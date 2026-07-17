@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { getBookingStatusColor, formatPrice, formatDate } from '../../utils/helpers.js';
 import { useCancelBookingMutation } from '../../store/api/bookingApi.js';
 
-// ── Status config ─────────────────────────────────────────────────────────────
+//  Status config 
 
 const STATUS_STYLES = {
   pending:   { label: 'Pending',   bg: 'bg-amber-100',   text: 'text-amber-700',   dot: 'bg-amber-400' },
@@ -24,7 +24,7 @@ function StatusBadge({ status }) {
   );
 }
 
-// ── Confirmation modal ────────────────────────────────────────────────────────
+//  Confirmation modal 
 
 function CancelModal({ bookingId, onConfirm, onClose, isLoading }) {
   return (
@@ -87,7 +87,7 @@ function CancelModal({ bookingId, onConfirm, onClose, isLoading }) {
   );
 }
 
-// ── Main component ────────────────────────────────────────────────────────────
+//  Main component 
 
 export default function BookingCard({ booking, onCancel }) {
   const [showCancelModal, setShowCancelModal] = useState(false);

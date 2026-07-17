@@ -32,7 +32,7 @@ const DESTINATIONS = [
     name: 'Rajasthan',
     state: 'Rajasthan',
     stateSlug: 'rajasthan',
-    image: 'https://images.pexels.com/photos/2409953/pexels-photo-2409953.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: 'https://images.pexels.com/photos/36941609/pexels-photo-36941609.jpeg',
     tripCount: 55,
     featured: false,
   },
@@ -49,6 +49,14 @@ const DESTINATIONS = [
     state: 'Andaman & Nicobar',
     stateSlug: 'andaman',
     image: 'https://images.pexels.com/photos/1268855/pexels-photo-1268855.jpeg?auto=compress&cs=tinysrgb&w=800',
+    tripCount: 29,
+    featured: false,
+  },
+   {
+    name: 'Lakhsdweep',
+    state: '',
+    stateSlug: '',
+    image: 'https://images.pexels.com/photos/21617942/pexels-photo-21617942.jpeg',
     tripCount: 29,
     featured: false,
   },
@@ -155,7 +163,7 @@ export default function PopularDestinations() {
           </div>
 
           {/* Remaining 4 smaller cards */}
-          {rest.slice(0, 5).map((dest, i) => (
+          {rest.slice(0, 8).map((dest, i) => (
             <DestinationCard key={dest.stateSlug} dest={dest} index={i + 1} />
           ))}
         </motion.div>

@@ -1,38 +1,3 @@
-import { useState } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Star as StarIcon,
-  MapPin as MapPinIcon,
-  Clock as ClockIcon,
-  Users as UsersIcon,
-  ChevronDown as ChevronDownIcon,
-  ChevronUp as ChevronUpIcon,
-  Check as CheckIcon,
-  X as XMarkIcon,
-  Share2 as ShareIcon,
-  Heart as HeartIcon,
-  ShieldCheck as ShieldCheckIcon,
-  Phone as PhoneIcon,
-  Minus as MinusIcon,
-  Plus as PlusIcon,
-  ChevronRight as ChevronRightIcon,
-  ArrowLeft as ArrowLeftIcon,
-  CalendarDays as CalendarDaysIcon,
-  Flag as FlagIcon,
-  Zap as BoltIcon,
-  HeartOff,
-} from 'lucide-react'
-const HeartSolid = HeartIcon
-const StarSolid = StarIcon
-
-import SEOHead from '../components/common/SEOHead.jsx'
-import TripGallery from '../components/trip/TripGallery.jsx'
-import TripItinerary from '../components/trip/TripItinerary.jsx'
-import TripReviews from '../components/trip/TripReviews.jsx'
-import SimilarTrips from '../components/trip/SimilarTrips.jsx'
-import { useGetTripBySlugQuery } from '../store/api/tripApi.js'
-
 // ── Fallback mock data used when API fails ─────────────────────────────────
 const MOCK_TRIP = {
   _id: 'mock-trip-001',
@@ -128,6 +93,38 @@ const MOCK_TRIP = {
   ],
 }
 
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate, Link } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Star as StarIcon,
+  MapPin as MapPinIcon,
+  Clock as ClockIcon,
+  Users as UsersIcon,
+  ChevronDown as ChevronDownIcon,
+  ChevronUp as ChevronUpIcon,
+  Check as CheckIcon,
+  X as XMarkIcon,
+  Share2 as ShareIcon,
+  Heart as HeartIcon,
+  ShieldCheck as ShieldCheckIcon,
+  Phone as PhoneIcon,
+  Minus as MinusIcon,
+  Plus as PlusIcon,
+  ChevronRight as ChevronRightIcon,
+  ArrowLeft as ArrowLeftIcon,
+  CalendarDays as CalendarDaysIcon,
+  Flag as FlagIcon,
+  Zap as BoltIcon,
+} from 'lucide-react'
+
+import SEOHead from '../components/common/SEOHead.jsx'
+import TripGallery from '../components/trip/TripGallery.jsx'
+import TripItinerary from '../components/trip/TripItinerary.jsx'
+import TripReviews from '../components/trip/TripReviews.jsx'
+import SimilarTrips from '../components/trip/SimilarTrips.jsx'
+import { useGetTripBySlugQuery } from '../store/api/tripApi.js'
+
 // ── Skeleton ────────────────────────────────────────────────────────────────
 function TripDetailSkeleton() {
   return (
@@ -193,17 +190,62 @@ export default function TripDetail() {
   const navigate = useNavigate()
 
   const { data, isLoading, isError } = useGetTripBySlugQuery(slug)
-
-  // Use API data or fall back to mock
-  const trip = data?.trip || (isError ? MOCK_TRIP : null)
+  const trip = data?.data || (isError || !data ? MOCK_TRIP : null)
 
   // Booking sidebar state
   const [selectedDate, setSelectedDate] = useState(null)
   const [travelers, setTravelers] = useState(1)
   const [wishlisted, setWishlisted] = useState(false)
 
-  const totalPrice = trip ? trip.price * travelers : 0
-  const savings = trip ? (trip.originalPrice - trip.price) * travelers : 0
+  // Normalize API structures
+  const categoryName = trip?.category?.name || ''
+  const categorySlug = trip?.category?.slug || ''
+  const displayPrice = trip?.price?.discounted ?? trip?.effectivePrice ?? 0
+  const originalPrice = trip?.price?.original ?? 0
+  const discountPercent = trip?.discountPercent ?? 0
+  const totalReviews = trip?.totalReviews ?? 0
+  const averageRating = trip?.averageRating ?? 0
+
+  const durationText = trip?.duration 
+    ? `${trip.duration.days} Day${trip.duration.days > 1 ? 's' : ''}${trip.duration.nights ? ` / ${trip.duration.nights} Night${trip.duration.nights > 1 ? 's' : ''}` : ''}`
+    : ''
+
+  const groupSizeText = trip?.groupSize
+    ? `${trip.groupSize.min}-${trip.groupSize.max} Pax`
+    : ''
+
+  const startingFromText = trip?.location?.from || ''
+
+  const destinationText = trip?.location?.destinations
+    ? trip.location.destinations.join(', ')
+    : ''
+
+  // Process available dates from backend startDates field
+  const availableDates = trip?.startDates?.map((d, i) => ({
+    id: d._id || i.toString(),
+    label: new Date(d.date).toLocaleDateString('en-IN', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    }),
+    available: d.slots,
+    rawDate: d.date,
+  })) || []
+
+  // Fallback if images array is empty but thumbnail url exists
+  const tripImages = trip?.images?.length 
+    ? trip.images 
+    : (trip?.thumbnail?.url ? [trip.thumbnail.url] : [])
+
+  // Automatically select the first available date once data loads
+  useEffect(() => {
+    if (availableDates.length > 0 && !selectedDate) {
+      setSelectedDate(availableDates[0])
+    }
+  }, [trip, selectedDate, availableDates])
+
+  const totalPrice = displayPrice * travelers
+  const savings = (originalPrice - displayPrice) * travelers
 
   const handleBookNow = () => {
     if (!selectedDate) {
@@ -217,7 +259,11 @@ export default function TripDetail() {
 
   const handleShare = async () => {
     if (navigator.share) {
-      await navigator.share({ title: trip.title, url: window.location.href })
+      try {
+        await navigator.share({ title: trip.title, url: window.location.href })
+      } catch (err) {
+        console.info('Share cancelled or failed: ', err)
+      }
     } else {
       navigator.clipboard.writeText(window.location.href)
       alert('Link copied to clipboard!')
@@ -248,8 +294,8 @@ export default function TripDetail() {
     <>
       <SEOHead
         title={`${trip.title} | Treno`}
-        description={`${trip.highlights?.[0] || ''} — ${trip.duration} trip starting from ₹${trip.price?.toLocaleString('en-IN')}.`}
-        ogImage={trip.images?.[0]}
+        description={`${trip.highlights?.[0] || ''} — ${durationText} trip starting from ₹${displayPrice?.toLocaleString('en-IN')}.`}
+        ogImage={tripImages?.[0]}
       />
 
       <div className="min-h-screen bg-gray-50">
@@ -267,18 +313,18 @@ export default function TripDetail() {
               <Link to="/" className="hover:text-amber-500">Home</Link>
               <ChevronRightIcon className="w-3 h-3" />
               <Link to="/trips" className="hover:text-amber-500">Trips</Link>
-              <ChevronRightIcon className="w-3 h-3" />
-              {trip.category && (
+              {categoryName && (
                 <>
+                  <ChevronRightIcon className="w-3 h-3" />
                   <Link
-                    to={`/trips?category=${trip.category.toLowerCase()}`}
+                    to={`/trips?category=${categorySlug || categoryName.toLowerCase()}`}
                     className="hover:text-amber-500 capitalize"
                   >
-                    {trip.category}
+                    {categoryName}
                   </Link>
-                  <ChevronRightIcon className="w-3 h-3" />
                 </>
               )}
+              <ChevronRightIcon className="w-3 h-3" />
               <span className="text-gray-800 font-medium line-clamp-1 max-w-[200px]">
                 {trip.title}
               </span>
@@ -288,7 +334,7 @@ export default function TripDetail() {
 
         {/* ── Hero Gallery ── */}
         <div className="w-full" style={{ height: '60vh', minHeight: 320 }}>
-          <TripGallery images={trip.images} title={trip.title} />
+          <TripGallery images={tripImages} title={trip.title} />
         </div>
 
         {/* ── Two-column layout ── */}
@@ -300,16 +346,22 @@ export default function TripDetail() {
               {/* 1. Trip Header */}
               <section>
                 <div className="flex flex-wrap items-start gap-3 mb-3">
-                  <span className="bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full capitalize">
-                    {trip.category}
-                  </span>
-                  <span className="bg-red-50 text-red-600 text-xs font-semibold px-3 py-1 rounded-full">
-                    {trip.difficulty}
-                  </span>
-                  <span className="bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
-                    <ClockIcon className="w-3.5 h-3.5" />
-                    {trip.duration}
-                  </span>
+                  {categoryName && (
+                    <span className="bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full capitalize">
+                      {categoryName}
+                    </span>
+                  )}
+                  {trip.difficulty && (
+                    <span className="bg-red-50 text-red-600 text-xs font-semibold px-3 py-1 rounded-full">
+                      {trip.difficulty}
+                    </span>
+                  )}
+                  {durationText && (
+                    <span className="bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+                      <ClockIcon className="w-3.5 h-3.5" />
+                      {durationText}
+                    </span>
+                  )}
                 </div>
 
                 <h1 className="text-3xl font-bold text-gray-900 font-playfair mb-3">
@@ -317,14 +369,16 @@ export default function TripDetail() {
                 </h1>
 
                 <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                  {destinationText && (
+                    <span className="flex items-center gap-1">
+                      <MapPinIcon className="w-4 h-4 text-amber-500" />
+                      {destinationText}
+                    </span>
+                  )}
                   <span className="flex items-center gap-1">
-                    <MapPinIcon className="w-4 h-4 text-amber-500" />
-                    {trip.location}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <StarSolid className="w-4 h-4 text-amber-400" />
-                    <strong className="text-gray-800">{trip.rating}</strong>
-                    <span className="text-gray-400">({trip.reviewCount} reviews)</span>
+                    <StarIcon className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    <strong className="text-gray-800">{averageRating}</strong>
+                    <span className="text-gray-400">({totalReviews} reviews)</span>
                   </span>
                 </div>
               </section>
@@ -333,59 +387,74 @@ export default function TripDetail() {
               <section>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {[
-                    { icon: ClockIcon, label: 'Duration', value: trip.duration },
+                    { icon: ClockIcon, label: 'Duration', value: durationText },
                     { icon: BoltIcon, label: 'Difficulty', value: trip.difficulty },
-                    { icon: UsersIcon, label: 'Group Size', value: trip.groupSize },
-                    {
-                      icon: MapPinIcon,
-                      label: 'Starting From',
-                      value: trip.startingFrom,
-                    },
+                    { icon: UsersIcon, label: 'Group Size', value: groupSizeText },
+                    { icon: MapPinIcon, label: 'Starting From', value: startingFromText },
                   ].map(({ icon: Icon, label, value }) => (
-                    <div
-                      key={label}
-                      className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 flex flex-col items-center text-center gap-2"
-                    >
-                      <div className="w-9 h-9 bg-amber-50 rounded-full flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-amber-500" />
+                    value && (
+                      <div
+                        key={label}
+                        className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 flex flex-col items-center text-center gap-2"
+                      >
+                        <div className="w-9 h-9 bg-amber-50 rounded-full flex items-center justify-center">
+                          <Icon className="w-5 h-5 text-amber-500" />
+                        </div>
+                        <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
+                          {label}
+                        </p>
+                        <p className="text-sm font-semibold text-gray-800 leading-tight">
+                          {value}
+                        </p>
                       </div>
-                      <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
-                        {label}
-                      </p>
-                      <p className="text-sm font-semibold text-gray-800 leading-tight">
-                        {value}
-                      </p>
-                    </div>
+                    )
                   ))}
                 </div>
               </section>
 
-              {/* 3. Highlights */}
-              <section>
-                <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
-                  Trip Highlights
-                </h2>
-                <ul className="space-y-2.5">
-                  {trip.highlights?.map((h, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="flex-shrink-0 mt-0.5 w-5 h-5 bg-amber-100 rounded-full flex items-center justify-center">
-                        <CheckIcon className="w-3 h-3 text-amber-600" />
-                      </span>
-                      <span className="text-gray-700 text-sm leading-relaxed">{h}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              {/* 3. Description (Render rich text description from API) */}
+              {trip.description && (
+                <section>
+                  <h2 className="text-xl font-bold text-gray-900 font-playfair mb-3">
+                    Overview
+                  </h2>
+                  <div 
+                    className="prose prose-sm text-gray-600 leading-relaxed max-w-none"
+                    dangerouslySetInnerHTML={{ __html: trip.description }}
+                  />
+                </section>
+              )}
 
-              {/* 4. Itinerary */}
-              <section>
-                <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
-                  Day-by-Day Itinerary
-                </h2>
-                <TripItinerary itinerary={trip.itinerary} />
-              </section>
+              {/* 4. Highlights */}
+              {trip.highlights?.length > 0 && (
+                <section>
+                  <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
+                    Trip Highlights
+                  </h2>
+                  <ul className="space-y-2.5">
+                    {trip.highlights.map((h, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span className="flex-shrink-0 mt-0.5 w-5 h-5 bg-amber-100 rounded-full flex items-center justify-center">
+                          <CheckIcon className="w-3 h-3 text-amber-600" />
+                        </span>
+                        <span className="text-gray-700 text-sm leading-relaxed">{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
 
-              {/* 5. Inclusions & Exclusions */}
+              {/* 5. Itinerary */}
+              {trip.itinerary?.length > 0 && (
+                <section>
+                  <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
+                    Day-by-Day Itinerary
+                  </h2>
+                  <TripItinerary itinerary={trip.itinerary} />
+                </section>
+              )}
+
+              {/* 6. Inclusions & Exclusions */}
               <section>
                 <h2 className="text-xl font-bold text-gray-900 font-playfair mb-5">
                   What's Included / Excluded
@@ -422,58 +491,69 @@ export default function TripDetail() {
                 </div>
               </section>
 
-              {/* 6. Things to Carry */}
-              <section>
-                <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
-                  Things to Carry
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
-                  {trip.thingsToCarry?.map((item, i) => (
-                    <label key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                      <input
-                        type="checkbox"
-                        className="accent-amber-500 w-4 h-4 rounded"
-                      />
-                      {item}
-                    </label>
-                  ))}
-                </div>
-              </section>
+              {/* 7. Things to Carry */}
+              {trip.thingsToCarry?.length > 0 && (
+                <section>
+                  <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
+                    Things to Carry
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                    {trip.thingsToCarry.map((item, i) => (
+                      <label key={i} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          className="accent-amber-500 w-4 h-4 rounded cursor-pointer"
+                          defaultChecked={false}
+                        />
+                        {item}
+                      </label>
+                    ))}
+                  </div>
+                </section>
+              )}
 
-              {/* 7. Guide Info */}
+              {/* 8. Guide Info */}
               {trip.guide && (
                 <section>
                   <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
                     Your Trip Leader
                   </h2>
                   <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex gap-5 items-start">
-                    <img
-                      src={trip.guide.avatar}
-                      alt={trip.guide.name}
-                      className="w-16 h-16 rounded-full object-cover flex-shrink-0 ring-2 ring-amber-200"
-                    />
+                    {trip.guide.avatar && (
+                      <img
+                        src={trip.guide.avatar}
+                        alt={trip.guide.name}
+                        className="w-16 h-16 rounded-full object-cover flex-shrink-0 ring-2 ring-amber-200"
+                      />
+                    )}
                     <div>
                       <h3 className="font-bold text-gray-900 text-base">{trip.guide.name}</h3>
                       <div className="flex flex-wrap items-center gap-3 mt-1 text-xs text-gray-500">
-                        <span className="flex items-center gap-1">
-                          <FlagIcon className="w-3.5 h-3.5" />
-                          {trip.guide.experience} experience
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <StarSolid className="w-3.5 h-3.5 text-amber-400" />
-                          {trip.guide.rating} rating
-                        </span>
-                        <span>{trip.guide.languages}</span>
+                        {trip.guide.experience && (
+                          <span className="flex items-center gap-1">
+                            <FlagIcon className="w-3.5 h-3.5" />
+                            {trip.guide.experience} experience
+                          </span>
+                        )}
+                        {trip.guide.rating && (
+                          <span className="flex items-center gap-1">
+                            <StarIcon className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                            {trip.guide.rating} rating
+                          </span>
+                        )}
+                        {trip.guide.languages && <span>{trip.guide.languages}</span>}
                       </div>
-                      <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-                        {trip.guide.bio}
-                      </p>
+                      {trip.guide.bio && (
+                        <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                          {trip.guide.bio}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </section>
               )}
 
-              {/* 8. FAQs */}
+              {/* 9. FAQs */}
               {trip.faqs?.length > 0 && (
                 <section>
                   <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
@@ -487,15 +567,15 @@ export default function TripDetail() {
                 </section>
               )}
 
-              {/* 9. Reviews */}
+              {/* 10. Reviews */}
               <section>
                 <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
                   Traveller Reviews
                 </h2>
-                <TripReviews tripId={trip._id} rating={trip.rating} reviewCount={trip.reviewCount} />
+                <TripReviews tripId={trip._id} rating={averageRating} reviewCount={totalReviews} />
               </section>
 
-              {/* 10. Similar Trips */}
+              {/* 11. Similar Trips */}
               <section className="pb-10">
                 <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
                   You Might Also Like
@@ -514,58 +594,66 @@ export default function TripDetail() {
                 <div className="bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-5">
                   <div className="flex items-end gap-3">
                     <span className="text-3xl font-extrabold text-white">
-                      ₹{trip.price?.toLocaleString('en-IN')}
+                      ₹{displayPrice?.toLocaleString('en-IN')}
                     </span>
-                    <span className="text-white/70 line-through text-base mb-0.5">
-                      ₹{trip.originalPrice?.toLocaleString('en-IN')}
-                    </span>
-                    <span className="bg-white text-amber-600 text-xs font-bold px-2 py-0.5 rounded-full mb-1">
-                      {trip.discount}% OFF
-                    </span>
+                    {originalPrice > displayPrice && (
+                      <span className="text-white/70 line-through text-base mb-0.5">
+                        ₹{originalPrice?.toLocaleString('en-IN')}
+                      </span>
+                    )}
+                    {discountPercent > 0 && (
+                      <span className="bg-white text-amber-600 text-xs font-bold px-2 py-0.5 rounded-full mb-1">
+                        {discountPercent}% OFF
+                      </span>
+                    )}
                   </div>
                   <p className="text-white/80 text-xs mt-0.5">per person (inclusive of taxes)</p>
                 </div>
 
                 <div className="p-6 space-y-5">
                   {/* Group size info */}
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <UsersIcon className="w-4 h-4 text-amber-500" />
-                    <span>{trip.groupSize}</span>
-                  </div>
+                  {groupSizeText && (
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <UsersIcon className="w-4 h-4 text-amber-500" />
+                      <span>{groupSizeText}</span>
+                    </div>
+                  )}
 
                   {/* Date Selector */}
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">
-                      Select Date
-                    </label>
-                    <div className="grid grid-cols-1 gap-2 max-h-44 overflow-y-auto pr-1">
-                      {trip.availableDates?.map((date) => (
-                        <button
-                          key={date.id}
-                          onClick={() => setSelectedDate(date)}
-                          className={`flex items-center justify-between px-4 py-3 rounded-xl border text-sm transition ${
-                            selectedDate?.id === date.id
-                              ? 'border-amber-500 bg-amber-50 text-amber-700 font-semibold'
-                              : 'border-gray-200 hover:border-amber-300 text-gray-700 hover:bg-gray-50'
-                          }`}
-                        >
-                          <span className="flex items-center gap-2">
-                            <CalendarDaysIcon className="w-4 h-4 text-gray-400" />
-                            {date.label}
-                          </span>
-                          <span
-                            className={`text-xs px-2 py-0.5 rounded-full ${
-                              date.available <= 3
-                                ? 'bg-red-50 text-red-600'
-                                : 'bg-green-50 text-green-600'
+                  {availableDates.length > 0 && (
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">
+                        Select Date
+                      </label>
+                      <div className="grid grid-cols-1 gap-2 max-h-44 overflow-y-auto pr-1">
+                        {availableDates.map((date) => (
+                          <button
+                            key={date.id}
+                            onClick={() => setSelectedDate(date)}
+                            className={`flex items-center justify-between px-4 py-3 rounded-xl border text-sm transition ${
+                              selectedDate?.id === date.id
+                                ? 'border-amber-500 bg-amber-50 text-amber-700 font-semibold'
+                                : 'border-gray-200 hover:border-amber-300 text-gray-700 hover:bg-gray-50'
                             }`}
                           >
-                            {date.available} seats
-                          </span>
-                        </button>
-                      ))}
+                            <span className="flex items-center gap-2">
+                              <CalendarDaysIcon className="w-4 h-4 text-gray-400" />
+                              {date.label}
+                            </span>
+                            <span
+                              className={`text-xs px-2 py-0.5 rounded-full ${
+                                date.available <= 3
+                                  ? 'bg-red-50 text-red-600'
+                                  : 'bg-green-50 text-green-600'
+                              }`}
+                            >
+                              {date.available} seats
+                            </span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Travelers Counter */}
                   <div>
@@ -596,15 +684,17 @@ export default function TripDetail() {
                   <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
                     <div className="flex justify-between text-gray-600">
                       <span>
-                        ₹{trip.price?.toLocaleString('en-IN')} × {travelers} traveler
+                        ₹{displayPrice?.toLocaleString('en-IN')} × {travelers} traveler
                         {travelers > 1 ? 's' : ''}
                       </span>
                       <span>₹{totalPrice?.toLocaleString('en-IN')}</span>
                     </div>
-                    <div className="flex justify-between text-green-600 font-medium">
-                      <span>You save</span>
-                      <span>₹{savings?.toLocaleString('en-IN')}</span>
-                    </div>
+                    {savings > 0 && (
+                      <div className="flex justify-between text-green-600 font-medium">
+                        <span>You save</span>
+                        <span>₹{savings?.toLocaleString('en-IN')}</span>
+                      </div>
+                    )}
                     <div className="border-t border-gray-200 pt-2 flex justify-between font-bold text-gray-900 text-base">
                       <span>Total</span>
                       <span>₹{totalPrice?.toLocaleString('en-IN')}</span>
@@ -652,11 +742,11 @@ export default function TripDetail() {
                       onClick={() => setWishlisted((w) => !w)}
                       className="flex-1 flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-2.5 text-sm text-gray-600 hover:bg-gray-50 transition"
                     >
-                      {wishlisted ? (
-                        <HeartSolid className="w-4 h-4 text-red-500" />
-                      ) : (
-                        <HeartIcon className="w-4 h-4" />
-                      )}
+                      <HeartIcon 
+                        className={`w-4 h-4 transition-colors ${
+                          wishlisted ? 'text-red-500 fill-red-500' : 'text-gray-600'
+                        }`} 
+                      />
                       {wishlisted ? 'Saved' : 'Wishlist'}
                     </button>
                   </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Users, BadgePercent, Headphones, ShieldCheck } from 'lucide-react';
 
-// ─── Animated counter hook ───────────────────────────────────────────────────
+//   Animated counter hook 
 function useCountAnimation(target, duration = 2000, start = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -22,7 +22,7 @@ function useCountAnimation(target, duration = 2000, start = false) {
   return count;
 }
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+//  Data 
 const STATS = [
   { label: 'Happy Travelers', value: 50000, suffix: '+', color: 'text-amber-500' },
   { label: 'Destinations', value: 500, suffix: '+', color: 'text-teal-500' },
@@ -67,9 +67,10 @@ const FEATURES = [
     iconColor: 'text-teal-500',
     ringColor: 'ring-teal-100',
   },
+  
 ];
 
-// ─── Stat Card ────────────────────────────────────────────────────────────────
+//  Stat Card 
 function StatCard({ label, value, suffix, color, animate }) {
   const count = useCountAnimation(value, 2200, animate);
   return (
@@ -83,7 +84,7 @@ function StatCard({ label, value, suffix, color, animate }) {
   );
 }
 
-// ─── Feature Card ─────────────────────────────────────────────────────────────
+//  Feature Card 
 function FeatureCard({ icon: Icon, title, description, color, iconColor, ringColor, delay }) {
   return (
     <motion.div
@@ -104,7 +105,7 @@ function FeatureCard({ icon: Icon, title, description, color, iconColor, ringCol
   );
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+//  Main Component 
 export default function WhyChooseUs() {
   const statsRef = useRef(null);
   const statsInView = useInView(statsRef, { once: true, margin: '-60px' });

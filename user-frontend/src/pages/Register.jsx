@@ -86,7 +86,8 @@ export default function Register() {
       await register({
         name: form.fullName.trim(),
         email: form.email,
-        phone: `+91${form.phone}`,
+        // phone: `+91${form.phone}`,
+           phone: form.phone,
         password: form.password,
       }).unwrap();
       toast.success("Account created! Welcome to Treno 🎉");

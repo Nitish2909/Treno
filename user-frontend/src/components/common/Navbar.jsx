@@ -508,7 +508,7 @@ export default function Navbar() {
                {/* CONTACT */}
               <li>
                 <Link
-                  to="/about"
+                  to="/contact"
                   className={clsx(
                     "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",

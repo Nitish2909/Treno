@@ -14,7 +14,7 @@ export const blogApi = baseApi.injectEndpoints({
         return `/blogs${qs ? `?${qs}` : ''}`
       },
       providesTags: (result) =>
-        result
+        result?.blog
           ? [
               ...result.blogs.map(({ _id }) => ({ type: 'Blog', id: _id })),
               { type: 'Blog', id: 'LIST' },

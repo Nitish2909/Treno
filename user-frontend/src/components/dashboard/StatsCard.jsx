@@ -28,8 +28,7 @@ const COLOR_MAP = {
   },
 };
 
-// ── Skeleton shimmer ──────────────────────────────────────────────────────────
-
+//  Skeleton shimmer 
 function Skeleton({ className }) {
   return (
     <div

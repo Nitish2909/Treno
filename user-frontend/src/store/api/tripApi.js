@@ -23,10 +23,10 @@ export const tripApi = baseApi.injectEndpoints({
       },
       providesTags: (result) =>
 
-        result
+        result.trips
           ?
           [
-            ...result.trips.map(({ _id }) => ({ type: 'Trip', id: _id })),
+            ...result.trips?.map(({ _id }) => ({ type: 'Trip', id: _id })),
             { type: 'Trip', id: 'LIST' },
           ]
           : [{ type: 'Trip', id: 'LIST' }],
