@@ -11,6 +11,7 @@ import {
   deactivateUser,
   getRevenueStats,
   getBookingAnalytics,
+  adminLogout,
 } from "../controllers/adminController.js";
 
 import {
@@ -27,6 +28,9 @@ import {
   addStartDate,
   updateStartDate,
   uploadTripPDF,
+  getAllTrips,
+  getPopularTrips,
+  getTripById,
 } from "../controllers/tripController.js";
 
 import {
@@ -61,6 +65,7 @@ import { adminLogin } from "../controllers/adminController.js";
 const router = express.Router();
 
 router.post('/auth/login',authLimiter,adminLogin)
+router.post('/auth/logout',verifyToken,adminLogout)
 
 // All admin routes require authentication + admin role
 router.use(verifyToken, isAdmin);
@@ -68,6 +73,7 @@ router.use(verifyToken, isAdmin);
 
 //  Dashboard 
 router.get("/dashboard/stats", getDashboardStats);
+router.get('/dashboard/top-trips',getPopularTrips)
 
 //  Analytics 
 router.get("/dashboard/revenue", getRevenueStats);
@@ -86,8 +92,10 @@ router.get("/bookings/:bookingId", getBookingById);
 router.patch("/bookings/:bookingId/status", updateBookingStatus);
 
 //  Trips 
+router.get("/trips",getAllTrips)
+router.get("/trips/:id",getTripById)
 router.post("/trips", uploadTripImages, validateCreateTrip, createTrip);
-router.put("/trips/:id", uploadTripImages, validateUpdateTrip, updateTrip);
+router.put("/trips/:id", validateUpdateTrip, updateTrip);
 router.delete("/trips/:id", deleteTrip);
 router.post("/trips/:id/start-dates", addStartDate);
 router.put("/trips/:id/start-dates/:dateIndex", updateStartDate);

@@ -18,7 +18,7 @@ import blogRoutes from "./src/routes/blogRoutes.js";
 import categoryRoutes from "./src/routes/categoryRoutes.js";
 import adminRoutes from "./src/routes/adminRoutes.js";
 import cookieParser from "cookie-parser";
-
+import fileUpload from "express-fileupload";
 
 dotenv.config();
 
@@ -51,9 +51,7 @@ console.log(process.env.CORS_ORIGIN)
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN
-      ? process.env.CORS_ORIGIN.split(",").map((o) => o.trim())
-      : "*",
+    origin: [process.env.ADMIN_URL,process.env.FRONTEND_URL],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: [
@@ -71,6 +69,10 @@ app.use(
 //     credentials:true
 //   })
 // )
+
+app.use(fileUpload({
+  useTempFiles:true
+}))
 
 app.use(globalLimiter);
 app.use(mongoSanitize());

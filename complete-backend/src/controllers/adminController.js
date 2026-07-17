@@ -43,11 +43,25 @@ export const adminLogin = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1000 })
+    .cookie("accessToken", accessToken, { ...cookieOptions, maxAge: 15 * 60 * 60 * 1000 })
     .cookie("refreshToken", refreshToken, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1000 })
     .json(
       new ApiResponse(200, { admin: userData, token:accessToken, refreshToken }, "Login successful.")
     );
+});
+
+export const adminLogout = asyncHandler(async (req, res) => {
+  await User.findByIdAndUpdate(
+    req.user._id,
+    { $unset: { refreshToken: 1 } },
+    { new: true }
+  );
+
+  return res
+    .status(200)
+    .clearCookie("accessToken", cookieOptions)
+    .clearCookie("refreshToken", cookieOptions)
+    .json(new ApiResponse(200, null, "Logged out successfully."));
 });
 
 /**

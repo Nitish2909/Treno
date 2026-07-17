@@ -119,6 +119,28 @@ export const getAllTrips = asyncHandler(async (req, res) => {
   ).send(res);
 });
 
+export const getTripById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  // Validate MongoID format
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(400, "Invalid trip ID format.");
+  }
+
+  const trip = await Trip.findById(id)
+    .populate("category", "name slug icon")
+    .populate("createdBy", "name email"); // Optional: populates user who created it
+
+  if (!trip) {
+    throw new ApiError(404, "Trip not found.");
+  }
+
+  return new ApiResponse(
+    200, 
+    { trip }, 
+    "Trip retrieved successfully."
+  ).send(res);
+});
 /**
  * GET /api/v1/trips/featured
  */
@@ -263,7 +285,7 @@ export const createTrip = asyncHandler(async (req, res) => {
     let thumbnail = {};
     if (req.files?.thumbnail?.[0]) {
       const thumbResult = await uploadToCloudinary(
-        req.files.thumbnail[0].path,
+        req.files.thumbnail[0].tempFilePath,
         "Treno/trips/thumbnails"
       );
       thumbnail = {
@@ -276,7 +298,7 @@ export const createTrip = asyncHandler(async (req, res) => {
     let images = [];
     if (req.files?.images?.length) {
       const uploadPromises = req.files.images.map((file) =>
-        uploadToCloudinary(file.path, "Treno/trips/images")
+        uploadToCloudinary(file.tempFilePath, "Treno/trips/images")
       );
       const results = await Promise.all(uploadPromises);
       images = results.map((r) => ({ url: r.secure_url, public_id: r.public_id }));
@@ -335,16 +357,17 @@ export const updateTrip = asyncHandler(async (req, res) => {
         await deleteFromCloudinary(trip.thumbnail.public_id);
       }
       const result = await uploadToCloudinary(
-        req.files.thumbnail[0].path,
+        req.files.thumbnail[0].tempFilePath,
         "Treno/trips/thumbnails"
       );
       body.thumbnail = { url: result.secure_url, public_id: result.public_id };
     }
 
+    console.log(req.files)
     // Append new gallery images
     if (req.files?.images?.length) {
       const uploadPromises = req.files.images.map((file) =>
-        uploadToCloudinary(file.path, "Treno/trips/images")
+        uploadToCloudinary(file.tempFilePath, "Treno/trips/images")
       );
       const results = await Promise.all(uploadPromises);
       const newImages = results.map((r) => ({ url: r.secure_url, public_id: r.public_id }));
@@ -455,7 +478,7 @@ export const uploadTripPDF = asyncHandler(async (req, res) => {
       await deleteFromCloudinary(trip.pdfBrochure.public_id, "raw");
     }
 
-    const result = await uploadToCloudinary(req.file.path, "Treno/trips/pdfs", {
+    const result = await uploadToCloudinary(req.file.tempFilePath, "Treno/trips/pdfs", {
       resource_type: "raw",
       format: "pdf",
     });
@@ -463,11 +486,11 @@ export const uploadTripPDF = asyncHandler(async (req, res) => {
     trip.pdfBrochure = { url: result.secure_url, public_id: result.public_id };
     await trip.save();
 
-    deleteTempFile(req.file.path);
+    deleteTempFile(req.file.tempFilePath);
 
     return new ApiResponse(200, trip.pdfBrochure, "PDF uploaded successfully.").send(res);
   } catch (error) {
-    deleteTempFile(req.file?.path);
+    deleteTempFile(req.file?.tempFilePat);
     throw error;
   }
 });

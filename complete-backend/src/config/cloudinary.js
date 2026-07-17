@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
+import { deleteTempFile } from "../utils/fileCleanup.js";
 
 dotenv.config();
 
@@ -18,7 +19,8 @@ cloudinary.config({
  * @returns {Promise<object>} Cloudinary upload result
  */
 export const uploadToCloudinary = async (filePath, folder = "Treno", options = {}) => {
-  const result = await cloudinary.uploader.upload(filePath, {
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
     folder,
     use_filename: true,
     unique_filename: true,
@@ -26,6 +28,11 @@ export const uploadToCloudinary = async (filePath, folder = "Treno", options = {
     ...options,
   });
   return result;
+  } catch (error) {
+    console.log(error)
+  } finally{
+    deleteTempFile(filePath)
+  }
 };
 
 /**
