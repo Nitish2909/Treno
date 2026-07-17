@@ -63,6 +63,8 @@ const DESTINATIONS = [
   { label: "Spiti Valley", href: "/destinations/spiti" },
   { label: "Andaman", href: "/destinations/andaman" },
   { label: "Meghalaya", href: "/destinations/meghalaya" },
+  { label: "Shimla", href: "/destinations/shimla" },
+  { label: "Jaipur", href: "/destinations/jaipur" },
 ];
 
 /** @type {{ label: string, href: string }[]} */
@@ -72,9 +74,7 @@ const USER_MENU_ITEMS = [
   { label: "Wishlist", icon: Heart, href: "/dashboard/wishlist" },
 ];
 
-const CONTACT=[
-   
-]
+const CONTACT = [];
 
 // ---------------------------------------------------------------------------
 // Animation variants
@@ -397,7 +397,7 @@ export default function Navbar() {
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-18">
-            {/* ── Logo ─────────────────────────────────────────────────────── */}
+            {/* Logo  */}
             <Link
               to="/"
               className="flex items-center justify-center flex-shrink-0 group relative"
@@ -418,7 +418,7 @@ export default function Navbar() {
               />
             </Link>
 
-            {/* ── Desktop Links ─────────────────────────────────────────────── */}
+            {/*  Desktop Links */}
             <ul className="hidden lg:flex items-center gap-1">
               {/* Home */}
               <li>
@@ -505,7 +505,7 @@ export default function Navbar() {
                 </Link>
               </li>
 
-               {/* CONTACT */}
+              {/* CONTACT */}
               <li>
                 <Link
                   to="/contact"
@@ -519,7 +519,7 @@ export default function Navbar() {
               </li>
             </ul>
 
-            {/* ── Right Controls ───────────────────────────────────────────── */}
+            {/*  Right Controls  */}
             <div className="hidden lg:flex items-center gap-3">
               {/* Expandable search */}
               <form
@@ -587,7 +587,7 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* ── Mobile hamburger ─────────────────────────────────────────── */}
+            {/*  Mobile hamburger  */}
             <button
               className={clsx(
                 "lg:hidden p-2 rounded-lg transition-colors",
@@ -604,7 +604,7 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* ── Mobile overlay ──────────────────────────────────────────────────── */}
+      {/*  Mobile overlay  */}
       <AnimatePresence>
         {mobileOpen && (
           <>

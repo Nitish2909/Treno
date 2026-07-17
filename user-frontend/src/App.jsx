@@ -12,6 +12,7 @@ import Loader from './components/common/Loader.jsx'
 // Pages - eager loaded
 import Home from './pages/Home.jsx'
 import NotFound from './pages/NotFound.jsx'
+import {Destination} from './pages/Destination.jsx'
 
 // Pages - lazy loaded
 const Trips = lazy(() => import('./pages/Trips.jsx'))
@@ -54,8 +55,10 @@ function AppContent() {
               <Route path="/trips/:slug" element={<TripDetail />} />
               <Route path="/trips/category/:categorySlug" element={<Trips />} />
               <Route path="/destination/:state" element={<Trips />} />
-              
 
+              {/* Destinations*/}
+              <Route path="/destinations" element={<Destination />} />
+              
               {/* Auth Routes */}
               <Route path="/auth/login" element={<Login />} />
               <Route path="/auth/register" element={<Register />} />
