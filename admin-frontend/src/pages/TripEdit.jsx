@@ -14,17 +14,22 @@ export default function TripEdit() {
 
   async function handleSubmit(formData) {
     try {
+      // Build updated payload structured specifically for the backend validator schema
       const payload = {
         id,
         ...formData,
-        images:        formData.images.map((img) => (typeof img === 'string' ? img : img.url || img.preview)),
-        inclusions:    formData.inclusions.filter(Boolean),
-        exclusions:    formData.exclusions.filter(Boolean),
-        thingsToCarry: formData.thingsToCarry.filter(Boolean),
-        highlights:    formData.highlights.filter(Boolean),
-        destinations:  formData.destinations.filter(Boolean),
-        tags:          formData.tags.filter(Boolean),
+        images:        (formData.images || []).map((img) => (typeof img === 'string' ? img : img.url || img.preview)),
+        inclusions:    (formData.inclusions || []).filter(Boolean),
+        exclusions:    (formData.exclusions || []).filter(Boolean),
+        thingsToCarry: (formData.thingsToCarry || []).filter(Boolean),
+        highlights:    (formData.highlights || []).filter(Boolean),
+        tags:          (formData.tags || []).filter(Boolean),
+        location: {
+          ...formData.location,
+          destinations: (formData.location?.destinations || []).filter(Boolean),
+        }
       }
+      
       await updateTrip(payload).unwrap()
       toast.success('Trip updated successfully!')
     } catch (err) {
@@ -40,7 +45,7 @@ export default function TripEdit() {
     )
   }
 
-  if (isError || !data?.trip) {
+  if (isError || !data?.data?.trip) {
     return (
       <div className="flex flex-col items-center justify-center h-64 gap-3 text-gray-400">
         <AlertCircle size={40} strokeWidth={1.5} />
@@ -57,11 +62,11 @@ export default function TripEdit() {
         breadcrumbs={[
           { label: 'Content' },
           { label: 'Trips', to: '/admin/trips' },
-          { label: data.trip.title },
+          { label: data?.data.trip.title },
         ]}
       />
       <div className="card card-body">
-        <TripForm initialValues={data.trip} onSubmit={handleSubmit} loading={updating} />
+        <TripForm initialValues={data?.data.trip} onSubmit={handleSubmit} loading={updating} />
       </div>
     </>
   )

@@ -74,7 +74,7 @@ export default function Sidebar({ onClose }) {
           <Mountain size={20} className="text-white" />
         </div>
         <div>
-          <span className="text-white font-bold text-base leading-tight">Treno</span>
+          <span className="text-white font-bold text-base leading-tight">TRENO</span>
           <span className="block text-sidebar-text text-[11px] font-medium">Admin Panel</span>
         </div>
       </div>

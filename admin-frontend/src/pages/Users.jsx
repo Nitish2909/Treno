@@ -21,8 +21,8 @@ export default function Users() {
   const [updateRole,    { isLoading: roleling  }] = useUpdateUserRoleMutation()
   const [deactivateUser,{ isLoading: deacting  }] = useDeactivateUserMutation()
 
-  const users = data?.users || []
-  const total = data?.total || 0
+  const users = data?.data?.users || []
+  const total = data?.data?.total || 0
 
   async function handleToggleRole(user) {
     const newRole = user.role === 'admin' ? 'user' : 'admin'

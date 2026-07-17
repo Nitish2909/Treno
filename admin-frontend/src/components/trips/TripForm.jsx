@@ -25,8 +25,8 @@ const SECTIONS = [
   { id: 'seo',        label: 'SEO & Policy', icon: Tag      },
 ]
 
-const TRIP_TYPES = ['Adventure', 'Cultural', 'Beach', 'Mountain', 'Wildlife', 'City Tour', 'Pilgrimage', 'Other']
-const DIFFICULTIES = ['Easy', 'Moderate', 'Challenging', 'Extreme']
+const TRIP_TYPES = ["domestic", "international"]
+const DIFFICULTIES = ['easy', 'moderate', 'hard']
 const CURRENCIES = ['INR', 'USD', 'EUR', 'GBP']
 
 function SectionTab({ sections, active, onSelect }) {
@@ -84,7 +84,7 @@ function ListEditor({ label, values = [], onChange, placeholder = 'Add item…' 
 
 function ItineraryEditor({ days = [], onChange }) {
   function addDay() {
-    onChange([...days, { day: days.length + 1, title: '', description: '', activities: [], accommodation: '', meals: { breakfast: false, lunch: false, dinner: false } }])
+    onChange([...days, { day: days.length + 1, title: '', description: '', accommodation: '', meals: { breakfast: false, lunch: false, dinner: false } }])
   }
   function removeDay(i) { onChange(days.filter((_, idx) => idx !== i)) }
   function updateDay(i, key, val) {
@@ -94,7 +94,7 @@ function ItineraryEditor({ days = [], onChange }) {
   }
   function toggleMeal(i, meal) {
     const d = [...days]
-    d[i] = { ...d[i], meals: { ...d[i].meals, [meal]: !d[i].meals?.[meal] } }
+    d[i] = { ...d[i], meals: { ...d[i].meals, [meal]: !d[i].meals?.[m] } }
     onChange(d)
   }
 
@@ -109,27 +109,16 @@ function ItineraryEditor({ days = [], onChange }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="form-label">Day Title *</label>
-              <input className="form-input" value={day.title} onChange={(e) => updateDay(i, 'title', e.target.value)} placeholder="e.g. Arrival in Manali" />
+              <input className="form-input" value={day.title || ''} onChange={(e) => updateDay(i, 'title', e.target.value)} placeholder="e.g. Arrival in Manali" />
             </div>
             <div>
               <label className="form-label">Accommodation</label>
-              <input className="form-input" value={day.accommodation} onChange={(e) => updateDay(i, 'accommodation', e.target.value)} placeholder="Hotel / Campsite name" />
+              <input className="form-input" value={day.accommodation || ''} onChange={(e) => updateDay(i, 'accommodation', e.target.value)} placeholder="Hotel / Campsite name" />
             </div>
           </div>
           <div>
             <label className="form-label">Description</label>
-            <textarea className="form-textarea" rows={2} value={day.description} onChange={(e) => updateDay(i, 'description', e.target.value)} placeholder="What happens on this day…" />
-          </div>
-          <div>
-            <label className="form-label">Meals Included</label>
-            <div className="flex gap-4">
-              {['breakfast', 'lunch', 'dinner'].map((m) => (
-                <label key={m} className="flex items-center gap-1.5 text-sm cursor-pointer">
-                  <input type="checkbox" className="rounded border-gray-300 text-primary-500" checked={!!day.meals?.[m]} onChange={() => toggleMeal(i, m)} />
-                  <span className="capitalize">{m}</span>
-                </label>
-              ))}
-            </div>
+            <textarea className="form-textarea" rows={2} value={day.description || ''} onChange={(e) => updateDay(i, 'description', e.target.value)} placeholder="What happens on this day…" />
           </div>
         </div>
       ))}
@@ -166,7 +155,7 @@ function StartDatesEditor({ dates = [], onChange }) {
           </div>
           <div className="w-32">
             <label className="form-label">Total Slots</label>
-            <input type="number" min={1} max={500} className="form-input" value={d.slots} onChange={(e) => update(i, 'slots', Number(e.target.value))} />
+            <input type="number" min={0} className="form-input" value={d.slots ?? 0} onChange={(e) => update(i, 'slots', Number(e.target.value))} />
           </div>
           <button type="button" onClick={() => remove(i)} className="btn-icon text-danger-500 hover:bg-danger-50 mb-0.5"><Trash2 size={15} /></button>
         </div>
@@ -179,11 +168,27 @@ function StartDatesEditor({ dates = [], onChange }) {
 const EMPTY_FORM = {
   title: '', slug: '', category: '', type: '', description: '', shortDescription: '',
   images: [], thumbnail: '',
-  originalPrice: '', discountedPrice: '', currency: 'INR',
-  from: '', destinations: [''], state: '', country: 'India',
-  difficulty: 'Moderate', minGroupSize: 2, maxGroupSize: 20,
+  price: {
+    original: '',
+    discounted: '',
+    currency: 'INR'
+  },
+  location: {
+    from: '', 
+    destinations: [''], 
+    state: '', 
+    country: 'India'
+  },
+  difficulty: 'moderate',
+  groupSize: {
+    min: 2,
+    max: 20
+  },
   highlights: [''],
-  durationDays: 1, durationNights: 0,
+  duration: {
+    days: 1, 
+    nights: 0
+  },
   inclusions: [''], exclusions: [''], thingsToCarry: [''],
   itinerary: [],
   startDates: [],
@@ -197,11 +202,8 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
   const [form, setForm]       = useState({ ...EMPTY_FORM, ...initialValues })
   const [errors, setErrors]   = useState({})
   const { data: catData, isLoading }     = useGetCategoriesQuery({})
-
-  // console.log(catData.data);
   
   const categories = catData?.data?.categories || []
-  
 
   useEffect(() => {
     if (initialValues) setForm({ ...EMPTY_FORM, ...initialValues })
@@ -212,6 +214,19 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
     if (errors[key]) setErrors((e) => { const n = { ...e }; delete n[key]; return n })
   }
 
+  // Helper for cleanly setting deep properties inside sub-objects
+  function setNested(nestedKey, subKey, val) {
+    setForm((f) => ({
+      ...f,
+      [nestedKey]: {
+        ...f[nestedKey],
+        [subKey]: val
+      }
+    }))
+    const errorKey = `${nestedKey}.${subKey}`
+    if (errors[errorKey]) setErrors((e) => { const n = { ...e }; delete n[errorKey]; return n })
+  }
+
   function handleTitleChange(e) {
     const title = e.target.value
     set('title', title)
@@ -220,13 +235,69 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
 
   function validate() {
     const e = {}
-    if (!form.title.trim())            e.title = 'Title is required'
-    if (!form.slug.trim())             e.slug  = 'Slug is required'
-    if (!form.category)                e.category = 'Category is required'
-    if (!form.description.trim())      e.description = 'Description is required'
-    if (!form.originalPrice)           e.originalPrice = 'Price is required'
-    if (!form.from.trim())             e.from = 'Departure city is required'
-    if (form.durationDays < 1)         e.durationDays = 'Must be at least 1 day'
+    
+    // Basic validations mapped directly to backend parameters
+    if (!form.title.trim()) {
+      e.title = 'Trip title is required.'
+    } else if (form.title.trim().length < 5 || form.title.trim().length > 150) {
+      e.title = 'Title must be between 5 and 150 characters.'
+    }
+
+    if (!form.slug.trim()) e.slug = 'Slug is required'
+    if (!form.category) e.category = 'Category is required.'
+    
+    if (!form.description.trim()) {
+      e.description = 'Description is required.'
+    } else if (form.description.replace(/<[^>]*>/g, '').trim().length < 50) {
+      e.description = 'Description must be at least 50 characters.'
+    }
+
+    if (form.shortDescription && form.shortDescription.trim().length > 300) {
+      e['shortDescription'] = 'Short description must not exceed 300 characters.'
+    }
+
+    if (!form.type) e.type = 'Trip type is required.'
+
+    // Duration validation
+    if (!form.duration.days) {
+      e['duration.days'] = 'Duration in days is required.'
+    } else if (form.duration.days < 1 || form.duration.days > 60) {
+      e['duration.days'] = 'Duration days must be between 1 and 60.'
+    }
+
+    if (form.duration.nights === undefined || form.duration.nights === null || form.duration.nights === '') {
+      e['duration.nights'] = 'Duration in nights is required.'
+    } else if (form.duration.nights < 0 || form.duration.nights > 60) {
+      e['duration.nights'] = 'Duration nights must be between 0 and 60.'
+    }
+
+    // Group Size validation
+    if (form.groupSize?.min && Number(form.groupSize.min) < 1) {
+      e['groupSize.min'] = 'Minimum group size must be at least 1.'
+    }
+    if (form.groupSize?.max) {
+      if (Number(form.groupSize.max) < 1) {
+        e['groupSize.max'] = 'Maximum group size must be at least 1.'
+      } else if (form.groupSize.min && Number(form.groupSize.max) < Number(form.groupSize.min)) {
+        e['groupSize.max'] = 'Maximum group size must be greater than or equal to minimum group size.'
+      }
+    }
+
+    // Price checks
+    if (form.price.original === '' || form.price.original === undefined) {
+      e['price.original'] = 'Original price is required.'
+    } else if (Number(form.price.original) < 0) {
+      e['price.original'] = 'Price must be a positive number.'
+    }
+
+    if (form.price.discounted !== '' && form.price.discounted !== undefined && form.price.discounted !== null) {
+      if (Number(form.price.discounted) < 0) {
+        e['price.discounted'] = 'Discounted price must be a positive number.'
+      } else if (Number(form.price.original) && Number(form.price.discounted) > Number(form.price.original)) {
+        e['price.discounted'] = 'Discounted price must be less than or equal to the original price.'
+      }
+    }
+
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -250,7 +321,7 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
     <form onSubmit={handleSubmit} noValidate>
       <SectionTab sections={SECTIONS} active={section} onSelect={setSection} />
 
-      {/* ── BASIC INFO ───────────────────── */}
+      {/* BASIC INFO */}
       {section === 'basic' && (
         <div className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -277,37 +348,41 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
               {errors.category && <p className="form-error">{errors.category}</p>}
             </div>
             <div>
-              <label className="form-label">Trip Type</label>
-              <select className="form-select" value={form.type} onChange={(e) => set('type', e.target.value)}>
+              <label className="form-label">Trip Type *</label>
+              <select className={clsx('form-select', errors.type && 'error')} value={form.type} onChange={(e) => set('type', e.target.value)}>
                 <option value="">Select type…</option>
                 {TRIP_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
+              {errors.type && <p className="form-error">{errors.type}</p>}
             </div>
           </div>
           <div>
             <label className="form-label">Short Description</label>
-            <textarea className="form-textarea" rows={2} value={form.shortDescription} onChange={(e) => set('shortDescription', e.target.value)} placeholder="Brief summary shown in cards (max 160 chars)" maxLength={160} />
-            <p className="form-hint">{form.shortDescription.length}/160</p>
+            <textarea className={clsx('form-textarea', errors.shortDescription && 'error')} rows={2} value={form.shortDescription} onChange={(e) => set('shortDescription', e.target.value)} placeholder="Brief summary shown in cards (max 300 chars)" maxLength={300} />
+            <div className="flex justify-between items-center text-xs mt-1">
+              <p className="form-hint">{(form.shortDescription || '').length}/300</p>
+              {errors.shortDescription && <p className="form-error">{errors.shortDescription}</p>}
+            </div>
           </div>
           <div>
             <label className="form-label">Full Description *</label>
-            <RichTextEditor value={form.description} onChange={(v) => set('description', v)} placeholder="Detailed trip description…" />
+            <RichTextEditor value={form.description} onChange={(v) => set('description', v)} placeholder="Detailed trip description (min 50 chars)…" />
             {errors.description && <p className="form-error">{errors.description}</p>}
           </div>
           <div className="flex gap-6">
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="rounded border-gray-300 text-primary-500" checked={form.featured} onChange={(e) => set('featured', e.target.checked)} />
+              <input type="checkbox" className="rounded border-gray-300 text-primary-500" checked={!!form.featured} onChange={(e) => set('featured', e.target.checked)} />
               <span className="text-sm font-medium text-gray-700">Featured Trip</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="rounded border-gray-300 text-primary-500" checked={form.popular} onChange={(e) => set('popular', e.target.checked)} />
+              <input type="checkbox" className="rounded border-gray-300 text-primary-500" checked={!!form.popular} onChange={(e) => set('popular', e.target.checked)} />
               <span className="text-sm font-medium text-gray-700">Popular Trip</span>
             </label>
           </div>
         </div>
       )}
 
-      {/* ── MEDIA ───────────────────────── */}
+      {/* MEDIA */}
       {section === 'media' && (
         <div className="space-y-5">
           <div>
@@ -324,88 +399,93 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
         </div>
       )}
 
-      {/* ── PRICING ─────────────────────── */}
+      {/* PRICING */}
       {section === 'pricing' && (
         <div className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="form-label">Currency</label>
-              <select className="form-select" value={form.currency} onChange={(e) => set('currency', e.target.value)}>
+              <select className="form-select" value={form.price?.currency || 'INR'} onChange={(e) => setNested('price', 'currency', e.target.value)}>
                 {CURRENCIES.map((c) => <option key={c}>{c}</option>)}
               </select>
             </div>
             <div>
               <label className="form-label">Original Price *</label>
-              <input type="number" min={0} className={clsx('form-input', errors.originalPrice && 'error')} value={form.originalPrice} onChange={(e) => set('originalPrice', e.target.value)} placeholder="12000" />
-              {errors.originalPrice && <p className="form-error">{errors.originalPrice}</p>}
+              <input type="number" min={0} className={clsx('form-input', errors['price.original'] && 'error')} value={form.price?.original ?? ''} onChange={(e) => setNested('price', 'original', e.target.value !== '' ? Number(e.target.value) : '')} placeholder="12000" />
+              {errors['price.original'] && <p className="form-error">{errors['price.original']}</p>}
             </div>
             <div>
               <label className="form-label">Discounted Price</label>
-              <input type="number" min={0} className="form-input" value={form.discountedPrice} onChange={(e) => set('discountedPrice', e.target.value)} placeholder="9999" />
-              <p className="form-hint">Leave blank if no discount</p>
+              <input type="number" min={0} className={clsx('form-input', errors['price.discounted'] && 'error')} value={form.price?.discounted ?? ''} onChange={(e) => setNested('price', 'discounted', e.target.value !== '' ? Number(e.target.value) : '')} placeholder="9999" />
+              <div className="flex justify-between items-center text-xs mt-1">
+                <p className="form-hint">Leave blank if no discount</p>
+                {errors['price.discounted'] && <p className="form-error text-right">{errors['price.discounted']}</p>}
+              </div>
             </div>
           </div>
-          {form.originalPrice && form.discountedPrice && (
+          {Number(form.price?.original) > 0 && Number(form.price?.discounted) > 0 && Number(form.price.original) >= Number(form.price.discounted) && (
             <div className="bg-success-50 border border-success-100 rounded-lg px-4 py-3 text-sm text-success-700">
-              Discount: {Math.round(((form.originalPrice - form.discountedPrice) / form.originalPrice) * 100)}% off
+              Discount: {Math.round(((form.price.original - form.price.discounted) / form.price.original) * 100)}% off
             </div>
           )}
         </div>
       )}
 
-      {/* ── LOCATION ────────────────────── */}
+      {/* LOCATION */}
       {section === 'location' && (
         <div className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="form-label">Departure From *</label>
-              <input className={clsx('form-input', errors.from && 'error')} value={form.from} onChange={(e) => set('from', e.target.value)} placeholder="e.g. Delhi" />
-              {errors.from && <p className="form-error">{errors.from}</p>}
+              <label className="form-label">Departure From</label>
+              <input className="form-input" value={form.location?.from || ''} onChange={(e) => setNested('location', 'from', e.target.value)} placeholder="e.g. Delhi" />
             </div>
             <div>
               <label className="form-label">State</label>
-              <input className="form-input" value={form.state} onChange={(e) => set('state', e.target.value)} placeholder="e.g. Himachal Pradesh" />
+              <input className="form-input" value={form.location?.state || ''} onChange={(e) => setNested('location', 'state', e.target.value)} placeholder="e.g. Himachal Pradesh" />
             </div>
           </div>
           <div>
             <label className="form-label">Country</label>
-            <input className="form-input" value={form.country} onChange={(e) => set('country', e.target.value)} placeholder="India" />
+            <input className="form-input" value={form.location?.country || ''} onChange={(e) => setNested('location', 'country', e.target.value)} placeholder="India" />
           </div>
           <div>
             <label className="form-label">Destinations (places visited)</label>
-            <ListEditor label="Destination" values={form.destinations} onChange={(v) => set('destinations', v)} placeholder="e.g. Kaza, Tabo, Nako" />
+            <ListEditor label="Destination" values={form.location?.destinations || ['']} onChange={(v) => setNested('location', 'destinations', v)} placeholder="e.g. Kaza, Tabo, Nako" />
           </div>
         </div>
       )}
 
-      {/* ── DETAILS ─────────────────────── */}
+      {/* DETAILS */}
       {section === 'details' && (
         <div className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="form-label">Duration (Days) *</label>
-              <input type="number" min={1} className={clsx('form-input', errors.durationDays && 'error')} value={form.durationDays} onChange={(e) => set('durationDays', Number(e.target.value))} />
-              {errors.durationDays && <p className="form-error">{errors.durationDays}</p>}
+              <input type="number" min={1} max={60} className={clsx('form-input', errors['duration.days'] && 'error')} value={form.duration?.days ?? ''} onChange={(e) => setNested('duration', 'days', e.target.value !== '' ? Number(e.target.value) : '')} />
+              {errors['duration.days'] && <p className="form-error">{errors['duration.days']}</p>}
             </div>
             <div>
-              <label className="form-label">Duration (Nights)</label>
-              <input type="number" min={0} className="form-input" value={form.durationNights} onChange={(e) => set('durationNights', Number(e.target.value))} />
+              <label className="form-label">Duration (Nights) *</label>
+              <input type="number" min={0} max={60} className={clsx('form-input', errors['duration.nights'] && 'error')} value={form.duration?.nights ?? ''} onChange={(e) => setNested('duration', 'nights', e.target.value !== '' ? Number(e.target.value) : '')} />
+              {errors['duration.nights'] && <p className="form-error">{errors['duration.nights']}</p>}
             </div>
             <div>
               <label className="form-label">Difficulty</label>
-              <select className="form-select" value={form.difficulty} onChange={(e) => set('difficulty', e.target.value)}>
-                {DIFFICULTIES.map((d) => <option key={d}>{d}</option>)}
+              <select className="form-select" value={form.difficulty || 'moderate'} onChange={(e) => set('difficulty', e.target.value)}>
+                {DIFFICULTIES.map((d) => <option key={d} value={d}>{d}</option>)}
               </select>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="form-label">Min Group Size</label>
-              <input type="number" min={1} className="form-input" value={form.minGroupSize} onChange={(e) => set('minGroupSize', Number(e.target.value))} />
+              <input type="number" min={1} className={clsx('form-input', errors['groupSize.min'] && 'error')} value={form.groupSize?.min ?? ''} onChange={(e) => setNested('groupSize', 'min', e.target.value !== '' ? Number(e.target.value) : '')} />
+              {errors['groupSize.min'] && <p className="form-error">{errors['groupSize.min']}</p>}
             </div>
             <div>
               <label className="form-label">Max Group Size</label>
-              <input type="number" min={1} className="form-input" value={form.maxGroupSize} onChange={(e) => set('maxGroupSize', Number(e.target.value))} />
+              <input type="number" min={1} className={clsx('form-input', errors['groupSize.max'] && 'error')} value={form.groupSize?.max ?? ''} onChange={(e) => setNested('groupSize', 'max', e.target.value !== '' ? Number(e.target.value) : '')} />
+              {errors['groupSize.max'] && <p className="form-error">{errors['groupSize.max']}</p>}
             </div>
           </div>
           <div>
@@ -427,21 +507,21 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
         </div>
       )}
 
-      {/* ── ITINERARY ───────────────────── */}
+      {/* ITINERARY */}
       {section === 'itinerary' && (
         <div>
           <ItineraryEditor days={form.itinerary} onChange={(v) => set('itinerary', v)} />
         </div>
       )}
 
-      {/* ── START DATES ─────────────────── */}
+      {/* START DATES */}
       {section === 'dates' && (
         <div>
           <StartDatesEditor dates={form.startDates} onChange={(v) => set('startDates', v)} />
         </div>
       )}
 
-      {/* ── FAQs ────────────────────────── */}
+      {/* FAQs */}
       {section === 'faqs' && (
         <div className="space-y-4">
           {form.faqs.map((faq, i) => (
@@ -452,11 +532,11 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
               </div>
               <div>
                 <label className="form-label">Question</label>
-                <input className="form-input" value={faq.question} onChange={(e) => faqUpdate(i, 'question', e.target.value)} placeholder="e.g. Is this trip suitable for beginners?" />
+                <input className="form-input" value={faq.question || ''} onChange={(e) => faqUpdate(i, 'question', e.target.value)} placeholder="e.g. Is this trip suitable for beginners?" />
               </div>
               <div>
                 <label className="form-label">Answer</label>
-                <textarea className="form-textarea" rows={2} value={faq.answer} onChange={(e) => faqUpdate(i, 'answer', e.target.value)} placeholder="Detailed answer…" />
+                <textarea className="form-textarea" rows={2} value={faq.answer || ''} onChange={(e) => faqUpdate(i, 'answer', e.target.value)} placeholder="Detailed answer…" />
               </div>
             </div>
           ))}
@@ -464,7 +544,7 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
         </div>
       )}
 
-      {/*  SEO & POLICY  */}
+      {/* SEO & POLICY */}
       {section === 'seo' && (
         <div className="space-y-5">
           <div>
@@ -478,7 +558,7 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
         </div>
       )}
 
-      {/*  Submit  */}
+      {/* Submit Buttons */}
       <div className="mt-8 pt-6 border-t border-gray-200 flex items-center justify-between gap-4">
         <div className="text-sm text-gray-500">
           {Object.keys(errors).length > 0 && (

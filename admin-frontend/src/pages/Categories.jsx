@@ -22,7 +22,7 @@ export default function Categories() {
   const [updateCategory, { isLoading: updating }] = useUpdateCategoryMutation()
   const [deleteCategory, { isLoading: deleting }] = useDeleteCategoryMutation()
 
-  const categories = data?.categories || []
+  const categories = data?.data?.categories || []
 
   function openCreate() { setEditing(null); setFormOpen(true) }
   function openEdit(cat) { setEditing(cat); setFormOpen(true) }

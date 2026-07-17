@@ -11,22 +11,26 @@ export default function TripCreate() {
 
   async function handleSubmit(data) {
     try {
-      // Convert image file objects to just their preview URLs (or handle upload separately)
+      // Build payload exactly as required by the backend validator schema
       const payload = {
         ...data,
-        images: data.images.map((img) => (typeof img === 'string' ? img : img.url || img.preview)),
-        inclusions:    data.inclusions.filter(Boolean),
-        exclusions:    data.exclusions.filter(Boolean),
-        thingsToCarry: data.thingsToCarry.filter(Boolean),
-        highlights:    data.highlights.filter(Boolean),
-        destinations:  data.destinations.filter(Boolean),
-        tags:          data.tags.filter(Boolean),
+        images: (data.images || []).map((img) => (typeof img === 'string' ? img : img.url || img.preview)),
+        inclusions:    (data.inclusions || []).filter(Boolean),
+        exclusions:    (data.exclusions || []).filter(Boolean),
+        thingsToCarry: (data.thingsToCarry || []).filter(Boolean),
+        highlights:    (data.highlights || []).filter(Boolean),
+        tags:          (data.tags || []).filter(Boolean),
+        location: {
+          ...data.location,
+          destinations: (data.location?.destinations || []).filter(Boolean),
+        }
       }
+
       const result = await createTrip(payload).unwrap()
       
       console.log(result)
       toast.success('Trip created successfully!')
-      navigate(`/admin/trips/${result.trip?._id}/edit`, { replace: true })
+      navigate(`/admin/trips/${result.data.trip?._id}/edit`, { replace: true })
     } catch (err) {
       toast.error(err?.data?.message || 'Failed to create trip')
     }
