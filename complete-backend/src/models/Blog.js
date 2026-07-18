@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import slugify from "slugify";
+import Category from "./Category.js";
 
 const blogSchema = new mongoose.Schema(
   {
@@ -31,22 +32,9 @@ const blogSchema = new mongoose.Schema(
       required: [true, "Author is required"],
     },
     category: {
-      type: String,
-      trim: true,
-      enum: [
-        "travel-tips",
-        "destination-guide",
-        "adventure",
-        "food-travel",
-        "budget-travel",
-        "solo-travel",
-        "group-travel",
-        "culture",
-        "photography",
-        "news",
-        "other",
-      ],
-      default: "other",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Category,
+      required: [true, "Category is required"],
     },
     tags: [{ type: String, trim: true, lowercase: true }],
     featuredImage: {

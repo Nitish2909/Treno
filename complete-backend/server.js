@@ -74,7 +74,7 @@ app.use(fileUpload({
   useTempFiles:true
 }))
 
-app.use(globalLimiter);
+// app.use(globalLimiter);
 app.use(mongoSanitize());
 app.use(xssClean());
 app.use(compression());

@@ -10,18 +10,20 @@ import asyncHandler from "../utils/asyncHandler.js";
 export const verifyToken = asyncHandler(async (req, _res, next) => {
   let token;
 
-  // 1. Check Authorization header
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer ")
-  ) {
-    token = req.headers.authorization.split(" ")[1];
-  }
+  
 
   // 2. Fallback to cookie
   if (!token && req.cookies?.accessToken) {
     token = req.cookies.accessToken;
   }
+
+  // // 1. Check Authorization header
+  // if (
+  //   req.headers.authorization &&
+  //   req.headers.authorization.startsWith("Bearer ")
+  // ) {
+  //   token = req.headers.authorization.split(" ")[1];
+  // }
 
   console.log(token)
   if (!token) {
