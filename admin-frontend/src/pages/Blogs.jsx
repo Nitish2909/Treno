@@ -185,8 +185,8 @@ export default function Blogs() {
   const [deleteBlog, { isLoading: deleting }] = useDeleteBlogMutation()
   const [publishBlog] = usePublishBlogMutation()
 
-  const blogs = data?.blogs || []
-  const total = data?.total || 0
+  const blogs = data?.data.blogs || []
+  const total = data?.data.total || 0
 
   async function handleDelete() {
     try {

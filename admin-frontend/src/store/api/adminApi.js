@@ -404,26 +404,48 @@ const baseQuery = fetchBaseQuery({
   }
 });
 
+
 // 2. Wrap with reauth logic
 const baseQueryWithReauth = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
-  console.log(result)
-  if (result.error && result.error.status === 401 ) {
+  // Ensure the original request configuration defaults to include credentials if not specified
+  const originalArgs = typeof args === 'string' ? { url: args } : { ...args };
+  if (!originalArgs.credentials) {
+    originalArgs.credentials = 'include';
+  }
+
+  // Run the original request
+  let result = await baseQuery(originalArgs, api, extraOptions);
+  console.log('Original request result:', result);
+
+  // Check if it failed with a 401 token expired status
+  if (result.error && result.error.status === 401) {
     console.log('Token expired, attempting refresh...');
 
+    // Call /auth/refresh ensuring credentials are systematically included
     const refreshResult = await baseQuery({ 
       url: '/auth/refresh', 
       method: 'POST',
+      credentials: 'include' // Explicitly forced for cookie sharing
     }, api, extraOptions);
+    
+    console.log('Refresh request result:', refreshResult);
 
     if (refreshResult.data && refreshResult.data?.success) {
       console.log('Refresh successful, retrying original request');
-      result = await baseQuery(args, api, extraOptions);
+      
+      // Update local storage with the new token
+      if (refreshResult.data.data?.accessToken) {
+        console.log(refreshResult.data.data.accessToken)
+        localStorage.setItem(TOKEN_KEY, refreshResult.data.data.accessToken);
+      }
+
+      // Force credentials: 'include' on the retried request
+      result = await baseQuery(originalArgs, api, extraOptions);
     } else {
       console.log('Refresh failed, logging out');
       localStorage.removeItem(TOKEN_KEY);
-      alert("You are Signed out. Please Login to continue");
-      window.location.href = '/';
+      // alert("You are Signed out. Please Login to continue");
+      // window.location.href = '/';
     }
   }
   return result;
@@ -518,6 +540,7 @@ export const adminApi = createApi({
         url: `/admin/trips/${id}`,
         method: 'PUT',
         body: data,
+        headers:{'Contetnt-Type':'multipart/form-data'}
       }),
       invalidatesTags: (_, __, { id }) => [{ type: 'Trip', id }, { type: 'Trip', id: 'LIST' }],
     }),
@@ -654,7 +677,7 @@ export const adminApi = createApi({
       },
     }),
     getBlogById: builder.query({
-      query: (id) => `/admin/blogs/${id}`,
+      query: (id) => `/admin/blogs/blog/${id}`,
       providesTags: (_, __, id) => [{ type: 'Blog', id }],
     }),
     createBlog: builder.mutation({

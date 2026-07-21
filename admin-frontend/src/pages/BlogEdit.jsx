@@ -84,7 +84,10 @@ export default function BlogEdit() {
   
   // FIXED: Added refetchOnMountOrArgChange configuration so newly added categories update instantly from cache
   const { data: catData } = useGetCategoriesQuery({}, { refetchOnMountOrArgChange: true })
-  const categories = catData?.categories || []
+  const categories = catData?.data.categories || []
+  console.log(data)
+  console.log(categories)
+  
 
   async function handleSubmit(formData) {
     try {
@@ -109,7 +112,7 @@ export default function BlogEdit() {
     )
   }
 
-  if (isError || !data?.blog) {
+  if (isError || !data?.data) {
     return (
       <div className="flex flex-col items-center justify-center h-64 gap-3 text-gray-400">
         <AlertCircle size={40} strokeWidth={1.5} />
@@ -126,11 +129,11 @@ export default function BlogEdit() {
         breadcrumbs={[
           { label: 'Content' },
           { label: 'Blogs', to: '/admin/blogs' },
-          { label: data.blog.title },
+          { label: data.data.title },
         ]}
       />
       <BlogForm
-        initialValues={data.blog}
+        initialValues={data.data}
         categories={categories}
         onSubmit={handleSubmit}
         loading={updating}

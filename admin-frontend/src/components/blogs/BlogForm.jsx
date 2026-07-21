@@ -201,6 +201,7 @@ export default function BlogForm({ initialValues, categories = [], onSubmit, loa
   const [form, setForm] = useState({ ...EMPTY, ...initialValues })
   const [errors, setErrors] = useState({})
 
+  console.log(initialValues)
   useEffect(() => {
     if (initialValues) {
       setForm({

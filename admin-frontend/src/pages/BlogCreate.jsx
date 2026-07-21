@@ -74,7 +74,7 @@ export default function BlogCreate() {
     { refetchOnMountOrArgChange: true }
   )
   
-  const categories = catData?.categories || []
+  const categories = catData?.data?.categories || []
 
   // Alternative fallback: Force a manual refetch on mount to be absolutely sure
   useEffect(() => {

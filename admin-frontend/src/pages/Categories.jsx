@@ -17,12 +17,13 @@ export default function Categories() {
   const [editing, setEditing]     = useState(null)
   const [deleteId, setDeleteId]   = useState(null)
 
-  const { data, isLoading }         = useGetCategoriesQuery({})
+  const { data, isLoading } = useGetCategoriesQuery({})
   const [createCategory, { isLoading: creating }] = useCreateCategoryMutation()
   const [updateCategory, { isLoading: updating }] = useUpdateCategoryMutation()
   const [deleteCategory, { isLoading: deleting }] = useDeleteCategoryMutation()
 
   const categories = data?.data?.categories || []
+  console.log(categories)
 
   function openCreate() { setEditing(null); setFormOpen(true) }
   function openEdit(cat) { setEditing(cat); setFormOpen(true) }
@@ -88,7 +89,7 @@ export default function Categories() {
               {/* Image */}
               <div className="relative h-36 bg-gray-100">
                 {cat.image ? (
-                  <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
+                  <img src={cat.image.url} alt={cat.name} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <ImageIcon size={32} className="text-gray-300" />
@@ -121,7 +122,7 @@ export default function Categories() {
                 <div className="flex items-center justify-between mt-1">
                   <p className="text-xs text-gray-400">{cat.slug}</p>
                   <span className="text-xs bg-blue-50 text-blue-600 rounded-full px-2 py-0.5 font-medium">
-                    {cat.tripsCount || 0} trips
+                    {cat.tripsCount || 3} trips
                   </span>
                 </div>
                 {cat.description && (

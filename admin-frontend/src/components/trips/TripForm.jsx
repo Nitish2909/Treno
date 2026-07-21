@@ -318,7 +318,7 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
+    <form onSubmit={handleSubmit} noValidate encType='multipart/form-data'>
       <SectionTab sections={SECTIONS} active={section} onSelect={setSection} />
 
       {/* BASIC INFO */}
