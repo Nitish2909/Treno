@@ -10,25 +10,27 @@ import { deleteTempFile } from "../utils/fileCleanup.js";
  * POST /api/v1/admin/categories
  */
 export const createCategory = asyncHandler(async (req, res) => {
-  const { name, description, icon, isActive, order } = req.body;
+  const { name, description, icon, isActive, order, image } = req.body;
 
   if (!name?.trim()) throw ApiError.badRequest("Category name is required.");
 
   const existing = await Category.findOne({ name: { $regex: `^${name}$`, $options: "i" } });
   if (existing) throw ApiError.conflict(`Category "${name}" already exists.`);
 
-  let image = {};
+  let newImage = {};
   if (req.file) {
     const result = await uploadToCloudinary(req.file.path, "Treno/categories");
-    image = { url: result.secure_url, public_id: result.public_id };
+    newImage = { url: result.secure_url, public_id: result.public_id };
     deleteTempFile(req.file.path);
+  }else{
+    newImage = {url : image , public_id : ""}
   }
 
   const category = await Category.create({
     name,
     description,
     icon,
-    image,
+    image:newImage,
     isActive: isActive !== false,
     order: order || 0,
   });

@@ -127,7 +127,20 @@ export const getAllBlogs = asyncHandler(async (req, res) => {
  * GET /api/v1/blogs/:slug
  */
 export const getBlogBySlug = asyncHandler(async (req, res) => {
-  const blog = await Blog.findOne({ slug: req.params.slug, status: "published" })
+  
+  console.log(req.params.slug)
+  const blog = await Blog.findOne({ $or : [{slug : req.params.slug },{_id:req.params.slug}] , status: "published" })
+    .populate("author", "name avatar");
+
+  console.log(blog)
+  if (!blog) throw ApiError.notFound("Blog post not found.");
+
+  return new ApiResponse(200, blog, "Blog fetched successfully.").send(res);
+});
+
+
+export const getBlogById = asyncHandler(async (req, res) => {
+  const blog = await Blog.findById(req.params.id)
     .populate("author", "name avatar");
 
   if (!blog) throw ApiError.notFound("Blog post not found.");

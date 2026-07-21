@@ -113,7 +113,7 @@ app.use("/api/v1/trips", tripRoutes);
 app.use("/api/v1/bookings", bookingRoutes);
 app.use("/api/v1/payments", paymentRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
-app.use("/api/v1/blogs", blogRoutes);
+app.use("/api/v1/admin/blogs", blogRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/admin", adminRoutes);
 
