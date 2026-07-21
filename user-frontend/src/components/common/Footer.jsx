@@ -70,10 +70,7 @@ const LEGAL_LINKS = [
 
 const PAYMENT_METHODS = ["Visa", "Mastercard", "UPI", "Razorpay"];
 
-// ---------------------------------------------------------------------------
 // Sub-components
-// ---------------------------------------------------------------------------
-
 /**
  * Newsletter subscription form section.
  */
@@ -212,17 +209,17 @@ function NewsletterSection() {
 export default function Footer() {
   return (
     <footer className="bg-[#0f172a] text-slate-300">
-      {/* ── Newsletter ────────────────────────────────────────────────────── */}
+      {/*  Newsletter  */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
         <NewsletterSection />
       </div>
 
-      {/* ── Decorative divider ────────────────────────────────────────────── */}
+      {/*  Decorative divider  */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </div>
 
-      {/* ── Four columns ─────────────────────────────────────────────────── */}
+      {/*  Four columns  */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Column 1 — Brand */}
@@ -371,8 +368,8 @@ export default function Footer() {
                   className="text-amber-500 mt-0.5 flex-shrink-0"
                 />
                 <div className="text-sm text-slate-400">
-                  <p>Mon – Sat: 9:00 AM – 7:00 PM</p>
-                  <p>Sunday: 10:00 AM – 4:00 PM</p>
+                  <p>Mon - Sat: 9:00 AM - 7:00 PM</p>
+                  <p>Sunday: 10:00 AM - 4:00 PM</p>
                 </div>
               </li>
             </ul>
@@ -380,7 +377,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ── Bottom bar ───────────────────────────────────────────────────── */}
+      {/*  Bottom bar  */}
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">

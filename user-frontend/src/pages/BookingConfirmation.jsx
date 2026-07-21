@@ -17,7 +17,7 @@ import { toast } from 'react-hot-toast'
 import SEOHead from '../components/common/SEOHead.jsx'
 import { useGetBookingByIdQuery } from '../store/api/bookingApi.js'
 
-// ── Confetti Particle ────────────────────────────────────────────────────────
+//  Confetti Particle 
 const CONFETTI_COLORS = [
   '#F59E0B', '#EF4444', '#10B981', '#3B82F6', '#8B5CF6', '#F97316', '#06B6D4',
 ]
@@ -72,7 +72,7 @@ function ConfettiRain({ count = 40 }) {
   )
 }
 
-// ── Animated Check ────────────────────────────────────────────────────────────
+//  Animated Check 
 function AnimatedCheck() {
   return (
     <div className="relative w-24 h-24 mx-auto mb-6">
@@ -103,7 +103,7 @@ function AnimatedCheck() {
   )
 }
 
-// ── Copyable Text ─────────────────────────────────────────────────────────────
+//  Copyable Text 
 function CopyableText({ value, label }) {
   const [copied, setCopied] = useState(false)
   const handleCopy = () => {
@@ -143,7 +143,7 @@ function CopyableText({ value, label }) {
   )
 }
 
-// ── Skeleton ──────────────────────────────────────────────────────────────────
+//  Skeleton 
 function ConfirmationSkeleton() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white flex flex-col items-center px-4 py-16 animate-pulse">
@@ -162,7 +162,7 @@ function ConfirmationSkeleton() {
   )
 }
 
-// ── Main Component ─────────────────────────────────────────────────────────────
+// Main Component 
 export default function BookingConfirmation() {
   const { bookingId } = useParams()
   const navigate = useNavigate()

@@ -1,4 +1,4 @@
-// ── Fallback mock data used when API fails ─────────────────────────────────
+//  Fallback mock data used when API fails 
 const MOCK_TRIP = {
   _id: 'mock-trip-001',
   title: 'Manali to Leh Bike Expedition',
@@ -14,9 +14,11 @@ const MOCK_TRIP = {
   rating: 4.8,
   reviewCount: 312,
   images: [
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200',
-    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200',
-    'https://images.unsplash.com/photo-1551632811-561732d1e306?w=1200',
+    // 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200',
+    // 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200',
+    // 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=1200',
+
+    'https://images.pexels.com/photos/5205541/pexels-photo-5205541.jpeg'
   ],
   location: 'Himachal Pradesh & Ladakh',
   highlights: [
@@ -64,7 +66,7 @@ const MOCK_TRIP = {
     experience: '8 years',
     languages: 'English, Hindi, Punjabi',
     rating: 4.9,
-    bio: 'Arjun is a certified mountaineer and seasoned bike-expedition leader who has completed the Manali–Leh route 40+ times.',
+    bio: 'Arjun is a certified mountaineer and seasoned bike-expedition leader who has completed the Manali-Leh route 40+ times.',
   },
   faqs: [
     {
@@ -73,7 +75,7 @@ const MOCK_TRIP = {
     },
     {
       q: 'What is the cancellation policy?',
-      a: 'Full refund if cancelled 30+ days before departure. 50% refund between 15–30 days. No refund within 15 days.',
+      a: 'Full refund if cancelled 30+ days before departure. 50% refund between 15-30 days. No refund within 15 days.',
     },
     {
       q: 'Is altitude sickness a concern?',
@@ -81,7 +83,7 @@ const MOCK_TRIP = {
     },
     {
       q: 'What kind of bikes are provided?',
-      a: 'Royal Enfield Bullet/Thunderbird 350cc – ideal for mountain terrain. Automatic variants are not available.',
+      a: 'Royal Enfield Bullet/Thunderbird 350cc - ideal for mountain terrain. Automatic variants are not available.',
     },
   ],
   itinerary: [
@@ -89,7 +91,7 @@ const MOCK_TRIP = {
     { day: 2, title: 'Manali -> Jispa', description: 'Cross Rohtang Pass, ride through Keylong, camp at Jispa (10,800 ft).' },
     { day: 3, title: 'Jispa -> Sarchu', description: 'Baralacha La (16,500 ft), vast Himalayan plateau, overnight camp.' },
     { day: 4, title: 'Sarchu -> Leh', description: 'Tanglang La (17,582 ft), arrive Leh, hotel check-in & rest.' },
-    { day: 5, title: 'Leh – Acclimatisation Day', description: 'Explore Leh Palace, Shanti Stupa, local market.' },
+    { day: 5, title: 'Leh - Acclimatisation Day', description: 'Explore Leh Palace, Shanti Stupa, local market.' },
   ],
 }
 
@@ -125,7 +127,7 @@ import TripReviews from '../components/trip/TripReviews.jsx'
 import SimilarTrips from '../components/trip/SimilarTrips.jsx'
 import { useGetTripBySlugQuery } from '../store/api/tripApi.js'
 
-// ── Skeleton ────────────────────────────────────────────────────────────────
+//  Skeleton 
 function TripDetailSkeleton() {
   return (
     <div className="animate-pulse">
@@ -151,7 +153,7 @@ function TripDetailSkeleton() {
   )
 }
 
-// ── FAQ Accordion Item ───────────────────────────────────────────────────────
+//  FAQ Accordion Item 
 function FaqItem({ faq }) {
   const [open, setOpen] = useState(false)
   return (
@@ -184,7 +186,7 @@ function FaqItem({ faq }) {
   )
 }
 
-// ── Main Component ───────────────────────────────────────────────────────────
+//  Main Component 
 export default function TripDetail() {
   const { slug } = useParams()
   const navigate = useNavigate()
@@ -340,7 +342,7 @@ export default function TripDetail() {
         {/* ── Two-column layout ── */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col lg:flex-row gap-10">
-            {/* ══ Main Content (left, 2/3) ══════════════════════════════════ */}
+            {/*  Main Content (left, 2/3)  */}
             <article className="flex-1 min-w-0 space-y-10">
 
               {/* 1. Trip Header */}
@@ -587,7 +589,7 @@ export default function TripDetail() {
               </section>
             </article>
 
-            {/* ══ Sticky Booking Sidebar (right, 1/3) ═══════════════════════ */}
+            {/*  Sticky Booking Sidebar (right, 1/3) */}
             <aside className="w-full lg:w-[360px] flex-shrink-0">
               <div className="lg:sticky lg:top-24 bg-white rounded-2xl border border-gray-100 shadow-lg overflow-hidden">
                 {/* Pricing */}

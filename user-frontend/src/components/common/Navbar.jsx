@@ -65,6 +65,10 @@ const DESTINATIONS = [
   { label: "Meghalaya", href: "/destinations/meghalaya" },
   { label: "Shimla", href: "/destinations/shimla" },
   { label: "Jaipur", href: "/destinations/jaipur" },
+  { label: "Sikkim", href: "/destinations/sikkim" },
+  { label: "Uttarakhand", href: "/destinations/uttarakhand" },
+  { label: "Nagaland", href: "/destinations/nagaland" },
+  { label: "Himachal Pradesh", href: "/destinations/himachal-pradesh" },
 ];
 
 /** @type {{ label: string, href: string }[]} */
@@ -133,7 +137,7 @@ function TripsDropdown({ isOpen }) {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[540px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 z-50"
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[540px] bg-white  rounded-2xl shadow-2xl border border-slate-100 p-6 z-50"
         >
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">
             Browse by Type
@@ -184,7 +188,7 @@ function DestinationsDropdown({ isOpen }) {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-slate-100 p-3 z-50"
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 p-3 z-50 grid grid-cols-2"
         >
           {DESTINATIONS.map(({ label, href }) => (
             <Link
@@ -492,6 +496,18 @@ export default function Navbar() {
                 </Link>
               </li>
 
+              {/* Event and Festivels */}
+              <li>
+                <Link
+                  to="/event-and-festivels"
+                  className={clsx(
+                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    isScrolled ? "text-slate-700" : "text-white",
+                  )}
+                >
+                  Event & Festivals
+                </Link>
+              </li>
               {/* About */}
               <li>
                 <Link

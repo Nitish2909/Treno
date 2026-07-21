@@ -208,6 +208,9 @@ export default function Contact() {
                       className="text-slate-800 font-semibold hover:text-amber-600 transition-colors"
                     >
                       +91- 88169 42362
+                      <br/>
+                      or
+                      9034447109
                     </a>
                   </div>
                 </div>
@@ -224,7 +227,7 @@ export default function Contact() {
                       href="mailto:hello@Treno.in"
                       className="text-slate-800 font-semibold hover:text-amber-600 transition-colors"
                     >
-                      hello@Treno.in
+                      Trenotravel@gmail.com
                     </a>
                   </div>
                 </div>
@@ -314,7 +317,7 @@ export default function Contact() {
 
             {/* WhatsApp CTA */}
             <a
-              href="https://wa.me/919876543210?text=Hi%20Treno!%20I%20have%20a%20travel%20inquiry."
+              href="https://wa.me/918816942362?text=Hi%20Treno!%20I%20have%20a%20travel%20inquiry."
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-4 rounded-2xl transition-colors shadow-md w-full justify-center"

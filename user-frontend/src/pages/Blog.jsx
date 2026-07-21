@@ -5,7 +5,7 @@ import SEOHead from '../components/common/SEOHead.jsx'
 import BlogCard from '../components/blog/BlogCard.jsx'
 import { useGetAllBlogsQuery, useGetFeaturedBlogsQuery } from '../store/api/blogApi.js'
 
-// ── Mock data ──────────────────────────────────────────────────────────────────
+//  Mock data 
 
 const MOCK_BLOGS = [
   {
@@ -86,6 +86,72 @@ const MOCK_BLOGS = [
     tags: ['northeast', 'culture', 'festivals'],
     views: 6300,
   },
+    {
+    _id: '6',
+    title: 'The Culture and Festivals of Northeast India',
+    slug: 'northeast-india-culture-festivals',
+    excerpt: 'Discover the incredible diversity of Northeast India — its tribes, languages, cuisine, and breathtaking festivals.',
+    category: 'Culture',
+    author: { name: 'Amit Das' },
+    coverImage: 'https://images.pexels.com/photos/1878293/pexels-photo-1878293.jpeg',
+    publishedAt: '2024-03-14',
+    readTime: '9 min read',
+    tags: ['northeast', 'culture', 'festivals'],
+    views: 6300,
+  },
+  {
+    _id: '7',
+    title: 'Hidden Gems of the Western Ghats: A Hiker\'s Paradise',
+    slug: 'hidden-gems-western-ghats-hiking-guide',
+    excerpt: 'Escape the crowds and explore misty peaks, cascading waterfalls, and endemic wildlife along the Western Ghats.',
+    category: 'Adventure',
+    author: { name: 'Priya Sharma' },
+    coverImage: 'https://images.pexels.com/photos/15286/pexels-photo.jpg',
+    publishedAt: '2024-03-20',
+    readTime: '7 min read',
+    tags: ['trekking', 'nature', 'westernghats'],
+    views: 4850,
+  },
+  {
+    _id: '8',
+    title: 'Spices, Silk, and Sea: The Culinary Heritage of Malabar',
+    slug: 'culinary-heritage-malabar-coast-spices',
+    excerpt: 'Journey through coastal Kerala to unearth century-old recipes, aromatic spice trade stories, and rich coastal flavors.',
+    category: 'Food',
+    author: { name: 'Rohan Nair' },
+    coverImage: 'https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg',
+    publishedAt: '2024-04-02',
+    readTime: '6 min read',
+    tags: ['food', 'kerala', 'heritage'],
+    views: 5210,
+  },
+  {
+    _id: '9',
+    title: 'A Guide to High-Altitude Lakes in Spiti & Ladakh',
+    slug: 'high-altitude-lakes-spiti-ladakh-guide',
+    excerpt: 'From Pangong Tso to Chandratal, discover the turquoise high-altitude waters cradled in the Trans-Himalayan desert.',
+    category: 'Travel',
+    author: { name: 'Amit Das' },
+    coverImage: 'https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg',
+    publishedAt: '2024-04-18',
+    readTime: '8 min read',
+    tags: ['himalayas', 'ladakh', 'lakes'],
+    views: 7420,
+  },
+  {
+    _id: '10',
+    title: 'Living Architecture: The Sacred Temples of Tamil Nadu',
+    slug: 'living-architecture-temples-tamil-nadu',
+    excerpt: 'Uncover Dravidian architectural marvels, intricate gopurams, and millennia-old traditions preserved in South India.',
+    category: 'History',
+    author: { name: 'Ananya Roy' },
+    coverImage: 'https://images.pexels.com/photos/2161467/pexels-photo-2161467.jpeg',
+    publishedAt: '2024-05-05',
+    readTime: '10 min read',
+    tags: ['architecture', 'southindia', 'history'],
+    views: 3910,
+  }
+
 ]
 
 const CATEGORIES = ['All', 'Destinations', 'Trekking', 'Culture', 'Tips', 'Food', 'Gear']
@@ -98,7 +164,7 @@ const TAG_CLOUD = [
   'planning', 'festivals', 'street-food', 'india',
 ]
 
-// ── Skeleton ───────────────────────────────────────────────────────────────────
+//  Skeleton 
 
 function SkeletonCard() {
   return (
@@ -115,7 +181,7 @@ function SkeletonCard() {
   )
 }
 
-// ── Main component ─────────────────────────────────────────────────────────────
+//  Main component 
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState('All')

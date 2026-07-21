@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion'
 import { Shield, Leaf, Users, Star, Award, Globe, Heart, Camera } from 'lucide-react'
 import SEOHead from '../components/common/SEOHead.jsx'
 
-// ── Animated counter ───────────────────────────────────────────────────────────
+//  Animated counter 
 
 function AnimatedCounter({ target, suffix = '', duration = 2 }) {
   const ref = useRef(null)
@@ -66,7 +66,7 @@ function SimpleCounter({ target, suffix = '' }) {
   )
 }
 
-// ── Section reveal animation ───────────────────────────────────────────────────
+//  Section reveal animation 
 
 function RevealSection({ children, delay = 0, className = '' }) {
   const ref = useRef(null)
@@ -85,7 +85,7 @@ function RevealSection({ children, delay = 0, className = '' }) {
   )
 }
 
-// ── Data ───────────────────────────────────────────────────────────────────────
+//  Data 
 
 const STATS = [
   { label: '50,000+ Travelers', sub: 'Happy explorers', icon: Users, num: '50,000+' },
@@ -175,8 +175,7 @@ const TIMELINE = [
 
 const PARTNERS = ['MakeMyTrip', 'Cleartrip', 'IRCTC', 'Air India', 'IndiGo', 'Ministry of Tourism']
 
-// ── Component ──────────────────────────────────────────────────────────────────
-
+//  Component 
 export default function About() {
   return (
     <>

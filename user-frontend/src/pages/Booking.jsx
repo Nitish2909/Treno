@@ -31,7 +31,7 @@ import { useGetTripBySlugQuery } from '../store/api/tripApi.js'
 import { initiatePayment } from '../utils/razorpay.js'
 import { useAuth } from '../hooks/useAuth.js'
 
-// ── Trip Summary Card ────────────────────────────────────────────────────────
+// Trip Summary Card
 function TripSummaryCard({ trip, selectedDate, travelers }) {
   if (!trip) {
     return (
@@ -119,7 +119,7 @@ function TripSummaryCard({ trip, selectedDate, travelers }) {
   )
 }
 
-// ── Main Component ───────────────────────────────────────────────────────────
+//  Main Component
 export default function Booking() {
   const { tripId } = useParams()
   const navigate = useNavigate()
@@ -213,7 +213,7 @@ export default function Booking() {
     }
   }
 
-  // ── Render ─────────────────────────────────────────────────────────────────
+  //  Render 
   return (
     <>
       <SEOHead

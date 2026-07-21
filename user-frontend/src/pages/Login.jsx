@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react';
-import toast from 'react-hot-toast';
-import { useLoginMutation } from '../store/api/authApi.js';
-import { useAuth } from '../hooks/useAuth.js';
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
+import { useLoginMutation } from "../store/api/authApi.js";
+import { useAuth } from "../hooks/useAuth.js";
 import clsx from "clsx";
 import TrenoLogo from "../assets/TrenoLogo.webp";
 
-
 const PEXELS_IMAGE =
-  'https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
+  "https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
 
 const GoogleIcon = () => (
   <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden="true">
@@ -34,7 +33,12 @@ const GoogleIcon = () => (
 );
 
 const FacebookIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-5 h-5" fill="#1877F2" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    className="w-5 h-5"
+    fill="#1877F2"
+    aria-hidden="true"
+  >
     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
   </svg>
 );
@@ -44,42 +48,58 @@ export default function Login() {
   const { isAuthenticated } = useAuth();
   const [login, { isLoading }] = useLoginMutation();
 
-  const [form, setForm] = useState({ email: '', password: '', rememberMe: false });
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (isAuthenticated) {
-      const redirect = localStorage.getItem('Treno_auth_redirect') || '/dashboard';
+      const redirect =
+        localStorage.getItem("Treno_auth_redirect") || "/dashboard";
       navigate(redirect, { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
   const validate = () => {
     const errs = {};
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = 'Enter a valid email address.';
-    if (form.password.length < 6) errs.password = 'Password must be at least 6 characters.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+      errs.email = "Enter a valid email address.";
+    if (form.password.length < 6)
+      errs.password = "Password must be at least 6 characters.";
     return errs;
   };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }));
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
-    if (Object.keys(errs).length) { setErrors(errs); return; }
+    if (Object.keys(errs).length) {
+      setErrors(errs);
+      return;
+    }
 
     try {
       await login({ email: form.email, password: form.password }).unwrap();
-      const redirect = localStorage.getItem('Treno_auth_redirect') || '/dashboard';
-      localStorage.removeItem('Treno_auth_redirect');
+      const redirect =
+        localStorage.getItem("Treno_auth_redirect") || "/dashboard";
+      localStorage.removeItem("Treno_auth_redirect");
       navigate(redirect, { replace: true });
     } catch (err) {
-      toast.error(err?.data?.message || 'Login failed. Please check your credentials.');
+      toast.error(
+        err?.data?.message || "Login failed. Please check your credentials.",
+      );
     }
   };
 
@@ -97,42 +117,51 @@ export default function Login() {
           {/* Logo */}
           <div className="flex items-center gap-2 mb-10">
             <div className="w-9 h-9 rounded-full bg-amber-500 flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="w-5 h-5 text-white fill-current" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                className="w-5 h-5 text-white fill-current"
+                aria-hidden="true"
+              >
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
               </svg>
             </div>
             <Link
-                         to="/"
-                         className="flex items-center justify-center flex-shrink-0 group relative"
-                       >
-                         {/* Soft background glow adjusted for the larger logo profile */}
-                         <div
-                           className={clsx(
-                             "absolute -inset-4 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-lg",
-                           )}
-                         />
-           
-                         {/* Significantly larger logo profile (w-24 h-24 / 96px) */}
-                         <img
-                           src={TrenoLogo}
-                           alt="Treno Logo"
-                           className="w-32 h-32 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
-                         />
-                       </Link>
+              to="/"
+              className="flex items-center justify-center flex-shrink-0 group relative"
+            >
+              {/* Soft background glow adjusted for the larger logo profile */}
+              <div
+                className={clsx(
+                  "absolute -inset-4 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-lg",
+                )}
+              />
+
+              {/* Significantly larger logo profile (w-24 h-24 / 96px) */}
+              <img
+                src={TrenoLogo}
+                alt="Treno Logo"
+                className="w-32 h-32 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
+              />
+            </Link>
           </div>
 
           <h1
             className="text-3xl font-bold text-gray-900 mb-2"
-            style={{ fontFamily: 'Playfair Display, serif' }}
+            style={{ fontFamily: "Playfair Display, serif" }}
           >
             Welcome Back
           </h1>
-          <p className="text-gray-500 mb-8">Sign in to continue your journey.</p>
+          <p className="text-gray-500 mb-8">
+            Sign in to continue your journey.
+          </p>
 
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Email address
               </label>
               <div className="relative">
@@ -146,16 +175,23 @@ export default function Login() {
                   onChange={handleChange}
                   placeholder="you@example.com"
                   className={`w-full pl-10 pr-4 py-2.5 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition ${
-                    errors.email ? 'border-red-400 bg-red-50' : 'border-gray-300 bg-white'
+                    errors.email
+                      ? "border-red-400 bg-red-50"
+                      : "border-gray-300 bg-white"
                   }`}
                 />
               </div>
-              {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-xs text-red-500 mt-1">{errors.email}</p>
+              )}
             </div>
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Password
               </label>
               <div className="relative">
@@ -163,25 +199,33 @@ export default function Login() {
                 <input
                   id="password"
                   name="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
                   value={form.password}
                   onChange={handleChange}
                   placeholder="••••••••"
                   className={`w-full pl-10 pr-10 py-2.5 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition ${
-                    errors.password ? 'border-red-400 bg-red-50' : 'border-gray-300 bg-white'
+                    errors.password
+                      ? "border-red-400 bg-red-50"
+                      : "border-gray-300 bg-white"
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
-              {errors.password && <p className="text-xs text-red-500 mt-1">{errors.password}</p>}
+              {errors.password && (
+                <p className="text-xs text-red-500 mt-1">{errors.password}</p>
+              )}
             </div>
 
             {/* Remember me + Forgot password */}
@@ -216,7 +260,7 @@ export default function Login() {
                   Signing in…
                 </>
               ) : (
-                'Sign In'
+                "Sign In"
               )}
             </button>
           </form>
@@ -254,8 +298,11 @@ export default function Login() {
           </div>
 
           <p className="mt-8 text-center text-sm text-gray-500">
-            Don&apos;t have an account?{' '}
-            <Link to="/auth/register" className="text-amber-600 hover:text-amber-700 font-semibold">
+            Don&apos;t have an account?{" "}
+            <Link
+              to="/auth/register"
+              className="text-amber-600 hover:text-amber-700 font-semibold"
+            >
               Sign up
             </Link>
           </p>
@@ -282,11 +329,14 @@ export default function Login() {
             </svg>
             <p
               className="text-xl font-medium leading-relaxed"
-              style={{ fontFamily: 'Playfair Display, serif' }}
+              style={{ fontFamily: "Playfair Display, serif" }}
             >
-              The world is a book, and those who do not travel read only one page.
+              The world is a book, and those who do not travel read only one
+              page.
             </p>
-            <footer className="mt-4 text-amber-300 text-sm font-medium">— Saint Augustine</footer>
+            <footer className="mt-4 text-amber-300 text-sm font-medium">
+              — Saint Augustine
+            </footer>
           </blockquote>
         </div>
       </div>

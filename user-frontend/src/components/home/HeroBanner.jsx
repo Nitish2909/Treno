@@ -159,6 +159,7 @@ export default function HeroBanner() {
                   href="/trips"
                   className="rounded-full bg-amber-500 px-7 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-amber-400 hover:shadow-amber-500/40 hover:shadow-xl active:scale-95"
                 >
+                  
                   Explore Trips
                 </a>
                 <a

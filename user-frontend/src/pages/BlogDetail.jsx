@@ -9,7 +9,7 @@ import SEOHead from '../components/common/SEOHead.jsx'
 import BlogCard from '../components/blog/BlogCard.jsx'
 import { useGetBlogBySlugQuery, useGetRelatedBlogsQuery } from '../store/api/blogApi.js'
 
-// ── Mock data ──────────────────────────────────────────────────────────────────
+//  Mock data 
 
 const MOCK_BLOG = {
   _id: 'mock-1',
@@ -103,7 +103,7 @@ const MOCK_RELATED = [
   },
 ]
 
-// ── Helpers ────────────────────────────────────────────────────────────────────
+//  Helpers 
 
 function formatDate(d) {
   if (!d) return ''
@@ -169,7 +169,7 @@ function extractTOC(content) {
     .map(l => ({ label: l.slice(3), id: l.slice(3).toLowerCase().replace(/\s+/g, '-') }))
 }
 
-// ── Component ──────────────────────────────────────────────────────────────────
+//  Component 
 
 export default function BlogDetail() {
   const { slug } = useParams()

@@ -50,7 +50,7 @@ function useDebounce(value, delay) {
   return debounced
 }
 
-export const Destination = ()=> {
+const Destination = ()=> {
   const dispatch = useDispatch()
   const { category: categoryParam } = useParams()
   const [searchParams] = useSearchParams()
@@ -444,3 +444,5 @@ export const Destination = ()=> {
     </>
   )
 }
+
+export default Destination;
