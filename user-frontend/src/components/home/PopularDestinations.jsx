@@ -32,7 +32,7 @@ const DESTINATIONS = [
     name: 'Rajasthan',
     state: 'Rajasthan',
     stateSlug: 'rajasthan',
-    image: 'https://images.pexels.com/photos/36941609/pexels-photo-36941609.jpeg',
+    image: 'https://images.pexels.com/photos/36941609/pexels-photo-36941609.jpeg?auto=compress&cs=tinysrgb&w=800',
     tripCount: 55,
     featured: false,
   },
@@ -56,9 +56,26 @@ const DESTINATIONS = [
     name: 'Lakhsdweep',
     state: '',
     stateSlug: '',
-    image: 'https://images.pexels.com/photos/21617942/pexels-photo-21617942.jpeg',
+    image: 'https://images.pexels.com/photos/21617942/pexels-photo-21617942.jpeg?auto=compress&cs=tinysrgb&w=800',
     tripCount: 29,
     featured: false,
+  },
+  {
+    name: 'Himachal Pradesh',
+    state: 'Himachal Pradesh',
+    stateSlug: 'himachal-pradesh',
+    image: 'https://images.pexels.com/photos/13727745/pexels-photo-13727745.jpeg?auto=compress&cs=tinysrgb&w=800',
+    tripCount: 10,
+    featured: true, 
+  },
+
+    {
+    name: 'Nagaland',
+    state: 'nagaland',
+    stateSlug: 'nagaland',
+    image: 'https://images.pexels.com/photos/13727745/pexels-photo-13727745.jpeg?auto=compress&cs=tinysrgb&w=800',
+    tripCount: 10,
+    featured: true, 
   },
 ];
 
@@ -163,7 +180,7 @@ export default function PopularDestinations() {
           </div>
 
           {/* Remaining 4 smaller cards */}
-          {rest.slice(0, 8).map((dest, i) => (
+          {rest.slice(0, 15).map((dest, i) => (
             <DestinationCard key={dest.stateSlug} dest={dest} index={i + 1} />
           ))}
         </motion.div>

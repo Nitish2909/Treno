@@ -1,4 +1,4 @@
-// import { useState, useEffect, useCallback, useRef } from 'react'
+// import { useState, useEffect, useCallback } from 'react'
 // import { useSelector, useDispatch } from 'react-redux'
 // import { useParams, useSearchParams } from 'react-router-dom'
 // import { Link } from 'react-router-dom'
@@ -58,17 +58,18 @@
 //   const sortBy = useSelector(selectSortBy)
 //   const page = useSelector(selectPage)
 
+  
 //   const [searchInput, setSearchInput] = useState('')
 //   const [viewMode, setViewMode] = useState('grid') // 'grid' | 'list'
 //   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
 
 //   const debouncedSearch = useDebounce(searchInput, 400)
 
-//   // Build combined query params
+//   // Build combined query params dynamically
 //   const queryParams = {
 //     ...filters,
 //     search: debouncedSearch || undefined,
-//     sortBy,
+//     sort:sortBy,
 //     page,
 //     limit: PAGE_SIZE,
 //     category: categoryParam || filters.category || searchParams.get('category') || undefined,
@@ -78,11 +79,12 @@
 //   const { data, isLoading, isFetching, isError, error } = useGetAllTripsQuery(queryParams)
 
 //   const trips = data?.data?.trips || []
-//   console.log(trips)
-//   const totalCount = trips.length || 0
+  
+//   // Access your backend's global counter instead of parsing array capacity length
+//   const totalCount = data?.data?.totalCount || data?.data?.total || trips.length || 0
 //   const totalPages = Math.ceil(totalCount / PAGE_SIZE)
 
-//   // Reset to page 1 when filters or search change
+//   // Reset to page 1 safely when filter states change
 //   useEffect(() => {
 //     dispatch(setPage(1))
 //   }, [filters, debouncedSearch, sortBy, dispatch])
@@ -144,7 +146,7 @@
 //                 <>
 //                   <span>/</span>
 //                   <span className="text-gray-800 font-medium capitalize">{categoryParam}</span>
-//                 </>
+//                 </                >
 //               )}
 //             </nav>
 //             <div className="flex items-center justify-between">
@@ -161,7 +163,7 @@
 //                     <>
 //                       Showing{' '}
 //                       <span className="font-semibold text-gray-700">
-//                         {Math.min((page - 1) * PAGE_SIZE + 1, totalCount)}–
+//                         {totalCount === 0 ? 0 : (page - 1) * PAGE_SIZE + 1}–
 //                         {Math.min(page * PAGE_SIZE, totalCount)}
 //                       </span>{' '}
 //                       of{' '}
@@ -289,8 +291,8 @@
 //                 </div>
 //               )}
 
-//               {/* Trip Cards */}
-//               {isLoading ? (
+//               {/* Cards List & Container Views */}
+//               {(isLoading || isFetching) ? (
 //                 <CardSkeletonGrid count={PAGE_SIZE} />
 //               ) : isError ? (
 //                 <div className="flex flex-col items-center justify-center py-20 text-center">
@@ -299,8 +301,7 @@
 //                     Something went wrong
 //                   </h3>
 //                   <p className="text-gray-500 text-sm mb-4">
-//                     {error?.data?.message ||
-//                       'Unable to load trips. Please try again.'}
+//                     {error?.data?.message || 'Unable to load trips. Please try again.'}
 //                   </p>
 //                   <button
 //                     onClick={() => window.location.reload()}
@@ -310,7 +311,6 @@
 //                   </button>
 //                 </div>
 //               ) : trips.length === 0 ? (
-//                 /* Empty state */
 //                 <motion.div
 //                   initial={{ opacity: 0, y: 20 }}
 //                   animate={{ opacity: 1, y: 0 }}
@@ -321,8 +321,7 @@
 //                     No trips found
 //                   </h3>
 //                   <p className="text-gray-500 text-sm mb-6 max-w-xs">
-//                     We couldn't find any trips matching your current filters. Try broadening
-//                     your search or clearing the filters.
+//                     We couldn't find any trips matching your current filters. Try broadening your search or clearing the filters.
 //                   </p>
 //                   <button
 //                     onClick={() => dispatch(clearFilters())}
@@ -357,10 +356,9 @@
 //                     </AnimatePresence>
 //                   </motion.div>
 
-//                   {/* Pagination */}
+//                   {/* Pagination Section */}
 //                   {totalPages > 1 && (
 //                     <div className="flex items-center justify-center gap-1 mt-10">
-//                       {/* Prev */}
 //                       <button
 //                         onClick={() => handlePageChange(page - 1)}
 //                         disabled={page === 1}
@@ -372,10 +370,7 @@
 
 //                       {getPaginationRange().map((p, i) =>
 //                         p === '...' ? (
-//                           <span
-//                             key={`ellipsis-${i}`}
-//                             className="px-2 py-2 text-sm text-gray-400"
-//                           >
+//                           <span key={`ellipsis-${i}`} className="px-2 py-2 text-sm text-gray-400">
 //                             …
 //                           </span>
 //                         ) : (
@@ -393,7 +388,6 @@
 //                         )
 //                       )}
 
-//                       {/* Next */}
 //                       <button
 //                         onClick={() => handlePageChange(page + 1)}
 //                         disabled={page === totalPages}
@@ -415,7 +409,6 @@
 //       <AnimatePresence>
 //         {mobileFilterOpen && (
 //           <>
-//             {/* Backdrop */}
 //             <motion.div
 //               key="backdrop"
 //               initial={{ opacity: 0 }}
@@ -424,7 +417,6 @@
 //               onClick={() => setMobileFilterOpen(false)}
 //               className="fixed inset-0 bg-black/50 z-40 lg:hidden"
 //             />
-//             {/* Drawer */}
 //             <motion.div
 //               key="drawer"
 //               initial={{ x: '-100%' }}
@@ -452,6 +444,10 @@
 //     </>
 //   )
 // }
+
+
+
+
 
 
 import { useState, useEffect, useCallback } from 'react'
@@ -514,7 +510,8 @@ export default function Trips() {
   const sortBy = useSelector(selectSortBy)
   const page = useSelector(selectPage)
 
-  const [searchInput, setSearchInput] = useState('')
+  const initialSearch = searchParams.get('search') || searchParams.get('q') || filters.search || ''
+  const [searchInput, setSearchInput] = useState(initialSearch)
   const [viewMode, setViewMode] = useState('grid') // 'grid' | 'list'
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
 
@@ -524,7 +521,7 @@ export default function Trips() {
   const queryParams = {
     ...filters,
     search: debouncedSearch || undefined,
-    sortBy,
+    sort: sortBy,
     page,
     limit: PAGE_SIZE,
     category: categoryParam || filters.category || searchParams.get('category') || undefined,
@@ -535,7 +532,7 @@ export default function Trips() {
 
   const trips = data?.data?.trips || []
   
-  // FIX: Access your backend's global counter instead of parsing array capacity length
+  // Access your backend's global counter instead of parsing array capacity length
   const totalCount = data?.data?.totalCount || data?.data?.total || trips.length || 0
   const totalPages = Math.ceil(totalCount / PAGE_SIZE)
 
@@ -544,14 +541,28 @@ export default function Trips() {
     dispatch(setPage(1))
   }, [filters, debouncedSearch, sortBy, dispatch])
 
-  // Build active filter chips from redux filters
+  // Clear all filters along with search input state
+  const handleClearAllFilters = useCallback(() => {
+    setSearchInput('')
+    dispatch(clearFilters())
+  }, [dispatch])
+
+  // Build active filter chips from redux filters & active search
   const activeFilterChips = Object.entries(filters)
-    .filter(([, val]) => val !== undefined && val !== null && val !== '')
+    .filter(([key, val]) => val !== undefined && val !== null && val !== '' && key !== 'search')
     .map(([key, val]) => ({ key, val: String(val) }))
+
+  if (debouncedSearch) {
+    activeFilterChips.unshift({ key: 'search', val: debouncedSearch })
+  }
 
   const handleRemoveFilter = useCallback(
     (key) => {
-      dispatch(clearSingleFilter(key))
+      if (key === 'search') {
+        setSearchInput('')
+      } else {
+        dispatch(clearSingleFilter(key))
+      }
     },
     [dispatch]
   )
@@ -601,7 +612,7 @@ export default function Trips() {
                 <>
                   <span>/</span>
                   <span className="text-gray-800 font-medium capitalize">{categoryParam}</span>
-                </                >
+                </>
               )}
             </nav>
             <div className="flex items-center justify-between">
@@ -738,7 +749,7 @@ export default function Trips() {
                     </span>
                   ))}
                   <button
-                    onClick={() => dispatch(clearFilters())}
+                    onClick={handleClearAllFilters}
                     className="text-xs text-red-500 hover:text-red-700 underline transition ml-1"
                   >
                     Clear all
@@ -779,7 +790,7 @@ export default function Trips() {
                     We couldn't find any trips matching your current filters. Try broadening your search or clearing the filters.
                   </p>
                   <button
-                    onClick={() => dispatch(clearFilters())}
+                    onClick={handleClearAllFilters}
                     className="bg-amber-500 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-amber-600 transition"
                   >
                     Clear Filters

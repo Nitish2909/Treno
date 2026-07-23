@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Users, BadgePercent, Headphones, ShieldCheck } from 'lucide-react';
+import { Users, BadgePercent, Headphones, ShieldCheck,CalendarCheck,MapPin,Sparkles } from 'lucide-react';
 
 //   Animated counter hook 
 function useCountAnimation(target, duration = 2000, start = false) {
@@ -67,6 +67,33 @@ const FEATURES = [
     iconColor: 'text-teal-500',
     ringColor: 'ring-teal-100',
   },
+  {
+    icon: CalendarCheck,
+    title: 'Flexible Bookings',
+    description:
+      'Plans change. Enjoy hassle-free date changes and flexible cancellation policies on most itineraries.',
+    color: 'bg-amber-50',
+    iconColor: 'text-amber-500',
+    ringColor: 'ring-amber-100',
+  },
+  {
+    icon: MapPin,
+    title: 'Tailored Itineraries',
+    description:
+      'Customized travel plans designed around your interests, pace, and preferences for a personalized journey.',
+    color: 'bg-teal-50',
+    iconColor: 'text-teal-500',
+    ringColor: 'ring-teal-100',
+  },
+  {
+    icon: Sparkles,
+    title: 'Handpicked Experiences',
+    description:
+      'Uncover hidden gems and unique off-the-beaten-path destinations curated by travel insiders.',
+    color: 'bg-teal-50',
+    iconColor: 'text-teal-500',
+    ringColor: 'ring-teal-100',
+  }
   
 ];
 

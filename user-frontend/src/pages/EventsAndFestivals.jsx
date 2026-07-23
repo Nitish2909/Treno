@@ -6,9 +6,8 @@ import {
   MapPin, 
   Sparkles, 
   ArrowUpRight,
-  ShieldCheck,
-  Users,
-  Compass
+  Check,
+  Ticket
 } from "lucide-react";
 import DiscoverEvents from "./DiscoverEvents";
 
@@ -52,23 +51,113 @@ const HERO_SLIDES = [
     duration: "7 Days / 6 Nights",
     location: "Tokyo, Kyoto & Mt. Fuji",
     videoUrl: "https://www.pexels.com/download/video/5737256/",
+  }
+];
+
+const MONTHLY_EVENTS = {
+  september: [
+    {
+      id: "sep-1",
+      dateDay: "15",
+      dateMonth: "Sep",
+      category: "OKTOBERFEST MUNICH",
+      title: "11 Days Europe Trip with Oktoberfest | Community Trip",
+      duration: "10 NIGHTS 11 DAYS",
+      route: "Prague International Airport - Munich International Airport",
+      stops: ["3N Prague", "3N Budapest", "2N Salzburg", "2N Munich"],
+      inclusions: ["Stay", "Breakfast", "Sightseeing & Activities", "Event ticket", "Local Transport", "Trip Assistance"],
+      badge: "Event Tickets Additional",
+      price: "2,09,990/-",
+      image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      id: "sep-2",
+      dateDay: "23",
+      dateMonth: "Sep",
+      category: "ZIRO FESTIVAL",
+      title: "7 Days Ziro Music Festival Tour Package",
+      duration: "6 NIGHTS 7 DAYS",
+      route: "Guwahati Airport/Khanapara - Guwahati Airport/Khanapara",
+      stops: ["Guwahati", "Tezpur", "Ziro Valley", "Ziro Valley Music Festival", "Apatani Tribal Village", "Guwahati"],
+      inclusions: ["Stay", "Breakfast", "Sightseeing & Activities", "Local Transport", "Trip Assistance"],
+      price: "44,999/-",
+      image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80",
+    }
+  ],
+  october: [
+    {
+      id: "oct-1",
+      dateDay: "12",
+      dateMonth: "Oct",
+      category: "ZAMNA BALI",
+      title: "8 Days Bali with Gili Island Trip | Zamna Festival Edition",
+      duration: "7 NIGHTS 8 DAYS",
+      route: "Ngurah Rai International Airport - Ngurah Rai International Airport",
+      stops: ["3N Seminyak", "2N Gili Trawangan", "2N Ubud"],
+      inclusions: ["Stay", "Breakfast", "Sightseeing & Activities", "Event ticket", "Local Transport"],
+      badge: "Festival Pass Included",
+      price: "89,990/-",
+      image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80",
+    }
+  ],
+  december: [
+    {
+      id: "dec-1",
+      dateDay: "28",
+      dateMonth: "Dec",
+      category: "NEW YEAR SPECIAL",
+      title: "6 Days Northern Lights & Arctic New Year Celebration",
+      duration: "5 NIGHTS 6 DAYS",
+      route: "Keflavík International Airport - Keflavík International Airport",
+      stops: ["3N Reykjavík", "2N Golden Circle"],
+      inclusions: ["Stay", "Breakfast", "Sightseeing & Activities", "Local Transport", "Trip Assistance"],
+      price: "1,45,000/-",
+      image: "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=600&q=80",
+    }
+  ]
+};
+
+const ALL_PACKAGES = [
+  {
+    id: "pkg-1",
+    duration: "10 NIGHTS 11 DAYS",
+    date: "15 SEPTEMBER 2026",
+    category: "Oktoberfest Munich",
+    title: "11 Days Europe Trip with Oktoberfest | Community Trip",
+    stops: ["3N Prague", "3N Budapest", "2N Salzburg", "2N Munich"],
+    price: "2,09,990/-",
+    image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
   },
   {
-    title: "6 Days Aurora Borealis & Arctic Wonders",
-    subtitle: "Chase the magical Northern Lights, ride husky sleds, and unwind in geothermal lagoons.",
-    tag: "Winter Expedition",
-    duration: "6 Days / 5 Nights",
-    location: "Reykjavík & Golden Circle",
-    videoUrl: "https://www.pexels.com/download/video/857032/",
+    id: "pkg-2",
+    duration: "7 NIGHTS 8 DAYS",
+    date: "11 OCTOBER 2026",
+    category: "Zamna Festival (Bali)",
+    title: "8 Days Bali With Gili Island Trip - Zamna Festival Edition",
+    stops: ["Ubud", "ATV Ride", "Bali Swing", "Gili Island", "Kuta", "Za..."],
+    price: "62,999/-",
+    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80",
   },
   {
-    title: "12 Days Amalfi Coast & Tuscan Sunsets",
-    subtitle: "Drive coastal highways, sip world-class wines, and explore timeless Mediterranean cliffside towns.",
-    tag: "Luxury Getaway",
-    duration: "12 Days / 11 Nights",
-    location: "Rome, Florence & Amalfi",
-    videoUrl: "https://www.pexels.com/download/video/2169880/",
+    id: "pkg-3",
+    duration: "5 NIGHTS 6 DAYS",
+    date: "10 DECEMBER 2026",
+    category: "Tomorrowland (Thailand)",
+    title: "Magic of Tomorrowland: Bucket List Thailand Trip with Bangkok",
+    stops: ["Bangkok", "Pattaya", "Tomorrowland Festival", "Bangkok"],
+    price: "2,29,990/-",
+    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80",
   },
+  {
+    id: "pkg-4",
+    duration: "6 NIGHTS 7 DAYS",
+    date: "23 SEPTEMBER 2026",
+    category: "Ziro Festival",
+    title: "7 Days Ziro Music Festival Tour Package",
+    stops: ["Guwahati", "Tezpur", "Ziro Valley", "Ziro Valley Music Fest..."],
+    price: "44,999/-",
+    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80",
+  }
 ];
 
 export default function EventsAndFestivals() {
@@ -85,8 +174,7 @@ export default function EventsAndFestivals() {
   const prevSlide = () => setActiveSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
 
   return (
-    <section className="relative w-full min-h-screen bg-slate-950 text-white overflow-hidden py-12 px-4 sm:px-6 md:px-8 flex flex-col justify-center items-center">
-      {/* CSS Keyframes injected for progress bar animation */}
+    <section className="relative w-full min-h-screen bg-slate-950 text-white overflow-hidden py-12 px-4 sm:px-6 md:px-8 flex flex-col justify-center items-center mt-7">
       <style>{`
         @keyframes sliderProgress {
           from { width: 0%; }
@@ -94,21 +182,19 @@ export default function EventsAndFestivals() {
         }
       `}</style>
 
-      {/* 1. BACKGROUND IMAGE BEHIND THE MAIN DIV */}
+      {/* 1. BACKGROUND IMAGE */}
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80"
           alt="Travel Background"
           className="w-full h-full object-cover object-center scale-105 filter blur-sm"
         />
-        {/* Dark Overlay for visual readability & depth */}
         <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-xs" />
       </div>
 
-      {/* Dynamic Ambient Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-amber-500/15 blur-[120px] pointer-events-none rounded-full z-0" />
 
-      {/* 2. MAIN DIV WITH REDUCED WIDTH & FLOATING CONTAINER */}
+      {/* 2. HERO SLIDER */}
       <div className="relative z-10 w-full max-w-6xl mx-auto rounded-3xl group/slider min-h-[560px] sm:min-h-[580px] md:min-h-[480px] lg:min-h-[540px] bg-slate-900/90 border border-slate-700/60 shadow-2xl shadow-black/80 backdrop-blur-xl overflow-hidden">
         {HERO_SLIDES.map((slide, index) => {
           const isActive = index === activeSlide;
@@ -122,13 +208,11 @@ export default function EventsAndFestivals() {
                   : "opacity-0 z-0 pointer-events-none scale-[0.97]"
               }`}
             >
-              {/* LEFT CONTENT PANEL */}
               <div
                 className={`col-span-1 md:col-span-7 lg:col-span-6 flex flex-col justify-center px-6 sm:px-10 md:px-12 lg:px-14 py-10 z-10 transition-all duration-700 ease-out ${
                   isActive ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
                 }`}
               >
-                {/* Meta Badges */}
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-5">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-lg shadow-amber-500/20">
                     <Sparkles className="w-3.5 h-3.5" />
@@ -140,17 +224,14 @@ export default function EventsAndFestivals() {
                   </span>
                 </div>
 
-                {/* Main Heading */}
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-[1.15] text-white">
                   {slide.title}
                 </h1>
 
-                {/* Subtitle */}
                 <p className="mt-3 text-xs sm:text-sm text-slate-300 font-normal leading-relaxed max-w-lg">
                   {slide.subtitle}
                 </p>
 
-                {/* Location & Action Buttons */}
                 <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   <button className="px-5 py-3 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 group cursor-pointer">
                     <span>Explore Itinerary</span>
@@ -163,7 +244,6 @@ export default function EventsAndFestivals() {
                 </div>
               </div>
 
-              {/* RIGHT VIDEO GRAPHIC PANEL */}
               <div
                 className={`col-span-1 md:col-span-5 lg:col-span-6 w-full h-full relative order-first md:order-last overflow-hidden transition-all duration-1000 ease-in-out ${
                   isActive ? "scale-100 opacity-100" : "scale-105 opacity-0"
@@ -178,15 +258,12 @@ export default function EventsAndFestivals() {
                   className="w-full h-full object-cover object-center"
                   src={slide.videoUrl}
                 />
-
-                {/* Gradient Overlays for Seamless Visual Blend */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent md:bg-gradient-to-r md:from-slate-900 md:via-transparent md:to-transparent" />
               </div>
             </div>
           );
         })}
 
-        {/* Directional Controls */}
         <button
           onClick={prevSlide}
           className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-slate-900/70 border border-white/10 backdrop-blur-md text-white/80 hover:text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover/slider:opacity-100 hover:bg-amber-500 hover:border-amber-500 hover:text-slate-950 hover:scale-110 shadow-xl hidden md:flex cursor-pointer"
@@ -202,7 +279,6 @@ export default function EventsAndFestivals() {
           <ChevronRight className="w-5 h-5" />
         </button>
 
-        {/* Progress Pagination Tickers */}
         <div className="absolute bottom-5 left-6 sm:left-10 md:left-12 flex items-center gap-2.5 z-30">
           {HERO_SLIDES.map((_, index) => {
             const isCurrent = index === activeSlide;
@@ -234,38 +310,221 @@ export default function EventsAndFestivals() {
         <DiscoverEvents />
       </div>
 
-      {/* KEY FEATURES / TRUST BAR UNDERNEATH */}
-      {/* <div className="relative z-10 w-full max-w-6xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <FeatureCard
-          icon={ShieldCheck}
-          title="Verified Community"
-          desc="100% vetted travelers & solo-friendly groups"
-        />
-        <FeatureCard
-          icon={Users}
-          title="Expert Captains"
-          desc="Guided by local experts & experienced leads"
-        />
-        <FeatureCard
-          icon={Compass}
-          title="Curated Experiences"
-          desc="Handpicked stays, VIP access & hidden gems"
-        />
-      </div> */}
+      {/* MONTHLY EVENTS LIST SECTION */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto mt-12 flex flex-col gap-12">
+        <MonthEventSection monthTitle="SEPTEMBER-2026" events={MONTHLY_EVENTS.september} />
+        <MonthEventSection monthTitle="OCTOBER-2026" events={MONTHLY_EVENTS.october} />
+        <MonthEventSection monthTitle="DECEMBER-2026" events={MONTHLY_EVENTS.december} />
+      </div>
+
+      {/* EXPLORE ALL EVENT PACKAGES SECTION */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto mt-16">
+        {/* Header with Title and Nav Controls */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="h-[1px] flex-1 bg-slate-800" />
+          <h2 className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-slate-400 uppercase px-4 text-center">
+            EXPLORE ALL EVENT PACKAGES
+          </h2>
+          <div className="h-[1px] flex-1 bg-slate-800" />
+        </div>
+
+        {/* Carousel Container */}
+        <div className="relative group/cards">
+          {/* Left Arrow */}
+          <button className="absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 flex items-center justify-center transition-all cursor-pointer shadow-lg">
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {/* Cards Grid / Carousel */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 overflow-hidden">
+            {ALL_PACKAGES.map((pkg) => (
+              <div
+                key={pkg.id}
+                className="flex flex-col bg-slate-900/90 rounded-2xl overflow-hidden border border-slate-800/80 hover:border-slate-700 transition-all duration-300"
+              >
+                {/* Image Container */}
+                <div className="relative h-52 w-full overflow-hidden">
+                  <img
+                    src={pkg.image}
+                    alt={pkg.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Card Content */}
+                <div className="p-4 flex flex-col justify-between flex-1">
+                  <div>
+                    {/* Meta header */}
+                    <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium">
+                      <span>{pkg.duration}</span>
+                      <span>{pkg.date}</span>
+                    </div>
+
+                    {/* Category */}
+                    <h4 className="text-sm font-bold text-white mt-2">
+                      {pkg.category}
+                    </h4>
+
+                    {/* Title */}
+                    <p className="text-xs text-slate-300 mt-1 line-clamp-2 leading-relaxed font-normal">
+                      {pkg.title}
+                    </p>
+
+                    {/* Stop tags */}
+                    <div className="flex flex-wrap items-center gap-1.5 mt-3">
+                      {pkg.stops.map((stop, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-0.5 rounded bg-slate-800/90 border border-slate-700/60 text-[10px] text-slate-400"
+                        >
+                          {stop}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Price & Action */}
+                  <div className="mt-5 flex items-center justify-between pt-3 border-t border-slate-800/60">
+                    <div>
+                      <span className="text-[10px] text-slate-400 block leading-none">
+                        STARTS FROM
+                      </span>
+                      <span className="text-sm font-bold text-white">
+                        {pkg.price}
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-normal">
+                        {" "}
+                        /Per Person
+                      </span>
+                    </div>
+                    <button className="px-4 py-1.5 rounded-full border border-slate-600 hover:border-amber-400 hover:bg-amber-400 hover:text-slate-950 text-xs text-slate-200 font-medium transition-all cursor-pointer">
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Right Arrow */}
+          <button className="absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 flex items-center justify-center transition-all cursor-pointer shadow-lg">
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Carousel Pagination Dots */}
+        <div className="flex items-center justify-center gap-2 mt-6">
+          <span className="w-4 h-1.5 rounded-full bg-slate-300" />
+          <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
+          <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
+          <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
+        </div>
+      </div>
     </section>
   );
 }
 
-// function FeatureCard({ icon: Icon, title, desc }) {
-//   return (
-//     <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-900/80 border border-slate-800/80 backdrop-blur-xl hover:border-slate-700/80 transition-colors">
-//       <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
-//         <Icon className="w-5 h-5" />
-//       </div>
-//       <div>
-//         <h4 className="text-xs sm:text-sm font-bold text-white tracking-wide">{title}</h4>
-//         <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">{desc}</p>
-//       </div>
-//     </div>
-//   );
-// }
+function MonthEventSection({ monthTitle, events }) {
+  if (!events || events.length === 0) return null;
+
+  return (
+    <div className="w-full flex flex-col gap-8">
+      <div className="flex items-center gap-4">
+        <span className="text-sm font-semibold tracking-widest text-slate-400 uppercase">
+          {monthTitle}
+        </span>
+        <div className="h-[1px] flex-1 bg-slate-800" />
+      </div>
+
+      <div className="flex flex-col gap-10">
+        {events.map((event) => (
+          <div key={event.id} className="flex gap-4 sm:gap-6 items-start">
+            <div className="flex items-start gap-2 pt-1 shrink-0">
+              <div className="flex flex-col items-center justify-center">
+                <Calendar className="w-4 h-4 text-slate-300 mb-1" />
+                <span className="text-lg sm:text-xl font-bold text-white leading-none">
+                  {event.dateDay}
+                </span>
+                <span className="text-xs text-slate-400 uppercase font-medium">
+                  {event.dateMonth}
+                </span>
+              </div>
+              <div className="w-1.5 h-36 bg-amber-400 rounded-full ml-2 hidden sm:block" />
+            </div>
+
+            <div className="flex-1 flex flex-col lg:flex-row gap-6 items-start">
+              <div className="relative w-full lg:w-48 h-36 rounded-xl overflow-hidden shrink-0 border border-slate-800 bg-slate-900">
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-slate-950/40 flex flex-col items-center justify-center p-2 text-center">
+                  <span className="text-xs font-light text-slate-200">
+                    {event.category.split(" ")[0]}
+                  </span>
+                  <span className="text-base font-bold text-amber-400 leading-tight">
+                    {event.category}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex-1 flex flex-col justify-between h-full py-0.5">
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200">
+                    {event.category}
+                  </h3>
+                  <h2 className="text-lg sm:text-xl font-bold text-white mt-1">
+                    {event.title}
+                  </h2>
+                  <p className="text-xs text-slate-400 font-medium mt-1">
+                    {event.duration} | {event.route}
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-1.5 mt-3">
+                    {event.stops.map((stop, i) => (
+                      <span
+                        key={i}
+                        className="px-2.5 py-0.5 rounded-full text-[11px] bg-slate-800 text-slate-300 border border-slate-700/60"
+                      >
+                        {stop}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3 mt-3 text-xs text-slate-300">
+                    {event.inclusions.map((inc, i) => (
+                      <span key={i} className="flex items-center gap-1">
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        {inc}
+                      </span>
+                    ))}
+                    {event.badge && (
+                      <span className="flex items-center gap-1 px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-semibold uppercase">
+                        <Ticket className="w-3 h-3" />
+                        {event.badge}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3">
+                  <button className="w-full sm:w-auto px-8 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-colors cursor-pointer shadow-md">
+                    Book Now
+                  </button>
+                  <div className="text-xs text-slate-400">
+                    STARTS FROM{" "}
+                    <span className="text-sm font-bold text-white ml-1">
+                      {event.price}
+                    </span>{" "}
+                    /Per Person
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

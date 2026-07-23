@@ -7,7 +7,8 @@ import { useLoginMutation } from "../store/api/authApi.js";
 import { useAuth } from "../hooks/useAuth.js";
 import clsx from "clsx";
 import TrenoLogo from "../assets/TrenoLogo.webp";
-
+import { setCredentials } from "../store/slices/authSlice.js";
+import {useDispatch} from 'react-redux'
 const PEXELS_IMAGE =
   "https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
 
@@ -55,6 +56,7 @@ export default function Login() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -91,11 +93,14 @@ export default function Login() {
     }
 
     try {
-      await login({ email: form.email, password: form.password }).unwrap();
+      const result = await login({ email: form.email, password: form.password }).unwrap();
       const redirect =
         localStorage.getItem("Treno_auth_redirect") || "/dashboard";
       localStorage.removeItem("Treno_auth_redirect");
+      console.log(result?.data)
+      dispatch(setCredentials(result?.data))
       navigate(redirect, { replace: true });
+
     } catch (err) {
       toast.error(
         err?.data?.message || "Login failed. Please check your credentials.",

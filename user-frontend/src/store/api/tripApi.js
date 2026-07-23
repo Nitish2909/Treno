@@ -33,7 +33,7 @@ export const tripApi = baseApi.injectEndpoints({
     }),
 
     getTripBySlug: builder.query({
-      query: (slug) => `/trips/${slug}`,
+      query: (slug) => `/trips/trip/${slug}`,
       providesTags: (result, error, slug) => [{ type: 'Trip', id: slug }],
     }),
 

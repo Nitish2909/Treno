@@ -11,7 +11,7 @@ const initialState = {
     searchQuery: '',
     destinations: [],
   },
-  sortBy: 'popularity', // 'popularity', 'price_low', 'price_high', 'duration_short', 'duration_long', 'rating'
+  sortBy: 'popular', // 'popular', 'price_low', 'price_high', 'duration_short', 'duration_long', 'rating'
   page: 1,
   limit: 12,
   viewMode: 'grid', // 'grid', 'list'
@@ -21,9 +21,11 @@ const tripSlice = createSlice({
   name: 'trip',
   initialState,
   reducers: {
-    setFilters: (state, action) => {
-      state.filters = { ...state.filters, ...action.payload }
-      state.page = 1 // reset page when filters change
+    setSortBy: (state, action) => {
+         state.sortBy = action.payload;
+
+      // state.filters = { ...state.filters, ...action.payload }
+      // state.page = 1 // reset page when filters change
     },
     setFilter: (state, action) => {
       const { key, value } = action.payload

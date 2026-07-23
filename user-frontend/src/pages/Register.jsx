@@ -136,7 +136,7 @@ export default function Register() {
               <img
                 src={TrenoLogo}
                 alt="Treno Logo"
-                className="w-32 h-32 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
+                className="w-40 h-40 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
               />
             </Link>
           </div>
@@ -345,7 +345,7 @@ export default function Register() {
                   </Link>{" "}
                   and{" "}
                   <Link
-                    to="/privacy-policy"
+                    to="/privacy"
                     className="text-amber-600 hover:underline"
                   >
                     Privacy Policy

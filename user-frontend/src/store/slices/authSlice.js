@@ -12,12 +12,15 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
+      console.log(action.payload)
       const { user, accessToken } = action.payload
-      state.user = user
+      localStorage.setItem("user",JSON.stringify(user))
+      state.user = JSON.parse(localStorage.getItem("user")) || user
       state.accessToken = accessToken
       state.isAuthenticated = true
       state.isLoading = false
       if (accessToken) {
+        
         localStorage.setItem('accessToken', accessToken)
       }
     },

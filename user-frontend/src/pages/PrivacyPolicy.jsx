@@ -72,7 +72,7 @@ const SECTIONS = [
       { heading: 'Deletion', body: 'You may request deletion of your personal data. We will honour such requests subject to our legal obligations to retain certain records.' },
       { heading: 'Portability', body: 'You may request your personal data in a structured, machine-readable format.' },
       { heading: 'Withdraw Consent', body: 'Where processing is based on your consent (e.g., marketing emails), you may withdraw that consent at any time by unsubscribing or contacting us.' },
-      'To exercise any of these rights, please contact us at privacy@Treno.in. We will respond within 30 days.',
+      'To exercise any of these rights, please contact us at Trenotravel@gmail.com. We will respond within 30 days.',
     ],
   },
   {
@@ -80,7 +80,7 @@ const SECTIONS = [
     title: 'Contact Information',
     content: [
       'If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please reach out to us:',
-      { heading: 'Treno Privacy Team', body: 'Email: privacy@Treno.in | Phone: +91-9876543210 | Address: 123 Travel Hub, Connaught Place, New Delhi — 110001' },
+      { heading: 'Treno Privacy Team', body: 'Email: Trenotravel@gmail.com | Phone: +91-8816942362 | Address: SCO 98,Sec. 4-5, Urban Estate, Karnal Haryana — 132001' },
       'We take privacy inquiries seriously and are committed to resolving any concerns promptly. If you are not satisfied with our response, you have the right to escalate your complaint to the relevant data protection authority.',
     ],
   },
@@ -144,7 +144,7 @@ export default function PrivacyPolicy() {
             <Shield className="w-7 h-7 text-white" />
           </div>
           <h1 className="font-playfair text-3xl md:text-4xl font-bold text-white mb-3">Privacy Policy</h1>
-          <p className="text-slate-400 text-sm">Last updated: January 2024</p>
+          <p className="text-slate-400 text-sm">Last updated: July 2026</p>
           <p className="text-slate-300 mt-4 max-w-xl mx-auto leading-relaxed">
             At Treno, your privacy matters. This policy explains how we collect, use, and protect your personal information when you use our services.
           </p>
@@ -195,7 +195,7 @@ export default function PrivacyPolicy() {
             <p className="text-sm text-slate-600 leading-relaxed">
               <strong className="text-slate-800">Questions about this policy?</strong> Contact our privacy team at{' '}
               <a href="mailto:privacy@Treno.in" className="text-amber-600 hover:text-amber-700 font-medium underline underline-offset-2">
-                privacy@Treno.in
+                Trenotravel@gmail.com
               </a>. We are committed to transparency and will respond to all privacy inquiries within 30 days.
             </p>
           </div>

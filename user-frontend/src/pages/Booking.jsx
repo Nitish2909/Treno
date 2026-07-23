@@ -30,9 +30,14 @@ import {
 import { useGetTripBySlugQuery } from '../store/api/tripApi.js'
 import { initiatePayment } from '../utils/razorpay.js'
 import { useAuth } from '../hooks/useAuth.js'
+import { authApi } from '../store/api/authApi.js'
+import {useSelector} from 'react-redux'
+import store from '../store/store.js'
 
 // Trip Summary Card
 function TripSummaryCard({ trip, selectedDate, travelers }) {
+  // console.log(trip);
+  
   if (!trip) {
     return (
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 animate-pulse space-y-3">
@@ -45,6 +50,8 @@ function TripSummaryCard({ trip, selectedDate, travelers }) {
   }
 
   const subtotal = trip.price * travelers
+console.log(subtotal);
+
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -123,10 +130,11 @@ function TripSummaryCard({ trip, selectedDate, travelers }) {
 export default function Booking() {
   const { tripId } = useParams()
   const navigate = useNavigate()
-  const { user } = useAuth()
+  const {user} = useSelector(store=>store.auth)
+  // console.log(user)
 
   const { data: tripData, isLoading: tripLoading, isError: tripError } = useGetTripBySlugQuery(tripId)
-  const trip = tripData?.trip || null
+  const trip = tripData?.data?.trip || null
 
   const [createBooking, { isLoading: creatingBooking }] = useCreateBookingMutation()
   const [initiatePaymentMutation, { isLoading: initiatingPayment }] = useInitiatePaymentMutation()

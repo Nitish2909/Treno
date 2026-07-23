@@ -15,6 +15,8 @@ import NotFound from "./pages/NotFound.jsx";
 import Destination from "./pages/Destination.jsx";
 import Sitmap from "./pages/Sitmap.jsx";
 import Packages from "./pages/Packages.jsx";
+import Sitemap from "./pages/Sitmap.jsx";
+import Disclaimer from "./components/common/Disclaimer.jsx";
 
 // Pages - lazy loaded
 const Trips = lazy(() => import("./pages/Trips.jsx"));
@@ -84,9 +86,9 @@ function AppContent() {
               <Route
                 path="/booking/:tripId"
                 element={
-                  <ProtectedRoute>
+                  // <ProtectedRoute>
                     <Booking />
-                  </ProtectedRoute>
+                  // </ProtectedRoute>
                 }
               />
               <Route
@@ -137,10 +139,13 @@ function AppContent() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/sitemap" element={<Sitemap />} />
+              <Route path="/disclaimer" element={<Disclaimer />} />
               <Route
                 path="/event-and-festivels"
                 element={<EventAndFestivals />}
               />
+
 
               {/* 404 */}
               <Route path="*" element={<NotFound />} />

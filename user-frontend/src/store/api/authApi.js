@@ -13,7 +13,7 @@ export const authApi = baseApi.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-          dispatch(setCredentials({ user: data.user, accessToken: data.accessToken }))
+          dispatch(setCredentials({ user: data.data?.user, accessToken: data.data.accessToken }))
           if (data.wishlist) {
             dispatch(setWishlist(data.wishlist))
           }
@@ -33,7 +33,7 @@ export const authApi = baseApi.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-          dispatch(setCredentials({ user: data.user, accessToken: data.accessToken }))
+          dispatch(setCredentials({ user: data.data?.user, accessToken: data.data?.accessToken }))
         } catch {
           // error handled in component
         }

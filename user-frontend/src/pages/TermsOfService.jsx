@@ -79,7 +79,7 @@ const SECTIONS = [
       { heading: 'Continued Use', body: 'Your continued use of Treno\'s services after the effective date of any modifications constitutes your acceptance of the revised Terms.' },
       { heading: 'Governing Law', body: 'These Terms are governed by and construed in accordance with the laws of India. Any disputes arising under these Terms shall be subject to the exclusive jurisdiction of the courts of New Delhi, India.' },
       { heading: 'Entire Agreement', body: 'These Terms, together with our Privacy Policy and any booking-specific terms, constitute the entire agreement between you and Treno regarding your use of our services.' },
-      { heading: 'Contact Us', body: 'For any questions about these Terms, please contact us at legal@Treno.in or write to us at 123 Travel Hub, Connaught Place, New Delhi — 110001.' },
+      { heading: 'Contact Us', body: 'For any questions about these Terms, please contact us at Trenotravel@gmail.com or write to us at SCO 98, Sec 4-5, Urban Estate, Karnal, Haryana — 132001.' },
     ],
   },
 ]
@@ -170,7 +170,7 @@ export default function TermsOfService() {
             <FileText className="w-7 h-7 text-white" />
           </div>
           <h1 className="font-playfair text-3xl md:text-4xl font-bold text-white mb-3">Terms of Service</h1>
-          <p className="text-slate-400 text-sm">Last updated: January 2024</p>
+          <p className="text-slate-400 text-sm">Last updated: July 2026</p>
           <p className="text-slate-300 mt-4 max-w-xl mx-auto leading-relaxed">
             Please read these terms carefully before booking with Treno. By using our services, you agree to be bound by these terms.
           </p>
@@ -182,10 +182,10 @@ export default function TermsOfService() {
         <div className="max-w-screen-xl mx-auto flex flex-wrap gap-4 items-center justify-center text-sm">
           <span className="font-semibold text-amber-800">Cancellation at a glance:</span>
           <span className="flex items-center gap-1.5 text-green-700">
-            <CheckCircle className="w-4 h-4" /> 7+ days: Full refund
+            <CheckCircle className="w-4 h-4" /> 10+ days: Full refund
           </span>
           <span className="flex items-center gap-1.5 text-amber-700">
-            <AlertCircle className="w-4 h-4" /> 3–6 days: 50% refund
+            <AlertCircle className="w-4 h-4" /> 3–6 days: 30% refund
           </span>
           <span className="flex items-center gap-1.5 text-red-600">
             <XCircle className="w-4 h-4" /> &lt;3 days: No refund
@@ -236,9 +236,9 @@ export default function TermsOfService() {
           <div className="mt-12 p-5 bg-slate-50 rounded-2xl border border-slate-200">
             <p className="text-sm text-slate-600 leading-relaxed">
               <strong className="text-slate-800">Questions about these terms?</strong> Contact our legal team at{' '}
-              <a href="mailto:legal@Treno.in" className="text-amber-600 hover:text-amber-700 font-medium underline underline-offset-2">
-                legal@Treno.in
-              </a>. These terms were last updated in January 2024 and supersede all prior versions.
+              <a href="mailto:Trenotravel@gmail.com" className="text-amber-600 hover:text-amber-700 font-medium underline underline-offset-2">
+                Trenotravel@gmail.com
+              </a>. These terms were last updated in July 2026 and supersede all prior versions.
             </p>
           </div>
         </article>

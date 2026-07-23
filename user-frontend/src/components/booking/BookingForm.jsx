@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import PassengerForm from './PassengerForm.jsx';
 import PriceSummary from './PriceSummary.jsx';
 
-// ─── helpers ────────────────────────────────────────────────────────────────
+//  helpers 
 
 const emptyPassenger = () => ({
   fullName: '',
@@ -31,7 +31,7 @@ const formatDateDisplay = (d) => {
   }
 };
 
-// ─── Step Progress Indicator ─────────────────────────────────────────────────
+//  Step Progress Indicator 
 
 const STEPS = [
   { label: 'Dates & Travelers' },
@@ -94,7 +94,7 @@ function StepIndicator({ current }) {
   );
 }
 
-// ─── Validation helpers ──────────────────────────────────────────────────────
+//  Validation helpers 
 
 function validateStep1(form) {
   const errs = {};
@@ -130,7 +130,7 @@ function validateStep3(form) {
   return errs;
 }
 
-// ─── Slide animation variants ─────────────────────────────────────────────────
+//  Slide animation variants 
 
 const variants = {
   enter: (dir) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
@@ -138,15 +138,15 @@ const variants = {
   exit: (dir) => ({ x: dir > 0 ? -60 : 60, opacity: 0 }),
 };
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// ---------------
 // MAIN COMPONENT
-// ═══════════════════════════════════════════════════════════════════════════════
+// ------------------
 
 export default function BookingForm({ trip, onComplete }) {
   const maxGroup = trip?.groupSize?.max || 20;
   const pricePerPerson = trip?.price || 0;
 
-  // ── Core state ──────────────────────────────────────────────────────────────
+  //  Core state 
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [paying, setPaying] = useState(false);
@@ -171,11 +171,11 @@ export default function BookingForm({ trip, onComplete }) {
   const [step1Errors, setStep1Errors] = useState({});
   const [step3Errors, setStep3Errors] = useState({});
 
-  // ── Derived ─────────────────────────────────────────────────────────────────
+  // ── Derived 
   const subtotal = pricePerPerson * travelers;
   const hasDates = Array.isArray(trip?.startDates) && trip.startDates.length > 0;
 
-  // ── Traveler count sync ──────────────────────────────────────────────────────
+  // ── Traveler count sync 
   const adjustTravelers = (n) => {
     const clamped = Math.max(1, Math.min(maxGroup, n));
     setTravelers(clamped);
@@ -193,7 +193,7 @@ export default function BookingForm({ trip, onComplete }) {
     });
   };
 
-  // ── Navigation ───────────────────────────────────────────────────────────────
+  // ── Navigation 
   const goTo = (next) => {
     setDirection(next > step ? 1 : -1);
     setStep(next);
@@ -223,7 +223,7 @@ export default function BookingForm({ trip, onComplete }) {
 
   const handleBack = () => goTo(step - 1);
 
-  // ── Payment ──────────────────────────────────────────────────────────────────
+  // ── Payment 
   const handlePay = async () => {
     setPaying(true);
     const bookingData = {
@@ -243,7 +243,7 @@ export default function BookingForm({ trip, onComplete }) {
     }
   };
 
-  // ── Passenger change handler ─────────────────────────────────────────────────
+  // ── Passenger change handler 
   const handlePassengerChange = (idx, updated) => {
     setPassengers((prev) => {
       const next = [...prev];
@@ -252,13 +252,13 @@ export default function BookingForm({ trip, onComplete }) {
     });
   };
 
-  // ────────────────────────────────────────────────────────────────────────────
+  // ---------------------------------
   // Render steps
-  // ────────────────────────────────────────────────────────────────────────────
+  // ---------------------------------
 
   const renderStep = () => {
     switch (step) {
-      // ── STEP 1 ─────────────────────────────────────────────────────────────
+      // ── STEP 1 
       case 0:
         return (
           <div className="space-y-6">
@@ -342,7 +342,7 @@ export default function BookingForm({ trip, onComplete }) {
           </div>
         );
 
-      // ── STEP 2 ─────────────────────────────────────────────────────────────
+      // ── STEP 2 
       case 1:
         return (
           <div className="space-y-5">
@@ -362,7 +362,7 @@ export default function BookingForm({ trip, onComplete }) {
           </div>
         );
 
-      // ── STEP 3 ─────────────────────────────────────────────────────────────
+      // ── STEP 3 
       case 2:
         return (
           <div className="space-y-6">
@@ -506,7 +506,7 @@ export default function BookingForm({ trip, onComplete }) {
           </div>
         );
 
-      // ── STEP 4 ─────────────────────────────────────────────────────────────
+      // ── STEP 4 
       case 3:
         return (
           <div className="space-y-6">
@@ -605,7 +605,7 @@ export default function BookingForm({ trip, onComplete }) {
     }
   };
 
-  // ── Main render ──────────────────────────────────────────────────────────────
+  // ── Main render 
   return (
     <div className="w-full max-w-2xl mx-auto">
       <StepIndicator current={step} />
