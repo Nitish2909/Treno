@@ -536,11 +536,10 @@ export const adminApi = createApi({
       invalidatesTags: [{ type: 'Trip', id: 'LIST' }],
     }),
     updateTrip: builder.mutation({
-      query: ({ id, ...data }) => ({
+      query: ({id,data}) => ({
         url: `/admin/trips/${id}`,
         method: 'PUT',
-        body: data,
-        headers:{'Contetnt-Type':'multipart/form-data'}
+        body: data
       }),
       invalidatesTags: (_, __, { id }) => [{ type: 'Trip', id }, { type: 'Trip', id: 'LIST' }],
     }),

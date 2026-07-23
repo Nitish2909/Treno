@@ -12,30 +12,81 @@ export default function TripEdit() {
   const { data, isLoading, isError } = useGetTripByIdQuery(id)
   const [updateTrip, { isLoading: updating }] = useUpdateTripMutation()
 
-  async function handleSubmit(formData) {
-    try {
-      // Build updated payload structured specifically for the backend validator schema
-      const payload = {
-        id,
-        ...formData,
-        images:        (formData.images || []).map((img) => (typeof img === 'string' ? img : img.url || img.preview)),
-        inclusions:    (formData.inclusions || []).filter(Boolean),
-        exclusions:    (formData.exclusions || []).filter(Boolean),
-        thingsToCarry: (formData.thingsToCarry || []).filter(Boolean),
-        highlights:    (formData.highlights || []).filter(Boolean),
-        tags:          (formData.tags || []).filter(Boolean),
-        location: {
-          ...formData.location,
-          destinations: (formData.location?.destinations || []).filter(Boolean),
+async function handleSubmit(formState) {
+  try {
+    const formData = new FormData();
+
+    // List of read-only or server-generated fields that shouldn't be re-sent
+    const OMIT_KEYS = [
+      '_id', 'id', '__v', 'createdAt', 'updatedAt', 'createdBy', 
+      'reviews', 'averageRating', 'totalReviews', 'totalBookings', 
+      'discountPercent', 'effectivePrice'
+    ];
+
+    // Cleaned arrays
+    const inclusions = (formState.inclusions || []).filter(Boolean);
+    const exclusions = (formState.exclusions || []).filter(Boolean);
+    const thingsToCarry = (formState.thingsToCarry || []).filter(Boolean);
+    const highlights = (formState.highlights || []).filter(Boolean);
+    const tags = (formState.tags || []).filter(Boolean);
+    const destinations = (formState.location?.destinations || []).filter(Boolean);
+
+    Object.keys(formState).forEach((key) => {
+      // 1. Skip system/read-only metadata
+      if (OMIT_KEYS.includes(key)) return;
+
+      const value = formState[key];
+
+      // 2. Handle empty objects like pdfBrochure
+      if (key === 'pdfBrochure') {
+        const fileObj = value instanceof File ? value : value?.file || value?.raw;
+        if (fileObj instanceof File) {
+          formData.append('pdfBrochure', fileObj);
+        } else if (value?.url) {
+          formData.append('pdfBrochure', JSON.stringify(value));
         }
+        return;
       }
-      
-      await updateTrip(payload).unwrap()
-      toast.success('Trip updated successfully!')
-    } catch (err) {
-      toast.error(err?.data?.message || 'Failed to update trip')
-    }
+
+      // 3. Handle Images (Checks direct Files AND wrapped File objects)
+      if (key === 'images') {
+        (value || []).forEach((img) => {
+          // Extract the raw file if wrapped inside an object by ImageUploader
+          const rawFile = img instanceof File ? img : (img?.file || img?.raw);
+
+          if (rawFile instanceof File || rawFile instanceof Blob) {
+            formData.append('images', rawFile);
+          } else if (typeof img === 'string' && img.trim()) {
+            formData.append('existingImages', img);
+          } else if (img?.url && typeof img.url === 'string') {
+            formData.append('existingImages', img.url);
+          }
+        });
+      } else if (key === 'thumbnail') {
+        const thumbFile = value instanceof File ? value : (value?.file || value?.raw);
+        if (thumbFile instanceof File || thumbFile instanceof Blob) {
+          formData.append('thumbnail', thumbFile);
+        } else if (typeof value === 'string' && value.trim()) {
+          formData.append('thumbnail', value);
+        }
+      } else if (key === 'location') {
+        formData.append('location', JSON.stringify({ ...value, destinations }));
+      } else if (['inclusions', 'exclusions', 'thingsToCarry', 'highlights', 'tags'].includes(key)) {
+        const cleanedArray = { inclusions, exclusions, thingsToCarry, highlights, tags }[key];
+        formData.append(key, JSON.stringify(cleanedArray));
+      } else if (typeof value === 'object' && value !== null) {
+        formData.append(key, JSON.stringify(value));
+      } else if (value !== undefined && value !== null) {
+        formData.append(key, value);
+      }
+    });
+
+    await updateTrip({ id, data: formData }).unwrap();
+    toast.success('Trip updated successfully!');
+  } catch (err) {
+    toast.error(err?.data?.message || 'Failed to update trip');
   }
+}
 
   if (isLoading) {
     return (

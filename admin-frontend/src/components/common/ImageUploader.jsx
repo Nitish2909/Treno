@@ -4,7 +4,7 @@ import { Upload, X, Image as ImageIcon, AlertCircle } from 'lucide-react'
 import { formatFileSize } from '../../utils/helpers'
 import clsx from 'clsx'
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 MB
+const MAX_FILE_SIZE = 6 * 1024 * 1024 // 5 MB
 
 export default function ImageUploader({
   value = [],      // array of { file, preview, url } objects or URL strings

@@ -47,6 +47,7 @@ export default function Trips() {
   const [updateStatus, { isLoading: updating }] = useUpdateTripStatusMutation();
 
   const trips = data?.data?.trips || [];
+  console.log(trips)
   const total = data?.data?.total || 0;
   const categories = catData?.data?.categories || [];
 
@@ -102,8 +103,7 @@ export default function Trips() {
       render: (val, row) => (
         <img
           src={
-            val ||
-            row.images?.[0] ||
+            row.images[0]?.url ||
             "https://placehold.co/56x40/e2e8f0/94a3b8?text=Trip"
           }
           alt={row.title}
@@ -141,11 +141,11 @@ export default function Trips() {
       render: (val, row) => (
         <div>
           <p className="font-semibold">
-            {formatPrice(val || row.originalPrice)}
+            {formatPrice(val || row.price?.original)}
           </p>
-          {val && val < row.originalPrice && (
+          {val && val < row?.original && (
             <p className="text-xs text-gray-400 line-through">
-              {formatPrice(row.originalPrice)}
+              {formatPrice(row?.original)}
             </p>
           )}
         </div>
