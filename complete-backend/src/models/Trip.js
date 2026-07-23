@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import slugify from "slugify";
 
-// ── Sub-schemas ───────────────────────────────────────────────────────────────
+//  Sub-schemas 
 const mealSchema = new mongoose.Schema(
   {
     breakfast: { type: Boolean, default: false },
@@ -41,7 +41,7 @@ const guideSchema = new mongoose.Schema(
   { _id: false }
 );
 
-// ── Main Trip Schema ──────────────────────────────────────────────────────────
+// ── Main Trip Schema 
 const tripSchema = new mongoose.Schema(
   {
     title: {
@@ -194,7 +194,7 @@ const tripSchema = new mongoose.Schema(
   }
 );
 
-// ── Indexes ───────────────────────────────────────────────────────────────────
+// ---- Indexes 
 tripSchema.index({ slug: 1 }, { unique: true });
 tripSchema.index({ type: 1 });
 tripSchema.index({ category: 1 });
@@ -207,7 +207,7 @@ tripSchema.index({ totalBookings: -1 });
 tripSchema.index({ createdAt: -1 });
 tripSchema.index({ title: "text", description: "text", tags: "text", "location.destinations": "text" });
 
-// ── Virtuals ──────────────────────────────────────────────────────────────────
+// ----- Virtuals 
 tripSchema.virtual("discountPercent").get(function () {
   if (this.price?.original && this.price?.discounted) {
     return Math.round(
@@ -221,7 +221,7 @@ tripSchema.virtual("effectivePrice").get(function () {
   return this.price?.discounted || this.price?.original || 0;
 });
 
-// ── Pre-save: Slug generation ─────────────────────────────────────────────────
+// ----- Pre-save: Slug generation 
 tripSchema.pre("save", async function (next) {
   if (!this.isModified("title")) return next();
 
@@ -231,7 +231,7 @@ tripSchema.pre("save", async function (next) {
     trim: true,
   });
 
-  // Ensure uniqueness
+  //--- Ensure uniqueness
   let slug = baseSlug;
   let counter = 1;
   while (await mongoose.model("Trip").findOne({ slug, _id: { $ne: this._id } })) {
@@ -242,7 +242,7 @@ tripSchema.pre("save", async function (next) {
   next();
 });
 
-// ── Pre-save: Set shortDescription if missing ─────────────────────────────────
+// ----- Pre-save: Set shortDescription if missing 
 tripSchema.pre("save", function (next) {
   if (!this.shortDescription && this.description) {
     this.shortDescription = this.description.substring(0, 200).trimEnd() + "...";

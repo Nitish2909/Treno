@@ -238,8 +238,7 @@ export const getTripsByCategory = asyncHandler(async (req, res) => {
  * GET /api/v1/trips/:slug
  */
 export const getTripBySlug = asyncHandler(async (req, res) => {
-  const trip = await Trip.findOne({ slug: req.params.slug, isActive: true })
-    .populate("category", "name slug icon")
+  const trip = await Trip.findOne({ $or:[{slug: req.params.slug,},{id:req.params.slug}]})
     .populate({
       path: "reviews",
       match: { isApproved: true },
@@ -363,15 +362,16 @@ export const updateTrip = asyncHandler(async (req, res) => {
       body.thumbnail = { url: result.secure_url, public_id: result.public_id };
     }
 
-    console.log(req.files)
+    console.log(req.files.images)
     // Append new gallery images
-    if (req.files?.images?.length) {
-      const uploadPromises = req.files.images.map((file) =>
-        uploadToCloudinary(file.tempFilePath, "Treno/trips/images")
-      );
-      const results = await Promise.all(uploadPromises);
-      const newImages = results.map((r) => ({ url: r.secure_url, public_id: r.public_id }));
-      body.images = [...(trip.images || []), ...newImages];
+    if (req.files?.images) {
+      // const uploadPromises = Array.from(req.files.images).map((file) =>
+      //   uploadToCloudinary(file.tempFilePath, "Treno/trips/images")
+      // );
+      // const results = await Promise.all(uploadPromises);
+      // const newImages = results.map((r) => ({ url: r.secure_url, public_id: r.public_id }));
+      const r = await uploadToCloudinary(req.files.images.tempFilePath)
+      body.images = [{ url: r.secure_url, public_id: r.public_id }];
     }
 
     // Handle category change

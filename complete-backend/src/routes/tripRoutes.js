@@ -26,7 +26,7 @@ router.get("/featured", getFeaturedTrips);
 router.get("/popular", getPopularTrips);
 router.get("/search", searchTrips);
 router.get("/category/:slug", getTripsByCategory);
-router.get("/:slug", optionalAuth, getTripBySlug);
+router.get("/trip/:slug", optionalAuth, getTripBySlug);
 
 // ── Admin-only routes ─────────────────────────────────────────────────────────
 router.use(verifyToken, isAdmin);

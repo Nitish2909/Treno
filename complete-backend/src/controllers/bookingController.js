@@ -16,7 +16,7 @@ const handleValidationErrors = (req) => {
   }
 };
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+//  Helpers 
 
 /**
  * Calculate refund amount based on days until trip start
@@ -33,7 +33,7 @@ const calculateRefundAmount = (booking, trip) => {
   return 0; // No refund within 3 days
 };
 
-// ── Controllers ───────────────────────────────────────────────────────────────
+// --- Controllers 
 
 /**
  * POST /api/v1/bookings
@@ -50,9 +50,11 @@ export const createBooking = asyncHandler(async (req, res) => {
     couponCode,
   } = req.body;
 
+
   // Fetch trip
   const trip = await Trip.findOne({ _id: tripId, isActive: true });
   if (!trip) throw ApiError.notFound("Trip not found or is no longer available.");
+
 
   // Validate start date availability
   const requestedDate = new Date(startDate);

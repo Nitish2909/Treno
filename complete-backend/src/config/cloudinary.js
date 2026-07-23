@@ -22,9 +22,6 @@ export const uploadToCloudinary = async (filePath, folder = "Treno", options = {
   try {
     const result = await cloudinary.uploader.upload(filePath, {
     folder,
-    use_filename: true,
-    unique_filename: true,
-    overwrite: false,
     ...options,
   });
   return result;
