@@ -17,6 +17,8 @@ import BlogEdit from './pages/BlogEdit'
 import Categories from './pages/Categories'
 import Settings from './pages/Settings'
 import NotFound from './pages/NotFound'
+import Messages from './pages/Messages'
+
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useSelector((state) => state.adminAuth)
@@ -73,6 +75,9 @@ export default function App() {
 
         {/* Settings */}
         <Route path="settings" element={<Settings />} />
+
+          {/* Messages */}
+        <Route path="messages" element={<Messages />} />
 
         {/* 404 fallback inside admin */}
         <Route path="*" element={<NotFound />} />

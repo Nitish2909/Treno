@@ -451,7 +451,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   return result;
 };
 
-/* ── RTK Query API Definition ──────────────── */
+/* ── RTK Query API Definition */
 export const adminApi = createApi({
   reducerPath: 'adminApi',
   baseQuery: baseQueryWithReauth,
@@ -460,7 +460,7 @@ export const adminApi = createApi({
     'Review', 'Blog', 'Category', 'AdminProfile',
   ],
   endpoints: (builder) => ({
-    /* ── Auth ───────────────────────────────────*/
+    /* ── Auth */
     adminLogin: builder.mutation({
       query: (credentials) => ({
         url: '/admin/auth/login',
@@ -491,7 +491,7 @@ export const adminApi = createApi({
       }),
     }),
 
-    /* ── Dashboard ─────────────────────────────── */
+    /* ── Dashboard  */
     getDashboardStats: builder.query({
       query: () => '/admin/dashboard/stats',
       providesTags: ['Dashboard'],
@@ -513,7 +513,7 @@ export const adminApi = createApi({
       providesTags: ['Dashboard'],
     }),
 
-    /* ── Trips ─────────────────────────────────── */
+    /* ── Trips  */
     getAllTrips: builder.query({
       query: (params = {}) => ({
         url: '/admin/trips',
@@ -565,7 +565,7 @@ export const adminApi = createApi({
       invalidatesTags: (_, __, { id }) => [{ type: 'Trip', id }],
     }),
 
-    /* ── Bookings ──────────────────────────────── */
+    /* ── Bookings  */
     getAllBookings: builder.query({
       query: (params = {}) => ({ url: '/admin/bookings', params }),
       providesTags: (result) =>
@@ -597,7 +597,7 @@ export const adminApi = createApi({
       }),
     }),
 
-    /* ── Users ─────────────────────────────────── */
+    /* ── Users  */
     getAllUsers: builder.query({
       query: (params = {}) => ({ url: '/admin/users', params }),
       providesTags: (result) =>
@@ -629,7 +629,7 @@ export const adminApi = createApi({
       invalidatesTags: (_, __, { id }) => [{ type: 'User', id }, { type: 'User', id: 'LIST' }],
     }),
 
-    /* ── Reviews ───────────────────────────────── */
+    /* ── Reviews  */
     getAllReviews: builder.query({
       query: (params = {}) => ({ url: '/admin/reviews', params }),
       providesTags: (result) =>
@@ -661,7 +661,7 @@ export const adminApi = createApi({
       invalidatesTags: (_, __, { id }) => [{ type: 'Review', id }, { type: 'Review', id: 'LIST' }],
     }),
 
-    /* ── Blogs ─────────────────────────────────── */
+    /* ── Blogs  */
     getAllBlogs: builder.query({
       query: (params = {}) => ({ url: '/admin/blogs', params }),
       providesTags: (result) => {
@@ -713,7 +713,7 @@ export const adminApi = createApi({
       ],
     }),
 
-    /* ── Categories ────────────────────────────── */
+    /* ── Categories  */
     getCategories: builder.query({
       query: (params = {}) => ({ url: '/admin/categories', params }),
       providesTags: (result) =>

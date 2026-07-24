@@ -2,7 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, Map, Compass, BookOpen, Calendar,
   Users, Star, Settings, LogOut, Mountain, ChevronRight,
-  Tag, FileText,
+  Tag, FileText,MessageSquare
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useAdminAuth } from '../../hooks/useAdminAuth'
@@ -40,6 +40,12 @@ const navGroups = [
     label: 'System',
     items: [
       { to: '/admin/settings', icon: Settings, label: 'Settings' },
+    ],
+  },
+  {
+    label: 'Message',
+    items: [
+      { to: '/admin/messages', icon: MessageSquare, label: 'Messages' },
     ],
   },
 ]
