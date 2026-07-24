@@ -796,6 +796,22 @@ export default function Navbar() {
                 </div>
 
                 <Link
+                  to="/event-and-festivels"
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                >
+                  Events & Festivals
+                </Link>
+
+                <Link
+                  to="/weekend-gateways"
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                >
+                  Weekend Gateways
+                </Link>
+
+                <Link
                   to="/blog"
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
@@ -809,6 +825,14 @@ export default function Navbar() {
                   className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
                 >
                   About
+                </Link>
+
+                 <Link
+                  to="/contact"
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                >
+                  Contact
                 </Link>
               </nav>
 
