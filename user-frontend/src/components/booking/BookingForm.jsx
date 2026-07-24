@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import PassengerForm from './PassengerForm.jsx';
 import PriceSummary from './PriceSummary.jsx';
-
+import { User, ShieldCheck, CreditCard, AlertCircle } from 'lucide-react';
 //  helpers 
 
 const emptyPassenger = () => ({
@@ -19,6 +19,7 @@ const emptyPassenger = () => ({
 const fmt = (n) => `₹${Number(n).toLocaleString('en-IN')}`;
 
 const formatDateDisplay = (d) => {
+  console.log(d)
   if (!d) return '';
   try {
     return new Date(d).toLocaleDateString('en-IN', {
@@ -143,8 +144,9 @@ const variants = {
 // ------------------
 
 export default function BookingForm({ trip, onComplete }) {
+  console.log(trip)
   const maxGroup = trip?.groupSize?.max || 20;
-  const pricePerPerson = trip?.price || 0;
+  const pricePerPerson = trip?.price.original || 0;
 
   //  Core state 
   const [step, setStep] = useState(0);
@@ -251,6 +253,7 @@ export default function BookingForm({ trip, onComplete }) {
       return next;
     });
   };
+  console.log(selectedDate)
 
   // ---------------------------------
   // Render steps
@@ -279,8 +282,8 @@ export default function BookingForm({ trip, onComplete }) {
                 >
                   <option value="">— Choose a departure date —</option>
                   {trip.startDates.map((d, i) => (
-                    <option key={i} value={d}>
-                      {formatDateDisplay(d)}
+                    <option key={i} value={d.date}>
+                      {formatDateDisplay(d.date)}
                     </option>
                   ))}
                 </select>
@@ -288,7 +291,8 @@ export default function BookingForm({ trip, onComplete }) {
                 <div className={`rounded-xl border ${step1Errors.selectedDate ? 'border-red-400' : 'border-slate-300'}`}>
                   <DatePicker
                     selected={selectedDate ? new Date(selectedDate) : null}
-                    onChange={(date) => setSelectedDate(date ? date.toISOString() : '')}
+                    onChange={(date) => { console.log(date);
+                      setSelectedDate(date ? new Date.toISOString() : '')}}
                     minDate={new Date()}
                     dateFormat="dd MMM yyyy"
                     placeholderText="Pick a departure date"
@@ -535,7 +539,7 @@ export default function BookingForm({ trip, onComplete }) {
                 </div>
                 <div className="flex gap-3">
                   <span className="text-slate-400 w-32 flex-shrink-0">Duration</span>
-                  <span className="text-slate-800">{trip?.duration ? `${trip.duration} days` : '—'}</span>
+                  <span className="text-slate-800">{trip?.duration ? `${trip.duration?.days} days` : '—'}</span>
                 </div>
                 <div className="flex gap-3">
                   <span className="text-slate-400 w-32 flex-shrink-0">Travelers</span>
@@ -657,3 +661,5 @@ export default function BookingForm({ trip, onComplete }) {
     </div>
   );
 }
+                              
+

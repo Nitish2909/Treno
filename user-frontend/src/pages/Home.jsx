@@ -8,6 +8,7 @@ import WhyChooseUs from '../components/home/WhyChooseUs.jsx'
 import TrendingDestinations from '../components/home/TrendingDestinations.jsx'
 import Testimonials from '../components/home/Testimonials.jsx'
 import NewsletterSection from '../components/home/NewsletterSection.jsx'
+import EventBanner from '../components/home/EventBanner.jsx'
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -36,6 +37,9 @@ export default function Home() {
       >
         {/* Hero Banner — full viewport, no extra padding */}
         <HeroBanner />
+
+        {/* New Events Banner */}
+        <EventBanner/>
 
         {/* Trip Categories */}
         <section className="py-16 bg-white">

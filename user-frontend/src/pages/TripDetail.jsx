@@ -297,7 +297,7 @@ export default function TripDetail() {
     return;
   }
     navigate(`/booking/${trip?._id}`, {
-      state: { selectedDate, travelers, tripTitle: trip?.title },
+      state: { selectedDate, travelers, tripTitle: trip?.title,trip:trip },
     });
   };
 

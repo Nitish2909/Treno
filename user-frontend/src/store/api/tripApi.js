@@ -22,20 +22,25 @@ export const tripApi = baseApi.injectEndpoints({
         return `/trips${qs ? `?${qs}` : ''}`
       },
       providesTags: (result) =>
-
-        result.trips
-          ?
-          [
-            ...result.trips?.map(({ _id }) => ({ type: 'Trip', id: _id })),
-            { type: 'Trip', id: 'LIST' },
-          ]
+        result?.trips
+          ? [
+              ...result.trips.map(({ _id }) => ({ type: 'Trip', id: _id })),
+              { type: 'Trip', id: 'LIST' },
+            ]
           : [{ type: 'Trip', id: 'LIST' }],
     }),
 
+    getTripById: builder.query({
+      query: (tripId) => `/trips/trip/${tripId}`, // Adjust URL if backend is `/trips/${tripId}`
+      providesTags: (result, error, tripId) => [{ type: 'Trip', id: tripId }],
+    }),
+
     getTripBySlug: builder.query({
-      query: (slug) => `/trips/trip/${slug}`,
+      query: (slug) => `/trips/${slug}`,
       providesTags: (result, error, slug) => [{ type: 'Trip', id: slug }],
     }),
+
+    
 
     getFeaturedTrips: builder.query({
       query: (limit = 6) => `/trips/featured?limit=${limit}`,
@@ -94,6 +99,7 @@ export const tripApi = baseApi.injectEndpoints({
 export const {
   useGetAllTripsQuery,
   useGetTripBySlugQuery,
+  useGetTripByIdQuery,
   useGetFeaturedTripsQuery,
   useGetPopularTripsQuery,
   useGetTripsByCategoryQuery,

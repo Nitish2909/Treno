@@ -17,6 +17,7 @@ import Sitmap from "./pages/Sitmap.jsx";
 import Packages from "./pages/Packages.jsx";
 import Sitemap from "./pages/Sitmap.jsx";
 import Disclaimer from "./components/common/Disclaimer.jsx";
+import Careers from "./components/common/Careers.jsx";
 
 // Pages - lazy loaded
 const Trips = lazy(() => import("./pages/Trips.jsx"));
@@ -141,6 +142,7 @@ function AppContent() {
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/sitemap" element={<Sitemap />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
+               <Route path="/careers" element={<Careers />} />
               <Route
                 path="/event-and-festivels"
                 element={<EventAndFestivals />}

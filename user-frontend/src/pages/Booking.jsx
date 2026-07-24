@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate, Link ,useLocation} from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   ArrowLeft,
@@ -27,16 +27,15 @@ import {
   useVerifyPaymentMutation,
   useCreateBookingMutation,
 } from '../store/api/bookingApi.js'
-import { useGetTripBySlugQuery } from '../store/api/tripApi.js'
+import { useGetTripByIdQuery } from '../store/api/tripApi.js'
 import { initiatePayment } from '../utils/razorpay.js'
 import { useAuth } from '../hooks/useAuth.js'
 import { authApi } from '../store/api/authApi.js'
 import {useSelector} from 'react-redux'
-import store from '../store/store.js'
 
 // Trip Summary Card
 function TripSummaryCard({ trip, selectedDate, travelers }) {
-  // console.log(trip);
+  console.log(trip);
   
   if (!trip) {
     return (
@@ -49,7 +48,7 @@ function TripSummaryCard({ trip, selectedDate, travelers }) {
     )
   }
 
-  const subtotal = trip.price * travelers
+  const subtotal = trip.price.original * travelers
 console.log(subtotal);
 
 
@@ -59,14 +58,14 @@ console.log(subtotal);
       {trip.images?.[0] && (
         <div className="relative h-44 overflow-hidden">
           <img
-            src={trip.images[0]}
+            src={trip.images[0].url}
             alt={trip.title}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
           {trip.category && (
             <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
-              {trip.category}
+              {trip.category.name}
             </span>
           )}
         </div>
@@ -80,11 +79,11 @@ console.log(subtotal);
         <div className="space-y-2 text-sm text-gray-600 mb-4">
           <div className="flex items-center gap-2">
             <MapPinIcon className="w-4 h-4 text-amber-500 flex-shrink-0" />
-            <span>{trip.location || trip.startingFrom}</span>
+            <span>{trip.location.from || trip.startingFrom}</span>
           </div>
           <div className="flex items-center gap-2">
             <ClockIcon className="w-4 h-4 text-amber-500 flex-shrink-0" />
-            <span>{trip.duration}</span>
+            <span>{trip.duration?.days}</span>
           </div>
           {selectedDate && (
             <div className="flex items-center gap-2">
@@ -104,7 +103,7 @@ console.log(subtotal);
         <div className="border-t border-gray-100 pt-4 space-y-1.5 text-sm">
           <div className="flex justify-between text-gray-600">
             <span>
-              ₹{trip.price?.toLocaleString('en-IN')} × {travelers}
+              ₹{trip.price?.original.toLocaleString('en-IN')} × {travelers}
             </span>
             <span>₹{subtotal?.toLocaleString('en-IN')}</span>
           </div>
@@ -112,7 +111,7 @@ console.log(subtotal);
             <div className="flex justify-between text-green-600 text-xs">
               <span>Savings</span>
               <span>
-                − ₹{((trip.originalPrice - trip.price) * travelers)?.toLocaleString('en-IN')}
+                − ₹{((trip.price.original - trip.price.discounted) * travelers)?.toLocaleString('en-IN')}
               </span>
             </div>
           )}
@@ -130,11 +129,34 @@ console.log(subtotal);
 export default function Booking() {
   const { tripId } = useParams()
   const navigate = useNavigate()
-  const {user} = useSelector(store=>store.auth)
+  // const {state} = useLocation()
+  const {user} = useSelector(state=>state.auth)
+  // const [trip,setTrip] = useState("")
   // console.log(user)
-
-  const { data: tripData, isLoading: tripLoading, isError: tripError } = useGetTripBySlugQuery(tripId)
-  const trip = tripData?.data?.trip || null
+  console.log(tripId)
+  const { data:t, isLoading: tripLoading, isError: tripError } = useGetTripByIdQuery(tripId, 
+  { skip: !tripId,refetchOnMountOrChange: true})
+  console.log(t)
+  const trip = t?.data?.trip
+  
+  // console.log(t)
+  // let data = {}
+  // async function getTripById(tripId){
+  //   const result = await fetch(`http://localhost:5000/api/v1/trips/trip/${tripId}`,{
+  //   method:"GET",
+  //   headers:{"Content-Type":"application/json"},
+  //   credentials:"include"
+  //   })
+  //   data = await result.json()
+  //   console.log(data)
+  // }
+  
+  // // const trip = data?.data?.trip || null
+  // const tripData = data.trip;  
+  // useEffect(()=>{
+  //   getTripById(tripId)
+  //   setTrip(tripData)
+  // },[tripData,tripId])
 
   const [createBooking, { isLoading: creatingBooking }] = useCreateBookingMutation()
   const [initiatePaymentMutation, { isLoading: initiatingPayment }] = useInitiatePaymentMutation()
@@ -144,12 +166,12 @@ export default function Booking() {
   const [paymentStep, setPaymentStep] = useState('idle') // 'idle' | 'creating' | 'payment' | 'verifying' | 'done'
 
   // Guard: redirect to login if not authenticated
-  useEffect(() => {
-    if (user === null) {
-      toast.error('Please log in to book a trip.')
-      navigate('/login', { state: { from: `/booking/${tripId}` } })
-    }
-  }, [user, navigate, tripId])
+  // useEffect(() => {
+  //   if (user === null) {
+  //     toast.error('Please log in to book a trip.')
+  //     navigate('/login', { state: { from: `/booking/${tripId}` } })
+  //   }
+  // }, [user, navigate, tripId])
 
   const isProcessing =
     creatingBooking || initiatingPayment || verifyingPayment || paymentStep !== 'idle'
@@ -303,7 +325,8 @@ export default function Booking() {
         )}
 
         {/* ── Main Content ── */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {
+          trip && (<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col lg:flex-row gap-8 items-start">
             {/* Left: Booking Form */}
             <div className="flex-1 min-w-0">
@@ -380,7 +403,8 @@ export default function Booking() {
               </div>
             </div>
           </div>
-        </div>
+        </div>)
+        }
       </div>
     </>
   )

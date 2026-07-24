@@ -464,6 +464,8 @@ const POPULAR_DESTINATIONS = [
   { label: "Spiti Valley", href: "/destinations/spiti" },
   { label: "Andaman", href: "/destinations/andaman" },
   { label: "Meghalaya", href: "/destinations/meghalaya" },
+  { label: "Shimla", href: "/destinations/shimla" },
+  { label: "Sikkim", href: "/destinations/sikkim" },
 ];
 
 const SOCIAL_LINKS = [
@@ -601,11 +603,11 @@ export default function Footer() {
 
               <li>
                 <a
-                  href="tel:+918199900000"
+                  href="tel:+918816942362"
                   className="flex items-center gap-3 text-sm text-slate-400 hover:text-amber-400 transition-colors duration-200"
                 >
                   <Phone size={17} className="text-amber-400 flex-shrink-0" />
-                  +91 81999 00000
+                  +91 8816942362
                 </a>
               </li>
 

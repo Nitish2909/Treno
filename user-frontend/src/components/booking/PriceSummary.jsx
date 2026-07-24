@@ -5,7 +5,7 @@ const CONVENIENCE_FEE = 99;
 const GST_RATE = 0.05;
 
 export default function PriceSummary({ trip, travelers, selectedDate, promoCode, promoDiscount }) {
-  const pricePerPerson = trip?.price || 0;
+  const pricePerPerson = trip?.price.original || 0;
   const base = pricePerPerson * (travelers || 1);
   const discount = promoDiscount || 0;
   const discountedBase = base - discount;
@@ -19,6 +19,7 @@ export default function PriceSummary({ trip, travelers, selectedDate, promoCode,
   };
 
   const formatDateStr = (dateVal) => {
+    
     if (!dateVal) return '—';
     try {
       return new Date(dateVal).toLocaleDateString('en-IN', {
