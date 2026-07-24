@@ -12,6 +12,7 @@ import {
   addStartDate,
   updateStartDate,
   uploadTripPDF,
+  getTripById,
 } from "../controllers/tripController.js";
 import { verifyToken, optionalAuth } from "../middleware/auth.js";
 import { isAdmin } from "../middleware/admin.js";
@@ -26,7 +27,8 @@ router.get("/featured", getFeaturedTrips);
 router.get("/popular", getPopularTrips);
 router.get("/search", searchTrips);
 router.get("/category/:slug", getTripsByCategory);
-router.get("/trip/:slug", optionalAuth, getTripBySlug);
+router.get("/:slug", optionalAuth, getTripBySlug);
+router.get("/trip/:id",getTripById)
 
 // ── Admin-only routes ─────────────────────────────────────────────────────────
 router.use(verifyToken, isAdmin);

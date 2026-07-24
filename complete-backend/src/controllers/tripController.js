@@ -238,7 +238,9 @@ export const getTripsByCategory = asyncHandler(async (req, res) => {
  * GET /api/v1/trips/:slug
  */
 export const getTripBySlug = asyncHandler(async (req, res) => {
-  const trip = await Trip.findOne({ $or:[{slug: req.params.slug,},{id:req.params.slug}]})
+
+  const trip = await Trip.findOne({ slug: req.params.slug, isActive: true })
+    .populate("category", "name slug icon")
     .populate({
       path: "reviews",
       match: { isApproved: true },
