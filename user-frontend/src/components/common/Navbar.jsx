@@ -398,7 +398,7 @@ export default function Navbar() {
           "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
           isScrolled
             ? "bg-white shadow-md"
-            : "bg-[rgb(1,175,209)] backdrop-blur-md",
+            : "bg-[rgb(1,175,220)] backdrop-blur-md",
         )}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -485,6 +485,31 @@ export default function Navbar() {
                 />
               </li>
 
+              {/* Event and Festivels */}
+              <li>
+                <Link
+                  to="/event-and-festivels"
+                  className={clsx(
+                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    isScrolled ? "text-slate-700" : "text-white",
+                  )}
+                >
+                  Event & Festivals
+                </Link>
+              </li>
+              {/* Weekend Gateways */}
+              <li>
+                <Link
+                  to="/weekend-gateways"
+                  className={clsx(
+                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    isScrolled ? "text-slate-700" : "text-white",
+                  )}
+                >
+                  Weekend Gateways
+                </Link>
+              </li>
+
               {/* Blog */}
               <li>
                 <Link
@@ -498,18 +523,6 @@ export default function Navbar() {
                 </Link>
               </li>
 
-              {/* Event and Festivels */}
-              <li>
-                <Link
-                  to="/event-and-festivels"
-                  className={clsx(
-                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
-                    isScrolled ? "text-slate-700" : "text-white",
-                  )}
-                >
-                  Event & Festivals
-                </Link>
-              </li>
               {/* About */}
               <li>
                 <Link
@@ -597,7 +610,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     to="/auth/register"
-                    className="px-4 py-2 rounded-full text-sm font-semibold bg-orange-400 hover:bg-orange-600-700 text-white transition-colors shadow-sm shadow-amber-200"
+                    className="px-4 py-2 rounded-full text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white transition-colors shadow-sm shadow-amber-200"
                   >
                     Register
                   </Link>

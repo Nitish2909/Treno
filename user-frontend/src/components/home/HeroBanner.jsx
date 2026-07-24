@@ -37,6 +37,30 @@ const slides = [
     title: 'Royal Rajasthan Awaits',
     subtitle: 'Majestic forts, desert dunes, and royal hospitality — live like royalty in the desert kingdom.',
   },
+ {
+  image: 'https://images.pexels.com/photos/27496413/pexels-photo-27496413.jpeg',
+  tag: 'Jammu & Kashmir',
+  title: 'Gulmarg: The Meadow of Flowers',
+  subtitle: 'Walk through endless meadows that turn into snow-laden ski slopes in the heart of the Kashmir Valley.'
+},
+{
+  image: 'https://images.pexels.com/photos/35151736/pexels-photo-35151736.jpeg',
+  tag: 'West Bengal',
+  title: 'Darjeeling: The Queen of Hills',
+  subtitle: 'Sip world-famous tea and watch the sunrise over the majestic Kanchenjunga range.'
+},
+{
+  image: 'https://images.pexels.com/photos/2070307/pexels-photo-2070307.jpeg',
+  tag: 'Uttarakhand',
+  title: 'Mussoorie: Charm of the Doon Valley',
+  subtitle: 'Stroll down the iconic Mall Road and enjoy panoramic views of the spectacular Garhwal Himalayan range.'
+},
+{
+  image: 'https://images.pexels.com/photos/28488400/pexels-photo-28488400.jpeg',
+  tag: 'Himachal Pradesh',
+  title: 'Manali: A Himalayan Paradise',
+  subtitle: 'Embrace the thrill of adventure among snow-capped peaks, rushing rivers, and pine-scented valleys.'
+}
 ];
 
 const badges = [
@@ -157,7 +181,7 @@ export default function HeroBanner() {
               >
                 <a
                   href="/trips"
-                  className="rounded-full bg-amber-500 px-7 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-amber-400 hover:shadow-amber-500/40 hover:shadow-xl active:scale-95"
+                  className="rounded-full bg-orange-500 px-7 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-orange-600 hover:shadow-amber-500/40 hover:shadow-xl active:scale-95"
                 >
                   
                   Explore Trips
