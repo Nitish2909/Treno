@@ -333,7 +333,7 @@
 //                   className="text-amber-500 mt-0.5 flex-shrink-0"
 //                 />
 //                 <span className="text-sm text-slate-400 leading-relaxed">
-                  
+
 //                 </span>
 //               </li>
 
@@ -419,8 +419,6 @@
 //   );
 // }
 
-
-
 /**
  * @file Footer.jsx
  * @description Multi-column dark footer for Treno travel booking platform.
@@ -497,7 +495,6 @@ export default function Footer() {
       {/* Main Footer Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
-          
           {/* Column 1 — Brand */}
           <div className="lg:col-span-4 space-y-5">
             <Link to="/" className="inline-block group">
@@ -549,6 +546,7 @@ export default function Footer() {
                 <li key={label}>
                   <Link
                     to={href}
+                    onClick={() => window.scrollTo(0, 0)}
                     className="group inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     <ChevronRight
@@ -593,10 +591,13 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3.5">
               <li className="flex gap-3 text-slate-400 text-sm">
-                <MapPin size={17} className="text-amber-400 flex-shrink-0 mt-0.5" />
+                <MapPin
+                  size={17}
+                  className="text-amber-400 flex-shrink-0 mt-0.5"
+                />
                 <span className="leading-relaxed">
                   SCO 98, Sector 4-5, Urban State
-                  <br/>
+                  <br />
                   Karnal, Haryana - 132001
                 </span>
               </li>
@@ -622,15 +623,19 @@ export default function Footer() {
               </li>
 
               <li className="flex gap-3 text-sm text-slate-400">
-                <Clock size={17} className="text-amber-400 flex-shrink-0 mt-0.5" />
+                <Clock
+                  size={17}
+                  className="text-amber-400 flex-shrink-0 mt-0.5"
+                />
                 <div className="space-y-0.5">
                   <p>Mon - Sat: 9:00 AM - 7:00 PM</p>
-                  <p className="text-xs text-slate-500">Sunday: 10:00 AM - 4:00 PM</p>
+                  <p className="text-xs text-slate-500">
+                    Sunday: 10:00 AM - 4:00 PM
+                  </p>
                 </div>
               </li>
             </ul>
           </div>
-
         </div>
       </div>
 
@@ -638,15 +643,17 @@ export default function Footer() {
       <div className="border-t border-white/5 bg-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            
             {/* Copyright & Legal Links */}
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-2 text-xs text-slate-500">
-              <span>© {new Date().getFullYear()} Treno. All rights reserved.</span>
+              <span>
+                © {new Date().getFullYear()} Treno. All rights reserved.
+              </span>
               <div className="flex items-center gap-4">
                 {LEGAL_LINKS.map(({ label, href }) => (
                   <Link
                     key={label}
                     to={href}
+                    onClick={() => window.scrollTo(0,0)}
                     className="hover:text-amber-400 transition-colors duration-200"
                   >
                     {label}
@@ -667,7 +674,6 @@ export default function Footer() {
                 </span>
               ))}
             </div>
-
           </div>
         </div>
       </div>
