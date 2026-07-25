@@ -430,7 +430,6 @@ export default function Navbar() {
               <li>
                 <Link
                   to="/"
-
                   className={clsx(
                     "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
@@ -490,7 +489,7 @@ export default function Navbar() {
               <li>
                 <Link
                   to="/event-and-festivels"
-                     onClick={()=> window.scrollTo(0,0)}
+                  onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
                     "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
@@ -503,7 +502,7 @@ export default function Navbar() {
               <li>
                 <Link
                   to="/weekend-gateways"
-                     onClick={()=> window.scrollTo(0,0)}
+                  onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
                     "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
@@ -517,7 +516,7 @@ export default function Navbar() {
               <li>
                 <Link
                   to="/blog"
-                     onClick={()=> window.scrollTo(0,0)}
+                  onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
                     "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
@@ -531,7 +530,7 @@ export default function Navbar() {
               <li>
                 <Link
                   to="/about"
-                     onClick={()=> window.scrollTo(0,0)}
+                  onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
                     "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
@@ -545,7 +544,7 @@ export default function Navbar() {
               <li>
                 <Link
                   to="/contact"
-                  onClick={()=> window.scrollTo(0,0)}
+                  onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
                     "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
@@ -666,25 +665,25 @@ export default function Navbar() {
               {/* Panel header */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
                 <Link
-              to="/"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center flex-shrink-0 group relative"
-            >
-              {/* Soft background glow adjusted for the larger logo profile */}
-              <div
-                className={clsx(
-                  "absolute -inset-4 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-lg",
-                  isScrolled ? "bg-slate-900" : "bg-white",
-                )}
-              />
+                  to="/"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center flex-shrink-0 group relative"
+                >
+                  {/* Soft background glow adjusted for the larger logo profile */}
+                  <div
+                    className={clsx(
+                      "absolute -inset-4 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-lg",
+                      isScrolled ? "bg-slate-900" : "bg-white",
+                    )}
+                  />
 
-              {/* Significantly larger logo profile (w-24 h-24 / 96px) */}
-              <img
-                src={TrenoLogo}
-                alt="Treno Logo"
-                className="w-28 h-28 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
-              />
-            </Link>
+                  {/* Significantly larger logo profile (w-24 h-24 / 96px) */}
+                  <img
+                    src={TrenoLogo}
+                    alt="Treno Logo"
+                    className="w-28 h-28 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
+                  />
+                </Link>
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100"
@@ -841,7 +840,7 @@ export default function Navbar() {
                   About
                 </Link>
 
-                 <Link
+                <Link
                   to="/contact"
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"

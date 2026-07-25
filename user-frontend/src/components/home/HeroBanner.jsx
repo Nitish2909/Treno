@@ -212,7 +212,7 @@ export default function HeroBanner() {
       {/* Custom Navigation Arrows */}
       <button
         ref={prevRef}
-        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-amber-500 focus:outline-none"
+        className="absolute left-1 top-1/2 z-20 -translate-y-1/2 flex h-11 w-11  items-center justify-center rounded-full  text-white backdrop-blur-sm transition hover:bg-amber-500 focus:outline-none"
         aria-label="Previous slide"
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -221,7 +221,7 @@ export default function HeroBanner() {
       </button>
       <button
         ref={nextRef}
-        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-amber-500 focus:outline-none"
+        className="absolute right-1 top-1/2 z-20 -translate-y-1/2 flex h-11 w-11  items-center justify-center rounded-full  text-white backdrop-blur-sm transition hover:bg-amber-500 focus:outline-none"
         aria-label="Next slide"
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
