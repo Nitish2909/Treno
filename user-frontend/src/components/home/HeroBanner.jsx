@@ -229,7 +229,7 @@ export default function HeroBanner() {
         </svg>
       </button>
 
-      {/* Pagination dots */}
+      {/* Pagination dots */} 
       <div className="hero-pagination absolute bottom-24 left-1/2 z-20 -translate-x-1/2 [&_.swiper-pagination-bullet-active]:bg-amber-400 [&_.swiper-pagination-bullet-active]:w-6 [&_.swiper-pagination-bullet]:bg-white/60 [&_.swiper-pagination-bullet]:transition-all" />
 
       {/* Floating Badges — bottom-left */}

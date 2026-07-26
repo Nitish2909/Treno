@@ -29,6 +29,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
     )
 
     if (refreshResult?.data?.accessToken) {
+      console.log(refreshToken)
       api.dispatch(setToken(refreshResult.data.accessToken))
       // Retry original request
       result = await baseQuery(args, api, extraOptions)

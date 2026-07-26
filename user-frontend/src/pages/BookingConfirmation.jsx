@@ -304,7 +304,7 @@ export default function BookingConfirmation() {
                   Travel Date
                 </span>
                 <span className="text-sm font-semibold text-gray-800">
-                  {booking.travelDate || booking.selectedDate}
+                  {booking.travelDate || booking.startDate}
                 </span>
               </div>
 

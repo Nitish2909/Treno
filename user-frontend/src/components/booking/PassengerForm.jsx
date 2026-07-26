@@ -7,8 +7,8 @@ const ID_FORMATS = {
   'Driving License': 'State code + digits (e.g. DL0420110149646)',
 };
 
-const GENDER_OPTIONS = ['Male', 'Female', 'Other'];
-const ID_TYPES = ['Aadhaar Card', 'PAN Card', 'Passport', 'Driving License'];
+const GENDER_OPTIONS = ['male', 'female', 'other'];
+const ID_TYPES = ["aadhar", "passport", "driving_license", "voter_id", "pan"];
 
 export default function PassengerForm({ index, data, onChange, errors }) {
   const handle = (field, value) => {
@@ -37,19 +37,19 @@ export default function PassengerForm({ index, data, onChange, errors }) {
           </label>
           <input
             type="text"
-            value={data.fullName || ''}
-            onChange={(e) => handle('fullName', e.target.value)}
+            value={data.name || ''}
+            onChange={(e) => handle('name', e.target.value)}
             placeholder="As per ID proof"
             className={`w-full rounded-lg border px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-amber-400 ${
-              err.fullName ? 'border-red-400 bg-red-50' : 'border-slate-300 bg-white'
+              err.name ? 'border-red-400 bg-red-50' : 'border-slate-300 bg-white'
             }`}
           />
-          {err.fullName && (
+          {err.name && (
             <p className="mt-1 text-xs text-red-500 flex items-center gap-1">
               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
               </svg>
-              {err.fullName}
+              {err.name}
             </p>
           )}
         </div>

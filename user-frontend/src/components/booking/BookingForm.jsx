@@ -8,7 +8,7 @@ import { User, ShieldCheck, CreditCard, AlertCircle } from 'lucide-react';
 //  helpers 
 
 const emptyPassenger = () => ({
-  fullName: '',
+  name: '',
   age: '',
   gender: '',
   idType: '',
@@ -99,14 +99,14 @@ function StepIndicator({ current }) {
 
 function validateStep1(form) {
   const errs = {};
-  if (!form.selectedDate) errs.selectedDate = 'Please select a departure date.';
+  if (!form.startDate) errs.startDate = 'Please select a departure date.';
   if (!form.travelers || form.travelers < 1) errs.travelers = 'At least 1 traveler required.';
   return errs;
 }
 
 function validatePassenger(p) {
   const e = {};
-  if (!p.fullName || p.fullName.trim().length < 3) e.fullName = 'Full name is required (min 3 chars).';
+  if (!p.name || p.name.trim().length < 3) e.name = 'Full name is required (min 3 chars).';
   const age = parseInt(p.age, 10);
   if (!p.age || isNaN(age) || age < 2 || age > 99) e.age = 'Age must be between 2 and 99.';
   if (!p.gender) e.gender = 'Please select a gender.';
@@ -154,7 +154,7 @@ export default function BookingForm({ trip, onComplete }) {
   const [paying, setPaying] = useState(false);
 
   // Step 1
-  const [selectedDate, setSelectedDate] = useState('');
+  const [startDate, setstartDate] = useState('');
   const [travelers, setTravelers] = useState(1);
 
   // Step 2
@@ -203,7 +203,7 @@ export default function BookingForm({ trip, onComplete }) {
 
   const handleNext = () => {
     if (step === 0) {
-      const errs = validateStep1({ selectedDate, travelers });
+      const errs = validateStep1({ startDate, travelers });
       setStep1Errors(errs);
       if (Object.keys(errs).length === 0) goTo(1);
     } else if (step === 1) {
@@ -230,7 +230,7 @@ export default function BookingForm({ trip, onComplete }) {
     setPaying(true);
     const bookingData = {
       tripId: trip?._id,
-      selectedDate,
+      startDate,
       travelers,
       passengers,
       emergencyContact: { name: emergencyName, phone: emergencyPhone, relationship: emergencyRelationship },
@@ -253,7 +253,7 @@ export default function BookingForm({ trip, onComplete }) {
       return next;
     });
   };
-  console.log(selectedDate)
+  console.log(startDate)
 
   // ---------------------------------
   // Render steps
@@ -274,10 +274,10 @@ export default function BookingForm({ trip, onComplete }) {
               </label>
               {hasDates ? (
                 <select
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
+                  value={startDate}
+                  onChange={(e) => setstartDate(e.target.value)}
                   className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition focus:ring-2 focus:ring-amber-400 bg-white ${
-                    step1Errors.selectedDate ? 'border-red-400' : 'border-slate-300'
+                    step1Errors.startDate ? 'border-red-400' : 'border-slate-300'
                   }`}
                 >
                   <option value="">— Choose a departure date —</option>
@@ -288,11 +288,11 @@ export default function BookingForm({ trip, onComplete }) {
                   ))}
                 </select>
               ) : (
-                <div className={`rounded-xl border ${step1Errors.selectedDate ? 'border-red-400' : 'border-slate-300'}`}>
+                <div className={`rounded-xl border ${step1Errors.startDate ? 'border-red-400' : 'border-slate-300'}`}>
                   <DatePicker
-                    selected={selectedDate ? new Date(selectedDate) : null}
+                    selected={startDate ? new Date(startDate) : null}
                     onChange={(date) => { console.log(date);
-                      setSelectedDate(date ? new Date.toISOString() : '')}}
+                      setstartDate(date ? new Date.toISOString() : '')}}
                     minDate={new Date()}
                     dateFormat="dd MMM yyyy"
                     placeholderText="Pick a departure date"
@@ -301,8 +301,8 @@ export default function BookingForm({ trip, onComplete }) {
                   />
                 </div>
               )}
-              {step1Errors.selectedDate && (
-                <p className="mt-1 text-xs text-red-500">{step1Errors.selectedDate}</p>
+              {step1Errors.startDate && (
+                <p className="mt-1 text-xs text-red-500">{step1Errors.startDate}</p>
               )}
             </div>
 
@@ -520,7 +520,7 @@ export default function BookingForm({ trip, onComplete }) {
             <PriceSummary
               trip={trip}
               travelers={travelers}
-              selectedDate={selectedDate}
+              startDate={startDate}
             />
 
             {/* Booking summary */}
@@ -535,7 +535,7 @@ export default function BookingForm({ trip, onComplete }) {
                 </div>
                 <div className="flex gap-3">
                   <span className="text-slate-400 w-32 flex-shrink-0">Departure</span>
-                  <span className="text-slate-800">{formatDateDisplay(selectedDate) || '—'}</span>
+                  <span className="text-slate-800">{formatDateDisplay(startDate) || '—'}</span>
                 </div>
                 <div className="flex gap-3">
                   <span className="text-slate-400 w-32 flex-shrink-0">Duration</span>
@@ -562,7 +562,7 @@ export default function BookingForm({ trip, onComplete }) {
                       <div className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 font-bold text-xs flex items-center justify-center flex-shrink-0">
                         {i + 1}
                       </div>
-                      <span className="font-medium text-slate-700">{p.fullName || `Traveler ${i + 1}`}</span>
+                      <span className="font-medium text-slate-700">{p.name || `Traveler ${i + 1}`}</span>
                       {p.age && <span className="text-slate-400 text-xs">Age {p.age}</span>}
                       {p.gender && (
                         <span className="text-slate-400 text-xs">· {p.gender}</span>

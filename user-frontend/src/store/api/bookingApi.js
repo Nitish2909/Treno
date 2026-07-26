@@ -21,7 +21,7 @@ export const bookingApi = baseApi.injectEndpoints({
 
     verifyPayment: builder.mutation({
       query: (paymentData) => ({
-        url: '/bookings/verify-payment',
+        url: '/payments/verify-payment',
         method: 'POST',
         body: paymentData,
       }),

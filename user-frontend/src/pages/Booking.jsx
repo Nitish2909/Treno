@@ -34,7 +34,7 @@ import { authApi } from '../store/api/authApi.js'
 import {useSelector} from 'react-redux'
 
 // Trip Summary Card
-function TripSummaryCard({ trip, selectedDate, travelers }) {
+function TripSummaryCard({ trip, startDate, travelers }) {
   console.log(trip);
   
   if (!trip) {
@@ -85,10 +85,10 @@ console.log(subtotal);
             <ClockIcon className="w-4 h-4 text-amber-500 flex-shrink-0" />
             <span>{trip.duration?.days}</span>
           </div>
-          {selectedDate && (
+          {startDate && (
             <div className="flex items-center gap-2">
               <CalendarDaysIcon className="w-4 h-4 text-amber-500 flex-shrink-0" />
-              <span>{selectedDate.label || selectedDate}</span>
+              <span>{startDate.label || startDate}</span>
             </div>
           )}
           <div className="flex items-center gap-2">
@@ -178,70 +178,80 @@ export default function Booking() {
 
   /**
    * Called by BookingForm once the form is complete.
-   * @param {object} formData - {passengers, emergencyContact, specialRequirements, selectedDate, travelers}
+   * @param {object} formData - {passengers, emergencyContact, specialRequirements, startDate, travelers}
    */
   const handleFormComplete = async (formData) => {
-    if (!trip) return
-    setBookingFormData(formData)
+  if (!trip) return
+  setBookingFormData(formData)
 
-    try {
-      // Step 1: Create booking in backend
-      setPaymentStep('creating')
-      const bookingPayload = {
-        tripId: trip._id,
-        passengers: formData.passengers,
-        emergencyContact: formData.emergencyContact,
-        specialRequirements: formData.specialRequirements,
-        selectedDate: formData.selectedDate,
-        travelers: formData.travelers,
-      }
-      const createResult = await createBooking(bookingPayload).unwrap()
-      const { bookingId, razorpayOrderId, amount, currency = 'INR' } = createResult
+  try {
+    // Step 1: Create booking in backend
+    setPaymentStep('creating')
+    const bookingPayload = {
+      tripId: trip._id,
+      passengers: formData.passengers,
+      emergencyContact: formData.emergencyContact,
+      specialRequirements: formData.specialRequirements,
+      startDate: formData.startDate,
+      travelers: formData.travelers,
+    }
 
-      if (!razorpayOrderId) throw new Error('Failed to create payment order.')
+    const createResult = await createBooking(bookingPayload).unwrap()
+    
+    const { 
+      booking: { _id: bookingId }, 
+      razorpayOrder: { id: razorpayOrderId, amount, currency = 'INR' } 
+    } = createResult?.data || {}
 
-      // Step 2: Open Razorpay modal
-      setPaymentStep('payment')
-      const paymentResult = await initiatePayment({
+    if (!razorpayOrderId) throw new Error('Failed to create payment order.')
+
+    // Step 2: Open Razorpay modal using onSuccess and onFailure callbacks
+    setPaymentStep('payment')
+
+    const paymentResult = await new Promise((resolve, reject) => {
+      initiatePayment({
         orderId: razorpayOrderId,
         amount,
         currency,
-        name: trip.title,
-        description: `Booking for ${formData.travelers} traveler${formData.travelers > 1 ? 's' : ''}`,
-        prefill: {
-          name: user?.name || formData.passengers[0]?.name,
-          email: user?.email,
-          contact: user?.phone || formData.emergencyContact?.phone,
-        },
-      })
-
-      // Step 3: Verify payment
-      setPaymentStep('verifying')
-      await verifyPayment({
         bookingId,
-        razorpayPaymentId: paymentResult.razorpay_payment_id,
-        razorpayOrderId: paymentResult.razorpay_order_id,
-        razorpaySignature: paymentResult.razorpay_signature,
-      }).unwrap()
+        user,
+        tripName: trip.title,
+        onSuccess: (res) => resolve(res),
+        onFailure: (err) => reject(err),
+      })
+    })
 
-      // Step 4: Navigate to confirmation
-      setPaymentStep('done')
-      toast.success('Booking confirmed! 🎉')
-      navigate(`/booking/confirm/${bookingId}`)
-    } catch (err) {
-      setPaymentStep('idle')
-      const message =
-        err?.data?.message ||
-        err?.message ||
-        'Payment failed or was cancelled. Please try again.'
+    // Step 3: Verify payment backend side
+    setPaymentStep('verifying')
+    await verifyPayment({
+      bookingId,
+      razorpayPaymentId: paymentResult.razorpayPaymentId,
+      razorpayOrderId: paymentResult.razorpayOrderId,
+      razorpaySignature: paymentResult.razorpaySignature,
+    }).unwrap()
 
-      if (message.toLowerCase().includes('cancel')) {
-        toast('Payment was cancelled.', { icon: '❌' })
-      } else {
-        toast.error(message)
-      }
+    // Step 4: Navigate to confirmation page
+    setPaymentStep('done')
+    toast.success('Booking confirmed! 🎉')
+    navigate(`/booking/confirm/${bookingId}`)
+
+  } catch (err) {
+    setPaymentStep('idle')
+
+    const message =
+      err?.data?.message ||
+      err?.error?.description ||
+      (typeof err?.error === 'string' ? err.error : null) ||
+      err?.message ||
+      'Payment failed or was cancelled. Please try again.'
+
+    if (typeof message === 'string' && message.toLowerCase().includes('cancel')) {
+      toast('Payment was cancelled.', { icon: '❌' })
+    } else {
+      toast.error(message)
     }
   }
+}
 
   //  Render 
   return (
@@ -380,7 +390,7 @@ export default function Booking() {
               </h2>
               <TripSummaryCard
                 trip={trip}
-                selectedDate={bookingFormData?.selectedDate}
+                startDate={bookingFormData?.startDate}
                 travelers={bookingFormData?.travelers || 1}
               />
 
