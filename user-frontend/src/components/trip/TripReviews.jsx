@@ -264,8 +264,8 @@ export default function TripReviews({ tripId }) {
     try {
       await createReview(payload).unwrap();
       setSubmitSuccess(true);
-    } catch {
-      // handle error silently
+    } catch(err) {
+      console.error(err)
     }
   };
 
