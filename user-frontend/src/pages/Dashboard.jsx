@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -118,25 +118,36 @@ function Sidebar({ user, onLogout, onClose, mobile }) {
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [error, setErrors] = useState(false)
 
-  const { data: stats, isLoading: statsLoading } = useGetBookingStatsQuery();
+  const { data: statsData, isLoading: statsLoading } = useGetBookingStatsQuery();
   const { data: recentBookingsData, isLoading: bookingsLoading } = useGetUserBookingsQuery({
     limit: 3,
     status: 'all',
   });
+  //   if (bookingsLoading) return <div>Loading dashboard...</div>;
+  // if (error) return <div>Failed to load bookings.</div>;
+  const stats = statsData?.data
+ 
 
-  const recentBookings = recentBookingsData?.bookings || [];
+  console.log(stats)
+  console.log(recentBookingsData)
+  const recentBookings = stats?.bookings || [];
+  // const recentBookings = recentBookingsData?.data || recentBookingsData?.bookings || [];
+
+  // console.log(recentBookings);
+  
 
   // Find next upcoming confirmed booking
   const upcomingTrip = recentBookings.find(
     (b) =>
-      b.status === 'confirmed' &&
-      b.tripDate &&
-      isAfter(new Date(b.tripDate), new Date())
+      b.bookingStatus === 'confirmed' &&
+      b.startDate &&
+      isAfter(new Date(b.startDate), new Date())
   );
 
   const daysToGo = upcomingTrip
-    ? differenceInDays(new Date(upcomingTrip.tripDate), new Date())
+    ? differenceInDays(new Date(upcomingTrip.startDate), new Date())
     : null;
 
   const today = format(new Date(), 'EEEE, MMMM d, yyyy');
@@ -254,7 +265,7 @@ export default function Dashboard() {
 
             {bookingsLoading ? (
               <div className="space-y-3">
-                {[1, 2, 3].map((i) => (
+                {[1, 2, 3,].map((i) => (
                   <div key={i} className="h-24 bg-gray-100 rounded-xl animate-pulse" />
                 ))}
               </div>
@@ -286,7 +297,7 @@ export default function Dashboard() {
                 {/* Background image */}
                 <img
                   src={upcomingTrip.trip?.coverImage || `https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=800`}
-                  alt={upcomingTrip.trip?.name || 'Upcoming trip'}
+                  alt={upcomingTrip.trip?.title || 'Upcoming trip'}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -301,12 +312,12 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <h3 className="text-white text-xl sm:text-2xl font-bold mb-1" style={{ fontFamily: 'Playfair Display, serif' }}>
-                      {upcomingTrip.trip?.name || 'Upcoming Trip'}
+                      {upcomingTrip.trip?.title || 'Upcoming Trip'}
                     </h3>
                     <div className="flex items-center gap-4 mb-3">
                       <span className="flex items-center gap-1.5 text-gray-300 text-sm">
                         <Calendar className="w-4 h-4" />
-                        {format(new Date(upcomingTrip.tripDate), 'MMM d, yyyy')}
+                        {format(new Date(upcomingTrip.startDate), 'MMM d, yyyy')}
                       </span>
                       {upcomingTrip.trip?.destination && (
                         <span className="flex items-center gap-1.5 text-gray-300 text-sm">

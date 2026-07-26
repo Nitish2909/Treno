@@ -132,6 +132,8 @@ export default function MyBookings() {
   const total = data?.total || 0;
   const hasMore = bookings.length < total;
 
+  console.log(bookings)
+
   const filtered = search.trim()
     ? bookings.filter((b) =>
         b.trip?.name?.toLowerCase().includes(search.toLowerCase()) ||

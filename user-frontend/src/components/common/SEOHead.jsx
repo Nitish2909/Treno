@@ -120,8 +120,20 @@
 //   );
 // 
 
-export default function SEOHead(){
-  return (
-    <h1>This is simple SEO Head</h1>
-  )
-}
+import { Helmet } from 'react-helmet-async';
+
+const SEOHead = () => (
+  <Helmet>
+    <title>Treno - Explore. Experience. Remember. | Trips from Karnal</title>
+    <meta 
+      name="keywords" 
+      content="Treno, Trip with Treno, best agency for travel booking in karnal, trips from Karnal, curated group trips Karnal, weekend getaways from Karnal, travel agency Karnal, adventure getaways India" 
+    />
+    <meta 
+      name="description" 
+      content="Treno is your trusted travel companion for curated group trips, adventure getaways, and transformative journeys from Karnal across India and beyond." 
+    />
+  </Helmet>
+);
+
+export default SEOHead;

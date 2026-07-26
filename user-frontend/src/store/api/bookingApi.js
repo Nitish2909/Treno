@@ -40,7 +40,7 @@ export const bookingApi = baseApi.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.bookings.map(({ _id }) => ({ type: 'Booking', id: _id })),
+              ...result?.bookings.map(({ _id }) => ({ type: 'Booking', id: _id })),
               { type: 'Booking', id: 'LIST' },
             ]
           : [{ type: 'Booking', id: 'LIST' }],
