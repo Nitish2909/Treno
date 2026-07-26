@@ -1,6 +1,6 @@
 User-agent: *
 
-# Allow public pages
+# Allow all public pages
 Allow: /
 
 # Block private pages
@@ -11,4 +11,4 @@ Disallow: /login
 Disallow: /register
 
 # Sitemap
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://tripwithtreno.com/sitemap.xml
