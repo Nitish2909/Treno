@@ -23,10 +23,10 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title="Treno - Explore. Experience. Remember."
-        description="Discover handcrafted travel experiences across India and the world. Treno offers group tours, trekking adventures, weekend getaways, and custom holiday packages designed for every kind of traveller. Explore breathtaking destinations, connect with like-minded explorers, and create memories that last a lifetime."
-        keywords="travel, tours, trips, group travel, trekking, adventure, holiday packages, India travel, weekend getaways, Treno"
-        ogImage="/og-home.jpg"
+        title={"Treno - Explore. Experience. Remember."}
+        description={"Discover handcrafted travel experiences across India and the world. Treno offers group tours, trekking adventures, weekend getaways, and custom holiday packages designed for every kind of traveller. Explore breathtaking destinations, connect with like-minded explorers, and create memories that last a lifetime."}
+        keywords={["travel, tours, trips, group travel, trekking, adventure, holiday packages, India travel, weekend getaways, Treno"]}
+        ogImage={"/og-home.jpg"}
       />
 
       <motion.div

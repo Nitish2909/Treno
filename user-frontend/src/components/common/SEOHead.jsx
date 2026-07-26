@@ -84,7 +84,7 @@ export default function SEOHead({
 
   return (
     <Helmet>
-      {/* ── Basic ─────────────────────────────────────────────────── */}
+      {/* ── Basic  */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       {keywords.length > 0 && (
@@ -95,10 +95,10 @@ export default function SEOHead({
         content={noIndex ? 'noindex, nofollow' : 'index, follow'}
       />
 
-      {/* ── Canonical ─────────────────────────────────────────────── */}
+      {/* ── Canonical  */}
       <link rel="canonical" href={canonicalUrl} />
 
-      {/* ── Open Graph ────────────────────────────────────────────── */}
+      {/* ── Open Graph  */}
       <meta property="og:type"        content={type}          />
       <meta property="og:site_name"   content={SITE_NAME}     />
       <meta property="og:title"       content={fullTitle}     />
@@ -109,7 +109,7 @@ export default function SEOHead({
       <meta property="og:url"         content={canonicalUrl}  />
       <meta property="og:locale"      content="en_IN"         />
 
-      {/* ── Twitter Card ──────────────────────────────────────────── */}
+      {/* ── Twitter Card  */}
       <meta name="twitter:card"        content="summary_large_image" />
       <meta name="twitter:site"        content={TWITTER_HANDLE}      />
       <meta name="twitter:creator"     content={TWITTER_HANDLE}      />
@@ -117,10 +117,10 @@ export default function SEOHead({
       <meta name="twitter:description" content={description}          />
       <meta name="twitter:image"       content={absoluteImage}        />
 
-      {/* ── Theme color (mobile browsers) ─────────────────────────── */}
+      {/* ── Theme color (mobile browsers)  */}
       <meta name="theme-color" content="#f59e0b" />
 
-      {/* ── Caller-supplied extras ────────────────────────────────── */}
+      {/* ── Caller-supplied extras  */}
       {children}
     </Helmet>
   );
