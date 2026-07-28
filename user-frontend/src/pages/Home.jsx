@@ -9,6 +9,7 @@ import TrendingDestinations from '../components/home/TrendingDestinations.jsx'
 import Testimonials from '../components/home/Testimonials.jsx'
 import NewsletterSection from '../components/home/NewsletterSection.jsx'
 import EventBanner from '../components/home/EventBanner.jsx'
+import IndiaTrips from './IndiaTrips.jsx'
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -85,37 +86,42 @@ export default function Home() {
         <EventBanner/>
 
         {/* Trip Categories */}
-        <section className="py-16 bg-white">
+        <section className="">
           <Categories />
         </section>
 
+        {/*  */}
+        <section className="">
+          <IndiaTrips/>
+        </section>
+
         {/* Featured Trips */}
-        <section className="py-20 bg-gray-50">
+        <section className="">
           <FeaturedTrips />
         </section>
 
         {/* Popular Destinations */}
-        <section className="py-16 bg-white">
+        <section className="">
           <PopularDestinations />
         </section>
 
         {/* Why Choose Us */}
-        <section className="py-20 bg-amber-50">
+        <section className="">
           <WhyChooseUs />
         </section>
 
         {/* Trending Destinations */}
-        <section className="py-16 bg-white">
+        <section className="">
           <TrendingDestinations />
         </section>
 
         {/* Testimonials */}
-        <section className="py-20 bg-gray-50">
+        <section className="">
           <Testimonials />
         </section>
 
         {/* Newsletter */}
-        <section className="py-16 bg-white">
+        <section className="">
           <NewsletterSection />
         </section>
       </motion.div>
