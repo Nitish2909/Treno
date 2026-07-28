@@ -125,17 +125,16 @@ export default function Dashboard() {
     limit: 3,
     status: 'all',
   });
-  //   if (bookingsLoading) return <div>Loading dashboard...</div>;
-  // if (error) return <div>Failed to load bookings.</div>;
-  const stats = statsData?.data
  
+  const stats = statsData?.data
 
   console.log(stats)
   console.log(recentBookingsData)
   const recentBookings = stats?.bookings || [];
   // const recentBookings = recentBookingsData?.data || recentBookingsData?.bookings || [];
 
-  // console.log(recentBookings);
+  console.log(recentBookings);
+
   
 
   // Find next upcoming confirmed booking
@@ -335,6 +334,7 @@ export default function Dashboard() {
                         className="inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors"
                       >
                         View Details <ChevronRight className="w-4 h-4" />
+                        
                       </Link>
                     </div>
                   </div>

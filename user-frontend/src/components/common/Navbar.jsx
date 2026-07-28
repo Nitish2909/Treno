@@ -9,6 +9,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
+import "../../index.css"
 import {
   Mountain,
   Menu,
@@ -395,10 +396,10 @@ export default function Navbar() {
       <header
         ref={navRef}
         className={clsx(
-          "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
+          "relative top-0 left-0 right-0 z-40 transition-all duration-300",
           isScrolled
             ? "bg-white shadow-md"
-            : "bg-[rgb(1,175,220)] backdrop-blur-md",
+            : "header-bg",
         )}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

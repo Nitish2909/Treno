@@ -150,13 +150,39 @@ export default function Contact() {
   return (
     <>
       <SEOHead
-        title="Contact Us"
-        description="Get in touch with Treno. Reach us by phone, email, or our contact form for trip inquiries, booking support, and partnerships."
+        title="Contact Treno - Your Travel Partner | Best Travel Agency in Karnal | Book Your Trip with Treno"
+        description="Contactn Treno - Your Travel Partner, a trusted travel agency in Karnal. Get expert assistance for domestic and international tour packages, flight booking, hotel booking, visa assistance, customized holiday packages, group tours, honeymoon trips, and travel inquiries."
         keywords={[
-          "contact Treno",
-          "travel inquiry",
-          "trip support",
-          "book trip india",
+          "Contact Treno- Treno Your Travel Partner",
+          "Contact Trip With Treno",
+          "Trip With Treno Contact",
+          "Travel Agency Contact Karnal",
+          "Best Travel Agency in Karnal",
+          "Travel Agency Karnal",
+          "Tour Operator Karnal",
+          "Travel Consultant Karnal",
+          "Travel Booking Support",
+          "Trip Booking",
+          "Tour Package Booking",
+          "Domestic Tour Packages",
+          "International Tour Packages",
+          "Flight Booking",
+          "Hotel Booking",
+          "Train Ticket Booking",
+          "Bus Booking",
+          "Cab Booking",
+          "Visa Assistance",
+          "Travel Insurance",
+          "Holiday Packages Karnal",
+          "Family Tour Packages",
+          "Honeymoon Packages",
+          "Customized Tour Packages",
+          "Travel Inquiry",
+          "Travel Support",
+          "Customer Support",
+          "Book Your Trip",
+          "Trip Planner",
+          "Trip With Treno",
         ]}
       />
 
@@ -208,9 +234,8 @@ export default function Contact() {
                       className="text-slate-800 font-semibold hover:text-amber-600 transition-colors"
                     >
                       +91- 88169 42362
-                      <br/>
-                      or
-                      9034447109
+                      <br />
+                      or 9034447109
                     </a>
                   </div>
                 </div>

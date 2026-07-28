@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import GoaSunBurn from "../../assets/Goa-Sunburn.mp4"
 import PUSHKARFAIR from "../../assets/pushkar-camel-fair.mp4"
 import CALIFORNIA from "../../assets/CALIFORNIA.mp4"
 import ARUNACHAL from "../../assets/arunachal-ziro-festival.mp4"
@@ -16,8 +15,18 @@ const bannerData = [
     // Festival Stage & Lights
     videoSrc: "https://videos.pexels.com/video-files/2022395/2022395-hd_1920_1080_30fps.mp4"
   },
-  {
+   {
     id: 2,
+    title: "SINGAPORE'S",
+    mainHeader: "ULTRA MUSIC FESTIVAL",
+    tagline: "futuristic beats",
+    subHeader: "MARINA BAY LIGHTS",
+    price: "INR 1,95,000/-",
+    duration: "3N–4D",
+    videoSrc: "https://www.pexels.com/download/video/5245433/"
+  },
+  {
+    id: 3,
     title: "BALI'S",
     mainHeader: "SUMMER FEST",
     tagline: "feel the vibe",
@@ -29,7 +38,7 @@ const bannerData = [
   },
   // --- Indian Festivals ---
   {
-    id: 3,
+    id: 4,
     title: "GOA'S",
     mainHeader: "SUNBURN FESTIVAL",
     tagline: "asia's biggest",
@@ -37,10 +46,10 @@ const bannerData = [
     price: "INR 45,990/-",
     duration: "3N–4D",
     // Crowd Raving & Laser Lights
-    videoSrc: GoaSunBurn
+    videoSrc: "https://www.pexels.com/download/video/27806813/"
   },
   {
-    id: 4,
+    id: 5,
     title: "ARUNACHAL'S",
     mainHeader: "ZIRO FESTIVAL",
     tagline: "echoes in the valley",
@@ -50,17 +59,7 @@ const bannerData = [
     // Outdoor Camping & Acoustic Fest Vibe
     videoSrc: ARUNACHAL
   },
-  {
-    id: 5,
-    title: "PUSHKAR'S",
-    mainHeader: "CAMEL FAIR & FEST",
-    tagline: "experience rich",
-    subHeader: "RAJASTHANI HERITAGE",
-    price: "INR 29,990/-",
-    duration: "3N–4D",
-    // Desert Sunset Vibe
-    videoSrc: PUSHKARFAIR
-  },
+
   {
     id: 6,
     title: "KASHMIR'S",
@@ -71,70 +70,7 @@ const bannerData = [
     duration: "4N–5D",
     videoSrc: "https://www.pexels.com/download/video/26592632/"
   },
-  // --- International Festivals ---
-  {
-    id: 7,
-    title: "CALIFORNIA'S",
-    mainHeader: "COACHELLA",
-    tagline: "desert beats &",
-    subHeader: "ICONIC ART",
-    price: "INR 3,49,990/-",
-    duration: "6N–7D",
-    // Concert Stage Crowd
-    videoSrc: CALIFORNIA
-  },
 
-  {
-    id: 8,
-    title: "SINGAPORE'S",
-    mainHeader: "ULTRA MUSIC FESTIVAL",
-    tagline: "futuristic beats",
-    subHeader: "MARINA BAY LIGHTS",
-    price: "INR 1,95,000/-",
-    duration: "3N–4D",
-    videoSrc: "https://www.pexels.com/download/video/5245433/"
-  },
-  {
-    id: 9,
-    title: "MALAYSIA'S",
-    mainHeader: "RAINFOREST MUSIC FEST",
-    tagline: "rhythms of nature",
-    subHeader: "BORNEO SOUNDS",
-    price: "INR 1,25,000/-",
-    duration: "4N–5D",
-    videoSrc: "https://www.pexels.com/download/video/3895039/"
-  },
-
-  {
-    id: 10,
-    title: "EGYPT'S",
-    mainHeader: "SUN FESTIVAL",
-    tagline: "ancient wonders &",
-    subHeader: "ABU SIMBEL LIGHTS",
-    price: "INR 1,75,000/-",
-    duration: "5N–6D",
-    videoSrc: "https://videos.pexels.com/video-files/4125883/4125883-hd_1920_1080_25fps"
-  },
-  {
-    id: 11,
-    title: "NEW ZEALAND'S",
-    mainHeader: "RHYTHM & VINES",
-    tagline: "first to see the sun",
-    subHeader: "NEW YEAR MUSIC FEST",
-    price: "INR 3,15,000/-",
-    duration: "6N–7D",
-    videoSrc: "https://videos.pexels.com/video-files/2882110/2882110-hd_1920_1080_24fps.mp4"
-  },
-  {
-    id: 12,
-    title: "ICELAND'S",
-    mainHeader: "SECRET SOLSTICE",
-    tagline: "party under the",
-    subHeader: "MIDNIGHT SUN",
-    price: "INR 2,95,000/-",
-    duration: "5N–6D",
-    videoSrc: "https://www.pexels.com/download/video/29415864/"
-  }
  
 ];
 

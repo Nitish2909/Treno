@@ -12,13 +12,14 @@ import Loader from "./components/common/Loader.jsx";
 // Pages - eager loaded
 import Home from "./pages/Home.jsx";
 import NotFound from "./pages/NotFound.jsx";
-import Destination from "./pages/Destination.jsx";
 import Sitmap from "./pages/Sitmap.jsx";
 import Packages from "./pages/Packages.jsx";
 import Sitemap from "./pages/Sitmap.jsx";
 import Disclaimer from "./components/common/Disclaimer.jsx";
 import Careers from "./components/common/Careers.jsx";
 import WeekendGateways from "./pages/WeekendGateways.jsx";
+import Destinations from "./pages/Destinations.jsx";
+import DestinationDetails from "./pages/DestinationDetails.jsx";
 
 // Pages - lazy loaded
 const Trips = lazy(() => import("./pages/Trips.jsx"));
@@ -73,7 +74,15 @@ function AppContent() {
                 element={<EventAndFestivals />}
               />
               {/* Destinations*/}
-              <Route path="/destinations" element={<Destination />} />
+              <Route path="/destinations" element={<Destinations />} />
+              <Route
+                path="/destinations/:city"
+                element={
+                  // <ProtectedRoute>
+                    <DestinationDetails  />
+                  // </ProtectedRoute>
+                }
+              />
               {/* WeekendGateways*/}
               <Route path="/weekend-gateways" element={<WeekendGateways />} />
 

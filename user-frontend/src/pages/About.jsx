@@ -243,18 +243,40 @@ export default function About() {
   return (
     <>
       <SEOHead
-        title="About Treno - Best Travel Agency in Karnal"
-        description="Learn the story behind Treno — Karnal's leading group travel company. Meet our team, discover our mission, and understand why 50,000+ travellers trust us."
+        title="About Trip With Treno | Best Travel Agency in Karnal | Tour & Travel Experts"
+        description="Learn about Trip With Treno, a trusted travel agency in Karnal. We specialize in domestic and international tour packages, flight booking, hotel booking, honeymoon packages, family vacations, group tours, customized travel experiences, and affordable holiday packages."
         keywords={[
-          "about Treno",
-          "travel company in Karnal",
-          "group tours Karnal",
-          "best tour operators in Karnal",
-          "Treno team",
-          "Best travel services provider in karnal"
+          "About Trip With Treno",
+          "Trip With Treno",
+          "TripWithTreno",
+          "Travel Agency in Karnal",
+          "Best Travel Agency in Karnal",
+          "Tour Operator Karnal",
+          "Travel Company Karnal",
+          "Travel Services Karnal",
+          "Travel Consultant Karnal",
+          "Holiday Packages Karnal",
+          "Tour Packages Karnal",
+          "Domestic Tour Packages",
+          "International Tour Packages",
+          "Customized Tour Packages",
+          "Family Tour Packages",
+          "Honeymoon Packages",
+          "Group Tour Packages",
+          "Adventure Tours",
+          "Corporate Travel Services",
+          "Flight Booking",
+          "Hotel Booking",
+          "Train Ticket Booking",
+          "Bus Booking",
+          "Cab Booking",
+          "Visa Assistance",
+          "Travel Insurance",
+          "Affordable Holiday Packages",
+          "Trusted Travel Company",
+          "Travel Experts in Karnal",
         ]}
       />
-
       {/* 1. Hero */}
       <section
         className="relative flex items-center justify-center overflow-hidden"

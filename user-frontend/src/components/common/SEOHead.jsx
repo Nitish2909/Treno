@@ -22,14 +22,14 @@ import { Helmet } from 'react-helmet-async';
 // Constants
 // ---------------------------------------------------------------------------
 
-const SITE_NAME        = 'Treno';
+const SITE_NAME        = 'tripwithtreno';
 const TITLE_SUFFIX     = `| ${SITE_NAME} Karnal`;
 const DEFAULT_TITLE    = `Treno — Best Travel Agency in Karnal | Domestic & International Tours`;
 const DEFAULT_DESC     =
   'Treno is Karnal’s premier travel agency offering end-to-end domestic and international travel services, ' +
   'curated group tours, holiday packages, flight bookings, and customized itineraries worldwide.';
 const DEFAULT_IMAGE    = 'https://cdn.Treno.in/og/default-og-image.jpg';
-const DEFAULT_URL      = 'https://Treno.in';
+const DEFAULT_URL      = 'https://tripwithtreno.com';
 const TWITTER_HANDLE   = '@TrenoIn';
 
 // ---------------------------------------------------------------------------
