@@ -167,7 +167,13 @@ function ReviewForm({ tripId, onSubmit, loading }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
-    onSubmit({ tripId, rating: formRating, title: reviewTitle, body: reviewText });
+   onSubmit({
+      tripId,
+      bookingId,
+      rating: formRating,
+      title: reviewTitle,
+      comment: reviewText,
+    });
   };
 
   return (
