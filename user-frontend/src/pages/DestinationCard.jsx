@@ -4,10 +4,9 @@ import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 
 const DestinationCard = ({ destination }) => {
-    console.log(destination)
     const navigate = useNavigate()
     const handleClick = ()=>{
-        navigate(`/destinations/${destination.id}`,{
+        navigate(`/destinations/${destination.name}`,{
             state:destination
         })
     }
@@ -34,7 +33,7 @@ const DestinationCard = ({ destination }) => {
             <MapPin className="w-4 h-4" />
             <span className="text-xs font-semibold tracking-wide uppercase">Destination</span>
           </div>
-          <h3 className="text-xl font-bold text-gray-800 mb-2">{destination.name}</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-2">{destination ? destination?.name[0].toUpperCase()+""+ destination?.name.slice(1,) : ""}</h3>
           <p className="text-sm text-gray-600 line-clamp-2">{destination.description}</p>
         </div>
 

@@ -30,7 +30,8 @@ const DestinationDetails = ({ destination: propDestination, TripCardCustom }) =>
 
   const { data, isLoading } = useGetDestinationByIdQuery(city, { skip: !city });
   
-  let destination = data?.data || [];
+  let destination = data?.data ;
+  console.log(destination)
 
   const [activeImage, setActiveImage] = useState(destination?.image);
   const [selectedAddOns, setSelectedAddOns] = useState([]);
@@ -69,7 +70,7 @@ const DestinationDetails = ({ destination: propDestination, TripCardCustom }) =>
         .reduce((sum, addon) => sum + addon.price, 0)
     : 0;
 
-  const totalPrice = (destination.pricing?.discountedPrice || 0) + addOnsTotal;
+  const totalPrice = (destination.destination.pricing?.discountedPrice || 0) + addOnsTotal;
 
 
   return (
@@ -112,7 +113,7 @@ const DestinationDetails = ({ destination: propDestination, TripCardCustom }) =>
         {/* Main Details (Left 2 Columns) */}
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">About {destination.destination.name}</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">About {destination?.destination.name[0].toUpperCase()+""+destination.destination.name.slice(1,)}</h2>
             <p className="text-gray-600 leading-relaxed">{destination.destination.description}</p>
           </div>
 
