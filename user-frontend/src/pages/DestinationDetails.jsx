@@ -74,7 +74,7 @@ const DestinationDetails = ({ destination: propDestination, TripCardCustom }) =>
 
 
   return (
-    <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 animate-fadeIn">
+    <div className="max-w-8xl mx-auto p-4 sm:p-6 lg:p-8 animate-fadeIn">
       {/* Back Button */}
       <button 
         onClick={onBack} 
@@ -84,7 +84,7 @@ const DestinationDetails = ({ destination: propDestination, TripCardCustom }) =>
       </button>
 
       {/* Hero Banner */}
-      <div className="relative h-[350px] md:h-[480px] rounded-3xl overflow-hidden shadow-2xl mb-6">
+      <div className="relative h-[350px] md:h-[480px] rounded-xl overflow-hidden shadow-2xl mb-6">
         <img 
           src={activeImage || destination.destination.image} 
           alt={destination.destination.name} 

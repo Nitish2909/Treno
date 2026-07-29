@@ -227,6 +227,7 @@ export default function TripDetail() {
 
   const { data, isLoading, isError } = useGetTripBySlugQuery(slug);
   const trip = data?.data || (isError || !data ? MOCK_TRIP : null);
+  console.log(trip)
 
   // Booking sidebar state
   const [selectedDate, setSelectedDate] = useState(null);
@@ -247,7 +248,7 @@ export default function TripDetail() {
     : "";
 
   const groupSizeText = trip?.groupSize
-    ? `${trip.groupSize.min}-${trip.groupSize.max} Max`
+    ? `${trip.groupSize.min}-${trip.groupSize.max} Pax`
     : "";
 
   const startingFromText = trip?.location?.from || "";

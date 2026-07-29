@@ -9,7 +9,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
-import "../../index.css"
+import "../../index.css";
 import {
   Mountain,
   Menu,
@@ -61,7 +61,6 @@ const DESTINATIONS = [
   { label: "Kerala", href: "/destinations/kerala" },
   { label: "Ladakh", href: "/destinations/ladakh" },
   { label: "Rajasthan", href: "/destinations/rajasthan" },
-  { label: "Spiti Valley", href: "/destinations/spiti" },
   { label: "Andaman", href: "/destinations/andaman" },
   { label: "Meghalaya", href: "/destinations/meghalaya" },
   { label: "Shimla", href: "/destinations/shimla" },
@@ -69,7 +68,9 @@ const DESTINATIONS = [
   { label: "Sikkim", href: "/destinations/sikkim" },
   { label: "Uttarakhand", href: "/destinations/uttarakhand" },
   { label: "Nagaland", href: "/destinations/nagaland" },
-  { label: "Himachal Pradesh", href: "/destinations/himachal-pradesh" },
+  { label: "Agra", href: "/destinations/agra" },
+  { label: "Varanasi", href: "/destinations/varanasi" },
+  { label: "Kashmir", href: "/destinations/kashmir" },
 ];
 
 /** @type {{ label: string, href: string }[]} */
@@ -397,9 +398,7 @@ export default function Navbar() {
         ref={navRef}
         className={clsx(
           "relative top-0 left-0 right-0 z-40 transition-all duration-300",
-          isScrolled
-            ? "bg-white shadow-md"
-            : "header-bg",
+          isScrolled ? "bg-white shadow-md" : "header-bg",
         )}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
