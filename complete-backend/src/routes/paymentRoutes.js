@@ -17,7 +17,7 @@ router.post("/webhook", handleWebhook);
 router.use(verifyToken);
 
 router.post("/create-order", createRazorpayOrder);
-router.post("/verify", verifyPayment);
+router.post("/verify-payment", verifyPayment);
 router.get("/:paymentId", getPaymentDetails);
 
 export default router;

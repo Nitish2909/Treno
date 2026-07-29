@@ -74,13 +74,13 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-// ── Indexes ───────────────────────────────────────────────────────────────────
+// ── Indexes 
 reviewSchema.index({ trip: 1, user: 1 });
 reviewSchema.index({ trip: 1, isApproved: 1 });
 reviewSchema.index({ user: 1 });
 reviewSchema.index({ booking: 1 }, { unique: true }); // One review per booking
 
-// ── Static: Recalculate trip average rating ───────────────────────────────────
+// ── Static: Recalculate trip average rating 
 reviewSchema.statics.calculateAverageRating = async function (tripId) {
   const stats = await this.aggregate([
     {
@@ -113,12 +113,12 @@ reviewSchema.statics.calculateAverageRating = async function (tripId) {
   }
 };
 
-// ── Post-save hook: Recalculate rating ───────────────────────────────────────
+// ── Post-save hook: Recalculate rating 
 reviewSchema.post("save", async function () {
   await this.constructor.calculateAverageRating(this.trip);
 });
 
-// ── Post-remove hook ──────────────────────────────────────────────────────────
+// ── Post-remove hook 
 reviewSchema.post("findOneAndDelete", async function (doc) {
   if (doc) {
     await doc.constructor.calculateAverageRating(doc.trip);

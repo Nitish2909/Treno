@@ -57,19 +57,22 @@ export const createRazorpayOrder = asyncHandler(async (req, res) => {
  * Verify Razorpay payment signature
  */
 export const verifyPayment = asyncHandler(async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingId } = req.body;
+  const { razorpayOrderId, razorpayPaymentId, razorpaySignature, bookingId } = req.body;
 
-  if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+  if (!razorpayOrderId || !razorpayPaymentId
+    || !razorpaySignature) {
     throw ApiError.badRequest("Payment verification details are incomplete.");
   }
 
   // Verify signature using HMAC SHA256
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-    .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+    .update(`${razorpayOrderId
+      }|${razorpayPaymentId
+      }`)
     .digest("hex");
 
-  if (expectedSignature !== razorpay_signature) {
+  if (expectedSignature !== razorpaySignature) {
     // Mark payment as failed
     if (bookingId) {
       await Booking.findOneAndUpdate(
@@ -82,12 +85,13 @@ export const verifyPayment = asyncHandler(async (req, res) => {
 
   // Update booking
   const booking = await Booking.findOneAndUpdate(
-    { razorpayOrderId: razorpay_order_id },
+    { razorpayOrderId:razorpayOrderId },
     {
       paymentStatus: "paid",
       bookingStatus: "confirmed",
-      razorpayPaymentId: razorpay_payment_id,
-      razorpaySignature: razorpay_signature,
+      razorpayPaymentId: razorpayPaymentId
+      ,
+      razorpaySignature: razorpaySignature,
     },
     { new: true }
   ).populate("trip", "title slug duration");
@@ -113,7 +117,7 @@ export const verifyPayment = asyncHandler(async (req, res) => {
     200,
     {
       bookingId: booking.bookingId,
-      paymentId: razorpay_payment_id,
+      paymentId: razorpayPaymentId,
       status: "paid",
     },
     "Payment verified successfully. Booking confirmed!"

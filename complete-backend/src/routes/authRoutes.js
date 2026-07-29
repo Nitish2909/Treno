@@ -44,7 +44,7 @@ export const authLimiter = rateLimit({
 // ── Public routes ─────────────────────────────────────────────────────────────
 router.post("/register", authLimiter, validateRegister, register);
 router.post("/login", authLimiter, validateLogin, login);
-router.post("/refresh", refreshAccessToken);
+router.post("/refresh-token", refreshAccessToken);
 router.get("/verify-email/:token", verifyEmail);
 router.post("/forgot-password", authLimiter, validateForgotPassword, forgotPassword);
 router.post("/reset-password/:token", authLimiter, validateResetPassword, resetPassword);

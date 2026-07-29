@@ -148,7 +148,7 @@ const bookingSchema = new mongoose.Schema(
   }
 );
 
-// ── Indexes ───────────────────────────────────────────────────────────────────
+// ── Indexes 
 bookingSchema.index({ bookingId: 1 }, { unique: true });
 bookingSchema.index({ user: 1 });
 bookingSchema.index({ trip: 1 });
@@ -157,7 +157,7 @@ bookingSchema.index({ paymentStatus: 1 });
 bookingSchema.index({ createdAt: -1 });
 bookingSchema.index({ razorpayOrderId: 1 });
 
-// ── Pre-save: Generate bookingId ──────────────────────────────────────────────
+// ── Pre-save: Generate bookingId 
 bookingSchema.pre("save", async function (next) {
   if (this.bookingId) return next();
 
@@ -179,7 +179,7 @@ bookingSchema.pre("save", async function (next) {
   next();
 });
 
-// ── Pre-save: Sync numberOfPassengers ─────────────────────────────────────────
+// ── Pre-save: Sync numberOfPassengers 
 bookingSchema.pre("save", function (next) {
   if (this.passengers) {
     this.numberOfPassengers = this.passengers.length;

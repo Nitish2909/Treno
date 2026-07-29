@@ -17,7 +17,6 @@ const handleValidationErrors = (req) => {
 };
 
 //  Helpers 
-
 /**
  * Calculate refund amount based on days until trip start
  */
@@ -51,6 +50,7 @@ export const createBooking = asyncHandler(async (req, res) => {
   } = req.body;
 
 
+  console.log(req.body)
   // Fetch trip
   const trip = await Trip.findOne({ _id: tripId, isActive: true });
   if (!trip) throw ApiError.notFound("Trip not found or is no longer available.");
@@ -150,10 +150,11 @@ export const createBooking = asyncHandler(async (req, res) => {
  * GET /api/v1/bookings
  */
 export const getUserBookings = asyncHandler(async (req, res) => {
-  const { page = 1, limit = 10, status } = req.query;
+  const { page = 1, limit = 10 } = req.query;
 
   const query = { user: req.user._id };
-  if (status) query.bookingStatus = status;
+  console.log(query)
+
 
   const pageNum = Math.max(1, parseInt(page, 10));
   const limitNum = Math.min(50, parseInt(limit, 10));
@@ -169,7 +170,7 @@ export const getUserBookings = asyncHandler(async (req, res) => {
     Booking.countDocuments(query),
   ]);
 
-  // ✅ PROPER EMPTY CHECK: Check array length
+  //  PROPER EMPTY CHECK: Check array length
   if (!bookings || bookings.length === 0) {
     return new ApiResponse(
       200, 

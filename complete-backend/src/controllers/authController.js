@@ -8,6 +8,8 @@ import asyncHandler from "../utils/asyncHandler.js";
 import { sendEmail } from "../utils/emailService.js";
 import { uploadToCloudinary, deleteFromCloudinary } from "../config/cloudinary.js";
 import { deleteTempFile } from "../utils/fileCleanup.js";
+import { config } from "dotenv";
+config()
 
 //  Helpers 
 export const generateTokens = async (user) => {
@@ -165,6 +167,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
   const incomingToken =
     req.cookies?.refreshToken || req.body?.refreshToken;
 
+    console.log(incomingToken)
   if (!incomingToken) {
     throw ApiError.unauthorized("Refresh token is missing.");
   }
