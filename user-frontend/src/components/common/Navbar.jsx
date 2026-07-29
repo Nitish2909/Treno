@@ -190,7 +190,7 @@ function DestinationsDropdown({ isOpen }) {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 p-3 z-50 grid grid-cols-2"
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 p-3 z-50 grid grid-cols-3"
         >
           {DESTINATIONS.map(({ label, href }) => (
             <Link

@@ -187,7 +187,7 @@ export default function HeroBanner() {
                   Explore Trips
                 </a>
                 <a
-                  href="/packages"
+                  href="/destinations"
                   className="rounded-full border-2 border-white/70 bg-white/10 px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-gray-900 active:scale-95"
                 >
                   View Packages

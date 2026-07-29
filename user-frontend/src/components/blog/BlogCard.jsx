@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { formatDate, calculateReadTime } from '../../utils/helpers.js';
 
-// ── Helpers ────────────────────────────────────────────────────────────────────
+// ── Helpers --------------
 
 const fmtDate = (d) => {
   if (typeof formatDate === 'function') return formatDate(d);
@@ -25,7 +25,7 @@ const readTime = (post) => {
   return null;
 };
 
-// ── Category badge ─────────────────────────────────────────────────────────────
+// ── Category badge ------------
 
 function CategoryBadge({ category }) {
   if (!category) return null;
@@ -36,7 +36,7 @@ function CategoryBadge({ category }) {
   );
 }
 
-// ── Author row ─────────────────────────────────────────────────────────────────
+// ── Author row -----------------
 
 function AuthorRow({ author, publishedAt, readTime: rt, compact }) {
   return (
@@ -71,9 +71,9 @@ function AuthorRow({ author, publishedAt, readTime: rt, compact }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// ------------------
 // REGULAR CARD
-// ═══════════════════════════════════════════════════════════════════════════════
+// -------------------
 
 function RegularCard({ post }) {
   const rt = readTime(post);
@@ -151,10 +151,9 @@ function RegularCard({ post }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+//---------------------------------------
 // FEATURED CARD
-// ═══════════════════════════════════════════════════════════════════════════════
-
+//---------------------------------------
 function FeaturedCard({ post }) {
   const rt = readTime(post);
 
@@ -232,9 +231,9 @@ function FeaturedCard({ post }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// -----------------
 // EXPORT
-// ═══════════════════════════════════════════════════════════════════════════════
+// ------------------
 
 export default function BlogCard({ post, featured = false }) {
   if (!post) return null;
