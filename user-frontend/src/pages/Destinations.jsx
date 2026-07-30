@@ -140,7 +140,7 @@ const Destinations = () => {
   const { data, isLoading } = useGetAllDestinationQuery();
   const destinationData = data?.data?.data || [];
 
-  const categories = ["All", "International", "Domestic", "Weekend"];
+  const categories = ["All", "International", "Domestic"];
 
   // Filter Logic
   const filteredDestinations = destinationData.filter((dest) => {
