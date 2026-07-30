@@ -1,4 +1,3 @@
-
 /**
  * @file Footer.jsx
  * @description Multi-column dark footer for Treno travel booking platform.
@@ -37,21 +36,37 @@ const POPULAR_DESTINATIONS = [
   { label: "Manali", href: "/destinations/manali" },
   { label: "Goa", href: "/destinations/goa" },
   { label: "Kerala", href: "/destinations/kerala" },
-  { label: "Rajasthan", href: "/destinations/rajasthan" },
   { label: "Ladakh", href: "/destinations/ladakh" },
+  { label: "Rajasthan", href: "/destinations/rajasthan" },
   { label: "Spiti Valley", href: "/destinations/spiti" },
   { label: "Andaman", href: "/destinations/andaman" },
   { label: "Meghalaya", href: "/destinations/meghalaya" },
   { label: "Shimla", href: "/destinations/shimla" },
   { label: "Sikkim", href: "/destinations/sikkim" },
+  { label: "Agra", href: "/destinations/agra" },
+  { label: "Kashmir", href: "/destinations/kashmir" },
+  { label: "Varanasi", href: "/destinations/varanasi" },
+  { label: "Nagaland", href: "/destinations/nagaland" },
 ];
 
 const SOCIAL_LINKS = [
-  { label: "Instagram", href: "https://instagram.com", icon: Instagram },
-  { label: "Facebook", href: "https://facebook.com", icon: Facebook },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/treno.travels/",
+    icon: Instagram,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61580526790627#",
+    icon: Facebook,
+  },
   { label: "Twitter", href: "https://twitter.com", icon: Twitter },
   { label: "YouTube", href: "https://youtube.com", icon: Youtube },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: Linkedin },
+  {
+    label: "LinkedIn",
+    href: "https://in.linkedin.com/in/treno-your-travel-partner-9105073ab",
+    icon: Linkedin,
+  },
 ];
 
 const LEGAL_LINKS = [
@@ -89,11 +104,11 @@ export default function Footer() {
             </Link>
 
             <p className="text-amber-400 text-xs font-semibold tracking-wider uppercase">
-              Explore. Experience. Remember.
+              Treno- Your Travel Partner
             </p>
 
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
-              Treno is your trusted travel companion for curated group trips,
+              Treno- Your Travel Partner is your trusted travel companion for curated group trips,
               adventure getaways, and transformative journeys across India and
               beyond.
             </p>
@@ -233,7 +248,7 @@ export default function Footer() {
                   <Link
                     key={label}
                     to={href}
-                    onClick={() => window.scrollTo(0,0)}
+                    onClick={() => window.scrollTo(0, 0)}
                     className="hover:text-amber-400 transition-colors duration-200"
                   >
                     {label}

@@ -27,14 +27,14 @@ const Destinations = () => {
 
           {/* Quick Jump Dropdown Menu */}
           <div className="relative">
-            <button
+            {/* <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="flex items-center gap-2 bg-amber-50 text-amber-700 px-4 py-2 rounded-full font-medium text-sm hover:bg-amber-100 transition-colors"
             >
               <MapPin className="w-4 h-4" />
               Destinations
               <ChevronDown className="w-4 h-4" />
-            </button>
+            </button> */}
 
             {/* Popover Card based on image UI */}
             {isMenuOpen && (

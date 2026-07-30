@@ -1,9 +1,11 @@
-import React, { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Flame, MapPin, ChevronLeft, ChevronRight, TrendingUp } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
-const TRENDING = [
+import React, { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Flame, MapPin, ChevronLeft, ChevronRight, TrendingUp, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useGetAllDestinationQuery } from '../../store/api/destinationApi';
+
+const STATIC_TRENDING = [
   {
     name: 'Ladakh',
     location: 'Jammu & Kashmir',
@@ -80,16 +82,18 @@ const TRENDING = [
 
 function DestinationCard({ dest }) {
   const navigate = useNavigate();
+  const route = dest?.stateSlug || dest?.slug || '';
+
   return (
     <div
-      onClick={() => navigate(`/destination/${dest.stateSlug}`)}
+      onClick={() => route && navigate(`/destination/${route}`)}
       className="group relative flex-shrink-0 cursor-pointer overflow-hidden rounded-2xl shadow-md"
       style={{ width: '220px', height: '300px' }}
     >
       {/* Image */}
       <img
-        src={dest.image}
-        alt={dest.name}
+        src={dest?.image || 'https://via.placeholder.com/800'}
+        alt={dest?.name || 'Destination'}
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         loading="lazy"
       />
@@ -97,7 +101,7 @@ function DestinationCard({ dest }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
       {/* Trending badge */}
-      {dest.trending && (
+      {dest?.trending && (
         <span className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-amber-500 px-2.5 py-1 text-[11px] font-bold text-white shadow">
           <Flame size={10} />
           Trending
@@ -107,14 +111,14 @@ function DestinationCard({ dest }) {
       {/* Bottom info */}
       <div className="absolute bottom-0 left-0 right-0 p-4">
         <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-white">
-          {dest.name}
+          {dest?.name || 'Unknown'}
         </h3>
         <div className="mt-0.5 flex items-center gap-1">
           <MapPin size={11} className="text-amber-400" />
-          <span className="text-xs text-white/80">{dest.location}</span>
+          <span className="text-xs text-white/80">{dest?.location || 'India'}</span>
         </div>
         <span className="mt-2 inline-block rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-medium text-white/90 backdrop-blur-sm">
-          {dest.tripCount} trips available
+          {dest?.tripCount ?? 0} trips available
         </span>
       </div>
     </div>
@@ -122,9 +126,14 @@ function DestinationCard({ dest }) {
 }
 
 export default function TrendingDestinations() {
+  const { data: apiDestinations, isLoading, isError } = useGetAllDestinationQuery();
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  // Normalize API data to array
+  const rawData = apiDestinations?.data || apiDestinations;
+  const destinations = Array.isArray(rawData) && rawData.length > 0 ? rawData : STATIC_TRENDING;
 
   const updateScrollState = () => {
     if (!scrollRef.current) return;
@@ -132,6 +141,10 @@ export default function TrendingDestinations() {
     setCanScrollLeft(scrollLeft > 8);
     setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 8);
   };
+
+  useEffect(() => {
+    updateScrollState();
+  }, [destinations]);
 
   const scroll = (dir) => {
     if (!scrollRef.current) return;
@@ -180,24 +193,35 @@ export default function TrendingDestinations() {
           </div>
         </div>
 
-        {/* Horizontal scroll container */}
-        <div
-          ref={scrollRef}
-          onScroll={updateScrollState}
-          className="flex gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          {TRENDING.map((dest, i) => (
-            <motion.div
-              key={dest.slug}
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.07 }}
-            >
-              <DestinationCard dest={dest} />
-            </motion.div>
-          ))}
-        </div>
+        {/* Dynamic content rendering */}
+        {isLoading ? (
+          <div className="flex h-[300px] items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
+          </div>
+        ) : isError && !destinations.length ? (
+          <div className="flex h-[300px] items-center justify-center text-sm text-gray-500">
+            Failed to load destinations.
+          </div>
+        ) : (
+          /* Horizontal scroll container */
+          <div
+            ref={scrollRef}
+            onScroll={updateScrollState}
+            className="flex gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {destinations.map((dest, i) => (
+              <motion.div
+                key={dest?._id || dest?.id || dest?.slug || i}
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}
+              >
+                <DestinationCard dest={dest} />
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {/* Mobile hint */}
         <p className="mt-4 flex items-center justify-center gap-1.5 text-xs text-gray-400 sm:hidden">

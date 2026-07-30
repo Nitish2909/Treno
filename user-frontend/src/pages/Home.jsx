@@ -91,9 +91,9 @@ export default function Home() {
         </section>
 
         {/*  */}
-        <section className="">
+        {/* <section className="">
           <IndiaTrips/>
-        </section>
+        </section> */}
 
         {/* Featured Trips */}
         <section className="">
