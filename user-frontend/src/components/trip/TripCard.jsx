@@ -57,9 +57,9 @@ const difficultyColors = {
   hard: "bg-orange-100 text-orange-700",
 };
 
-// ---------------------------------------------------------------------------
+
 // Main component
-// ---------------------------------------------------------------------------
+
 export default function TripCard({
   trip,
   className = "",
@@ -253,6 +253,7 @@ export default function TripCard({
           )}
         </div>
       </div>
+
       {/* CARD BODY */}
       <div className={`bg-white ${compact ? "p-3" : "p-4"}`}>
         {/* Title */}
