@@ -10,6 +10,7 @@ import {
   Ticket
 } from "lucide-react";
 import DiscoverEvents from "./DiscoverEvents";
+import { useNavigate } from "react-router-dom";
 
 const HERO_SLIDES = [
   {
@@ -162,6 +163,7 @@ const ALL_PACKAGES = [
 
 export default function EventsAndFestivals() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -397,7 +399,9 @@ export default function EventsAndFestivals() {
                         /Per Person
                       </span>
                     </div>
-                    <button className="px-4 py-1.5 rounded-full border border-slate-600 hover:border-amber-400 hover:bg-amber-400 hover:text-slate-950 text-xs text-slate-200 font-medium transition-all cursor-pointer">
+                    <button
+                    onClick={()=>navigate('/trips')}
+                    className="px-4 py-1.5 rounded-full border border-slate-600 hover:border-amber-400 hover:bg-amber-400 hover:text-slate-950 text-xs text-slate-200 font-medium transition-all cursor-pointer">
                       Book Now
                     </button>
                   </div>
@@ -509,7 +513,9 @@ function MonthEventSection({ monthTitle, events }) {
                 </div>
 
                 <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <button className="w-full sm:w-auto px-8 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-colors cursor-pointer shadow-md">
+                  <button 
+                  onClick={()=>navigate('/trips')}
+                  className="w-full sm:w-auto px-8 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-colors cursor-pointer shadow-md">
                     Book Now
                   </button>
                   <div className="text-xs text-slate-400">

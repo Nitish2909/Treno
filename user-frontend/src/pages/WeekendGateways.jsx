@@ -7,6 +7,7 @@ import {
   MapPin, 
   Calendar 
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 // --- DATA ---
 const BEST_SELLING = [
@@ -119,10 +120,13 @@ const EXTENDED_ESCAPES = [
 
 // --- CARD COMPONENT ---
 const TripCard = ({ trip }) => {
+
+  const navigate = useNavigate()
   return (
     <div className="relative h-[420px] rounded-xl overflow-hidden group shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between p-4 cursor-pointer">
       {/* Background Image */}
       <img
+      onClick={() => navigate('/trips')}
         src={trip.image}
         alt={trip.title}
         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

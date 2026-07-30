@@ -333,7 +333,8 @@ export default function TripCard({
 
           {/* View Details Link */}
           <Link
-            to={`/trips/${dynamicTargetUri}`}
+            // to={`/trips/${dynamicTargetUri}`}
+            to={`/trips`}
             className={`shrink-0 border border-amber-400 text-amber-500 font-semibold rounded-full
               hover:bg-amber-400 hover:text-white transition-colors duration-200
               ${compact ? "px-3 py-1 text-xs" : "px-4 py-1.5 text-sm"}`}
