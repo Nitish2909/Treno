@@ -177,7 +177,7 @@ export default function BlogDetail() {
   const [activeTocId, setActiveTocId] = useState('')
 
   const { data: blogData, isLoading, isError } = useGetBlogBySlugQuery(slug, { skip: !slug })
-  const blog = isError || !blogData ? MOCK_BLOG : (blogData.blog ?? blogData ?? MOCK_BLOG)
+  const blog = isError || !blogData ? MOCK_BLOG : (blogData?.data ?? blogData ?? MOCK_BLOG)
 
   const { data: relatedData, isLoading: relatedLoading } = useGetRelatedBlogsQuery(
     { blogId: blog._id, limit: 3 },

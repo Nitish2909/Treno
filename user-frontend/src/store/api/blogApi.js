@@ -11,7 +11,7 @@ export const blogApi = baseApi.injectEndpoints({
         if (params.limit) queryParams.set('limit', params.limit || 9)
         if (params.featured) queryParams.set('featured', params.featured)
         const qs = queryParams.toString()
-        return `/blogs${qs ? `?${qs}` : ''}`
+        return `/admin/blogs${qs ? `?${qs}` : ''}`
       },
       providesTags: (result) =>
         result?.blog
@@ -23,22 +23,22 @@ export const blogApi = baseApi.injectEndpoints({
     }),
 
     getBlogBySlug: builder.query({
-      query: (slug) => `/blogs/${slug}`,
+      query: (slug) => `/admin/blogs/blog/${slug}`,
       providesTags: (result, error, slug) => [{ type: 'Blog', id: slug }],
     }),
 
     getFeaturedBlogs: builder.query({
-      query: (limit = 3) => `/blogs/featured?limit=${limit}`,
+      query: (limit = 3) => `/admin/blogs/featured?limit=${limit}`,
       providesTags: [{ type: 'Blog', id: 'FEATURED' }],
     }),
 
     getRelatedBlogs: builder.query({
-      query: ({ blogId, limit = 3 }) => `/blogs/${blogId}/related?limit=${limit}`,
+      query: ({ blogId, limit = 3 }) => `/admin/blogs/${blogId}/related?limit=${limit}`,
       providesTags: (result, error, { blogId }) => [{ type: 'Blog', id: `RELATED_${blogId}` }],
     }),
 
     getBlogCategories: builder.query({
-      query: () => '/blogs/categories',
+      query: () => '/admin/blogs/categories',
       providesTags: [{ type: 'Blog', id: 'CATEGORIES' }],
     }),
   }),

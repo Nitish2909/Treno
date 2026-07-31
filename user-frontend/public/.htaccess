@@ -6,4 +6,8 @@
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule . /index.html [L]
+
+
+  RewriteCond %{HTTP_HOST} ^www\.tripwithtreno\.com [NC]
+RewriteRule ^(.*)$ https://tripwithtreno.com/$1 [L,R=301]
 </IfModule>

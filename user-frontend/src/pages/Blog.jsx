@@ -258,7 +258,7 @@ export default function Blog() {
 
   // Resolve data
   const allBlogs =
-    blogsError || !blogsData ? MOCK_BLOGS : (blogsData.blogs ?? MOCK_BLOGS);
+    blogsError || !blogsData ? MOCK_BLOGS : (blogsData?.data.blogs ?? MOCK_BLOGS);
   const featuredPost = !featuredData
     ? MOCK_BLOGS[0]
     : (featuredData[0] ?? MOCK_BLOGS[0]);
