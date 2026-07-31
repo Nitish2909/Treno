@@ -188,6 +188,7 @@ const DestinationCard = React.memo(function DestinationCard({ dest, large = fals
   if (!dest) return null;
 
   const handleNavigate = () => {
+      window.scrollTo(0, 0)
     navigate(`/destinations/${dest.name}`, {
       state: dest,
     });
@@ -211,6 +212,7 @@ const DestinationCard = React.memo(function DestinationCard({ dest, large = fals
     >
       {/* Background Image */}
       <img
+      
         src={dest.image}
         alt={dest.name || 'Destination'}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -249,7 +251,8 @@ const DestinationCard = React.memo(function DestinationCard({ dest, large = fals
 
         {/* Action Button Reveal */}
         <div className="overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-out group-hover:max-h-12 group-hover:opacity-100 group-hover:mt-3">
-          <span className="inline-flex items-center gap-2 rounded-full bg-amber-400 text-slate-950 px-3.5 py-1.5 text-xs font-semibold shadow-md hover:bg-amber-300 transition-colors">
+          <span
+           className="inline-flex items-center gap-2 rounded-full bg-amber-400 text-slate-950 px-3.5 py-1.5 text-xs font-semibold shadow-md hover:bg-amber-300 transition-colors">
             <Compass size={13} />
             Explore Destination
           </span>
