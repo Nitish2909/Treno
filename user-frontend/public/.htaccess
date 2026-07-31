@@ -1,13 +1,17 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # 1. Force Redirect www to non-www (Must be at the top)
+  RewriteCond %{HTTP_HOST} ^www\.tripwithtreno\.com$ [NC]
+  RewriteRule ^(.*)$ https://tripwithtreno.com/$1 [R=301,L]
+
+  # 2. Allow direct access to index.html
   RewriteRule ^index\.html$ - [L]
+
+  # 3. Route all other traffic to index.html (SPA Fallback)
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule . /index.html [L]
-
-
-  RewriteCond %{HTTP_HOST} ^www\.tripwithtreno\.com [NC]
-RewriteRule ^(.*)$ https://tripwithtreno.com/$1 [L,R=301]
 </IfModule>
