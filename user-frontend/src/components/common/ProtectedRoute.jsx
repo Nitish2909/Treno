@@ -77,6 +77,7 @@ export default function ProtectedRoute({
   const isAuthenticated = useSelector((state) => state.auth?.isAuthenticated ?? false);
   const isLoading       = useSelector((state) => state.auth?.isLoading       ?? false);
 
+  console.log(isAuthenticated)
   // Persist the intended path so the login page can redirect back after success.
   useEffect(() => {
     if (!isAuthenticated && !isLoading) {

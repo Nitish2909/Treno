@@ -392,7 +392,11 @@ export default function FeaturedTrips() {
             to="/trips"
             className="relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium rounded-xl transition-all duration-300 shadow-[0_10px_25px_-5px_rgba(245,158,11,0.4)] hover:shadow-[0_20px_35px_-5px_rgba(245,158,11,0.5)] hover:-translate-y-1 active:translate-y-0 group"
           >
-            <span>Explore All Trips</span>
+            <span
+            onClick={()=>{
+               window.scrollTo(0, 0)
+            }}
+            >Explore All Trips</span>
             <ArrowRight
               size={18}
               className="transition-transform duration-300 group-hover:translate-x-1"

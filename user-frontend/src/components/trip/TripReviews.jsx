@@ -169,7 +169,6 @@ function ReviewForm({ tripId, onSubmit, loading }) {
     if (!validate()) return;
    onSubmit({
       tripId,
-      bookingId,
       rating: formRating,
       title: reviewTitle,
       comment: reviewText,
@@ -259,7 +258,7 @@ export default function TripReviews({ tripId }) {
     useCreateReviewMutation?.() ?? [async () => {}, { isLoading: false }];
 
   const summary = summaryData ?? MOCK_SUMMARY;
-  const reviews = reviewsData?.reviews ?? MOCK_REVIEWS;
+  const reviews = reviewsData?.data?.reviews ?? MOCK_REVIEWS;
   const hasMore = reviewsData?.hasMore ?? false;
 
   const handleHelpful = (reviewId) => {

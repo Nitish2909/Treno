@@ -105,7 +105,6 @@ function RevealSection({ children, delay = 0, className = "" }) {
 }
 
 //  Data
-
 const STATS = [
   {
     label: "50,000+ Travelers",
@@ -125,7 +124,7 @@ const STATS = [
     icon: Camera,
     num: "1,000+",
   },
-  { label: "6 Years", sub: "Of experience", icon: Award, num: "6 Yrs" },
+  { label: "5 Years", sub: "Of experience", icon: Award, num: "5 Yrs" },
 ];
 
 const TEAM = [
@@ -204,29 +203,26 @@ const VALUES = [
 
 const TIMELINE = [
   {
-    year: "2018",
+    year: "2022",
     text: "Treno founded with a team of 4 in a tiny Delhi apartment, running weekend treks for 100 travellers.",
   },
   {
-    year: "2019",
+    year: "2023",
     text: "Expanded to 50 destinations across India. Crossed 5,000 happy travellers.",
   },
   {
-    year: "2020",
+    year: "2024",
     text: "Pivoted to virtual tours during the pandemic. Launched the Treno travel community.",
   },
   {
-    year: "2021",
+    year: "2025",
     text: "Relaunched on-ground trips. Introduced international packages. Reached 15,000 travellers.",
   },
   {
-    year: "2022",
+    year: "2026",
     text: "Launched the Treno app. Crossed 500 curated trips and 30,000 travellers.",
   },
-  {
-    year: "2024",
-    text: "Today, 50,000+ travellers trust Treno for unforgettable journeys across 500+ destinations worldwide.",
-  },
+
 ];
 
 const PARTNERS = [
@@ -315,7 +311,7 @@ export default function About() {
           "We believe every journey is a story waiting to be written."
         </blockquote>
         <p className="mt-6 text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed">
-          Treno exists to make extraordinary travel accessible to everyone —
+          Treno Your Travel Partner exists to make extraordinary travel accessible to everyone —
           whether you are a solo adventurer, a couple seeking romance, or a
           group of friends chasing thrills. We handle the logistics so you can
           focus on the moments.
@@ -338,7 +334,7 @@ export default function About() {
             {/* Text left */}
             <RevealSection delay={0.1}>
               <p className="text-slate-700 leading-relaxed text-base mb-4">
-                Treno was born in 2024 when founder Mukesh Kumar decided that
+                Treno Your Travel Partner was born in 2023 when founder Mukesh Kumar decided that
                 the best way to explore India was with a group of strangers who
                 quickly become friends. Starting with just 100 travellers on
                 weekend Himalayan treks, we quickly grew into a full-service

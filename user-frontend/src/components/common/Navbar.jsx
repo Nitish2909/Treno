@@ -326,7 +326,7 @@ function UserDropdown({ user, onLogout }) {
  * Becomes solid white with shadow once the user scrolls past 50 px.
  */
 export default function Navbar() {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, handleLogout } = useAuth();
   const scrollY = useScrollPosition();
   const navigate = useNavigate();
 
@@ -380,10 +380,10 @@ export default function Navbar() {
     [searchQuery, navigate],
   );
 
-  const handleLogout = useCallback(() => {
-    logout();
-    navigate("/");
-  }, [logout, navigate]);
+  // const handleLogout = useCallback(() => {
+  //   handleLogout();
+  //   navigate("/");
+  // }, [logout, navigate]);
 
   const toggleDropdown = (name) =>
     setActiveDropdown((prev) => (prev === name ? null : name));

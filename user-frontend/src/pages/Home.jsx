@@ -10,7 +10,7 @@ import Testimonials from '../components/home/Testimonials.jsx'
 import NewsletterSection from '../components/home/NewsletterSection.jsx'
 import EventBanner from '../components/home/EventBanner.jsx'
 import IndiaTrips from './IndiaTrips.jsx'
-
+// import WhatsApp from '../components/home/Whatsapp.jsx'
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
   animate: {
@@ -124,6 +124,11 @@ export default function Home() {
         <section className="">
           <NewsletterSection />
         </section>
+
+         {/* Whatapp */}
+        {/* <section className="">
+          <WhatsApp/>
+        </section> */}
       </motion.div>
     </>
   )
