@@ -412,3 +412,62 @@ export const getBookingAnalytics = asyncHandler(async (_req, res) => {
     "Booking analytics fetched successfully."
   ).send(res);
 });
+
+
+
+/**
+ * GET /api/v1/messages
+ * Retrieves all contact messages for admin (with pagination & search/filter)
+ */
+export const getContactMessages = asyncHandler(async (req, res) => {
+  // Extract query parameters with sensible defaults
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const skip = (page - 1) * limit;
+
+  const { subject, search } = req.query;
+
+  // Build filter query object
+  const query = {};
+
+  // Filter by subject if provided
+  if (subject) {
+    query.subject = subject;
+  }
+
+  // Search by name or email if search string is provided
+  if (search) {
+    query.$or = [
+      { name: { $regex: search, $options: "i" } },
+      { email: { $regex: search, $options: "i" } },
+    ];
+  }
+
+  // Fetch messages and total count concurrently for performance
+  const [messages, totalMessages] = await Promise.all([
+    Message.find(query)
+      .sort({ createdAt: -1 }) // Newest first
+      .skip(skip)
+      .limit(limit)
+      .lean(),
+    Message.countDocuments(query),
+  ]);
+
+  const totalPages = Math.ceil(totalMessages / limit);
+
+  return new ApiResponse(
+    200,
+    {
+      messages,
+      pagination: {
+        totalMessages,
+        totalPages,
+        currentPage: page,
+        limit,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    },
+    "Contact messages retrieved successfully."
+  ).send(res);
+});

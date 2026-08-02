@@ -12,12 +12,12 @@ import { uploadReviewImages } from "../middleware/upload.js";
 const router = express.Router();
 
 // Public
-router.get("/trip/:tripId", getReviews);
+router.get("/", getReviews);
 
 // Protected
 router.use(verifyToken);
 
-router.post("/", uploadReviewImages, createReview);
+router.post("/", createReview);
 router.put("/:id", updateReview);
 router.delete("/:id", deleteReview);
 router.post("/:id/helpful", markHelpful);

@@ -20,12 +20,12 @@ const handleValidationErrors = (req) => {
  */
 export const createReview = asyncHandler(async (req, res) => {
   const { tripId, bookingId, rating, title, comment } = req.body;
-  const tempFilePaths = extractTempFilePaths(req.files);
 
   try {
-    if (!tripId || !bookingId || !rating || !comment) {
-      throw ApiError.badRequest("tripId, bookingId, rating, and comment are required.");
+    if (!tripId || !bookingId || !title || !rating || !comment) {
+      throw ApiError.badRequest("tripId, bookingId, rating, title and comment are required.");
     }
+    
 
     // Verify booking belongs to user and trip is completed
     const booking = await Booking.findOne({
@@ -48,15 +48,6 @@ export const createReview = asyncHandler(async (req, res) => {
       throw ApiError.conflict("You have already submitted a review for this booking.");
     }
 
-    // Upload review images
-    let images = [];
-    if (req.files?.length) {
-      const uploadPromises = req.files.map((file) =>
-        uploadToCloudinary(file.path, "Treno/reviews")
-      );
-      const results = await Promise.all(uploadPromises);
-      images = results.map((r) => ({ url: r.secure_url, public_id: r.public_id }));
-    }
 
     const review = await Review.create({
       user: req.user._id,
@@ -65,16 +56,13 @@ export const createReview = asyncHandler(async (req, res) => {
       rating: parseInt(rating),
       title,
       comment,
-      images,
       isVerified: true, // Verified because booking exists
       isApproved: false, // Requires admin approval
     });
 
-    deleteTempFiles(tempFilePaths);
 
     return new ApiResponse(201, review, "Review submitted successfully. It will be visible after admin approval.").send(res);
   } catch (error) {
-    deleteTempFiles(tempFilePaths);
     throw error;
   }
 });
@@ -83,8 +71,8 @@ export const createReview = asyncHandler(async (req, res) => {
  * GET /api/v1/reviews/trip/:tripId
  */
 export const getReviews = asyncHandler(async (req, res) => {
-  const { tripId } = req.params;
-  const { page = 1, limit = 10, sort = "-createdAt" } = req.query;
+  // const { tripId } = req.params;
+  const { tripId, page = 1, limit = 10, sort = "-createdAt" } = req.query;
 
   const trip = await Trip.findById(tripId).select("_id");
   if (!trip) throw ApiError.notFound("Trip not found.");

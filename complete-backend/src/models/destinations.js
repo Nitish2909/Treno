@@ -71,9 +71,6 @@ export default Destination;
 
 
 
-
-
-
 const seedDestinations = [
   {
     name: 'manali',

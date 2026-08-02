@@ -61,6 +61,7 @@ import { uploadTripImages, uploadBlogImages, uploadSingleImage, uploadTripPDF as
 import { validateCreateTrip, validateUpdateTrip } from "../validators/tripValidator.js";
 import { authLimiter } from "./authRoutes.js";
 import { adminLogin } from "../controllers/adminController.js";
+import { changePassword, updateProfile } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -84,6 +85,8 @@ router.get("/users", getAllUsers);
 router.get("/users/:id", getUserById);
 router.patch("/users/:id/role", updateUserRole);
 router.patch("/users/:id/deactivate", deactivateUser);
+router.put("/profile",updateProfile)
+router.put("/change-password", changePassword)
 
 //  Bookings 
 router.get("/bookings", getAllBookings);
@@ -110,7 +113,7 @@ router.delete("/categories/:id", deleteCategory);
 //  Blogs
 router.get("/blogs", getAllAdminBlogs);
 router.post("/blogs", uploadBlogImages, createBlog);
-router.put("/blogs/:id", uploadBlogImages, updateBlog);
+router.put("/blogs/:id", updateBlog);
 router.delete("/blogs/:id", deleteBlog);
 
 //  Reviews 

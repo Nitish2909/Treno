@@ -6,14 +6,15 @@ import {
   incrementViewCount,
   getBlogById
 } from "../controllers/blogController.js";
+import isAdmin from "../middleware/admin.js";
 
 const router = express.Router();
 
 // Public routes
-router.post("/",createBlog)
+router.post("/",isAdmin,createBlog)
 router.get("/", getAllBlogs);
-// router.get("/:id",getBlogById)
+router.get("/:id",getBlogById)
 router.get("/blog/:slug", getBlogBySlug);
-router.post("/:slug/view", incrementViewCount);
+router.post("/:slug/view", isAdmin, incrementViewCount);
 
 export default router;

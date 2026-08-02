@@ -20,6 +20,7 @@ import adminRoutes from "./src/routes/adminRoutes.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import destinationsRoutes from "./src/routes/destinationsRoutes.js"
+import messageRoutes from "./src/routes/messageRoutes.js"
 
 dotenv.config();
 
@@ -118,6 +119,7 @@ app.use("/api/v1/admin/blogs", blogRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/destinations", destinationsRoutes )
+app.use("/api/v1/messages", messageRoutes);
 
 //  404 Handler 
 app.use((req, res) => {

@@ -129,7 +129,7 @@ export const getAllBlogs = asyncHandler(async (req, res) => {
 export const getBlogBySlug = asyncHandler(async (req, res) => {
   
   console.log(req.params.slug)
-  const blog = await Blog.findOne({ $or : [{slug : req.params.slug },{_id:req.params.slug}] , status: "published" })
+  const blog = await Blog.findOne({slug : req.params.slug , status: "published" })
     .populate("author", "name avatar");
 
   console.log(blog)
