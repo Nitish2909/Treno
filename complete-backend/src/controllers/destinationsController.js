@@ -8,19 +8,54 @@ import Destination from '../models/destinations.js';
 // @desc    Get all destinations (with optional search filter)
 // @route   GET /api/destinations
 // @access  Public
+// export const getAllDestionation = asyncHandler(async (req, res) => {
+
+//     const destinations = await Destination.find({}).sort({ createdAt: -1 });
+
+
+//     return new ApiResponse(
+//         200,
+//         {
+//             count: destinations.length,
+//             data: destinations
+//         },
+//         "desstination fetched successfully"
+//     ).send(res)
+// });
+
 export const getAllDestionation = asyncHandler(async (req, res) => {
+    // 1. Parse page and limit from query params with default values
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.max(1, parseInt(req.query.limit, 10) || 10);
+    const skip = (page - 1) * limit;
 
-    const destinations = await Destination.find({}).sort({ createdAt: -1 });
+    // 2. Fetch paginated data and total count concurrently
+    const [destinations, totalDestinations] = await Promise.all([
+        Destination.find({})
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit),
+        Destination.countDocuments({})
+    ]);
 
+    const totalPages = Math.ceil(totalDestinations / limit);
 
+    // 3. Send structured response
     return new ApiResponse(
         200,
         {
-            count: destinations.length,
-            data: destinations
+            data: destinations,
+            pagination: {
+                totalDestinations,
+                totalPages,
+                currentPage: page,
+                limit,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1
+            }
         },
-        "desstination fetched successfully"
-    ).send(res)
+        "Destinations fetched successfully"
+    ).send(res);
 });
 
 // @desc    Get single destination by Name

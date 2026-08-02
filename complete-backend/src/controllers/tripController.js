@@ -147,7 +147,7 @@ export const getTripById = asyncHandler(async (req, res) => {
 export const getFeaturedTrips = asyncHandler(async (_req, res) => {
   const trips = await Trip.find({ isActive: true, isFeatured: true })
     .populate("category", "name slug icon")
-    .select("title slug thumbnail price duration type averageRating totalReviews location isFeatured isPopular")
+    .select("title slug thumbnail price duration type averageRating totalReviews images location isFeatured isPopular")
     .sort("-createdAt")
     .limit(8)
     .lean();
