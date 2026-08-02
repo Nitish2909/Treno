@@ -33,7 +33,7 @@ export default function Bookings() {
 
   const [exportBookings, { isLoading: exporting }] = useExportBookingsMutation()
 
-  const bookings = data?.bookings || []
+  const bookings = data?.data?.bookings || []
   const total    = data?.total    || 0
 
   async function handleExport() {

@@ -298,7 +298,7 @@ export default function Trips() {
           },
         ]}
         searchable
-        searchPlaceholder="Search trips…"
+        searchPlaceholder="    Search trips…"
         onSearch={(v) => {
           setSearch(v);
           setPage(1);

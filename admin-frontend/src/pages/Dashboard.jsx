@@ -53,7 +53,6 @@
 
 //   const s = stats || {}
 
-  
 //   const revenueData   = revenue?.data   || []
 //   // const analyticsData = analytics.data. || []
 //   const analyticsData = []
@@ -352,13 +351,9 @@
 //   )
 // }
 
-
-
-
-
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
+import React from "react";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import {
   DollarSign,
   Calendar,
@@ -366,11 +361,12 @@ import {
   Compass,
   Plus,
   ArrowRight,
+  UserPlus,
   TrendingUp,
   PieChart as PieIcon,
   Sparkles,
   BarChart2,
-} from 'lucide-react'
+} from "lucide-react";
 import {
   AreaChart,
   Area,
@@ -384,35 +380,35 @@ import {
   Cell,
   BarChart,
   Bar,
-} from 'recharts'
+} from "recharts";
 import {
   useGetDashboardStatsQuery,
   useGetRevenueStatsQuery,
   useGetBookingAnalyticsQuery,
   useGetTopTripsQuery,
   useGetRecentActivityQuery,
-} from '../store/api/adminApi'
-import StatsCard from '../components/common/StatsCard'
-import StatusBadge from '../components/common/StatusBadge'
-import PageHeader from '../components/common/PageHeader'
+} from "../store/api/adminApi";
+import StatsCard from "../components/common/StatsCard";
+import StatusBadge from "../components/common/StatusBadge";
+import PageHeader from "../components/common/PageHeader";
 import {
   formatPrice,
   formatDate,
   calculatePercentageChange,
   truncateText,
-} from '../utils/helpers'
+} from "../utils/helpers";
 
-const CHART_COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6']
+const CHART_COLORS = ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6"];
 
 const PIE_COLORS = {
-  confirmed: '#3B82F6',
-  pending: '#F59E0B',
-  completed: '#10B981',
-  cancelled: '#EF4444',
-}
+  confirmed: "#3B82F6",
+  pending: "#F59E0B",
+  completed: "#10B981",
+  cancelled: "#EF4444",
+};
 
 function CustomTooltip({ active, payload, label }) {
-  if (!active || !payload?.length) return null
+  if (!active || !payload?.length) return null;
   return (
     <div className="bg-white/95 backdrop-blur-md border border-slate-100 rounded-xl shadow-xl p-3 text-xs min-w-[140px]">
       {label && (
@@ -421,68 +417,81 @@ function CustomTooltip({ active, payload, label }) {
         </p>
       )}
       {payload.map((p) => (
-        <p key={p.name || p.dataKey} className="flex items-center justify-between gap-3 text-slate-600 my-0.5">
+        <p
+          key={p.name || p.dataKey}
+          className="flex items-center justify-between gap-3 text-slate-600 my-0.5"
+        >
           <span className="flex items-center gap-1.5 capitalize">
-            <span className="w-2 h-2 rounded-full inline-block" style={{ background: p.color || p.fill }} />
+            <span
+              className="w-2 h-2 rounded-full inline-block"
+              style={{ background: p.color || p.fill }}
+            />
             {p.name}:
           </span>
           <strong className="text-slate-900 font-semibold">
-            {typeof p.value === 'number' && (p.name?.toLowerCase().includes('revenue') || p.dataKey === 'revenue')
+            {typeof p.value === "number" &&
+            (p.name?.toLowerCase().includes("revenue") ||
+              p.dataKey === "revenue")
               ? formatPrice(p.value)
               : p.value}
           </strong>
         </p>
       ))}
     </div>
-  )
+  );
 }
 
 export default function Dashboard() {
-  const { data: stats, isLoading: statsLoading } = useGetDashboardStatsQuery()
-  const { data: revenue, isLoading: revenueLoading } = useGetRevenueStatsQuery('monthly')
-  const { data: analytics, isLoading: analyticsLoading } = useGetBookingAnalyticsQuery()
-  const { data: topTrips, isLoading: tripsLoading } = useGetTopTripsQuery()
-  const { data: activity, isLoading: activityLoading } = useGetRecentActivityQuery()
+  const { data: stats, isLoading: statsLoading } = useGetDashboardStatsQuery();
+  const { data: revenue, isLoading: revenueLoading } =
+    useGetRevenueStatsQuery("monthly");
+  const { data: analytics, isLoading: analyticsLoading } =
+    useGetBookingAnalyticsQuery();
+  const { data: topTrips, isLoading: tripsLoading } = useGetTopTripsQuery();
+  const { data: activity, isLoading: activityLoading } =
+    useGetRecentActivityQuery();
 
-  const s = stats || {}
+  const s = stats || {};
   console.log(s);
-  
 
   // Safe array extractions to prevent runtime type errors
-  const revenueData = Array.isArray(revenue?.data)
-    ? revenue.data
+  const revenueData = Array.isArray(stats?.data?.monthlyRevenue)
+    ? stats?.data?.monthlyRevenue
     : Array.isArray(revenue)
-    ? revenue
-    : []
+      ? revenue
+      : [];
 
   const analyticsData = Array.isArray(analytics?.data)
-    ? analytics.data
+    ? analytics?.data
     : Array.isArray(analytics?.data?.stats)
-    ? analytics.data.stats
-    : Array.isArray(analytics)
-    ? analytics
-    : []
+      ? analytics.data.stats
+      : Array.isArray(analytics)
+        ? analytics
+        : [];
 
-  const topTripsData = Array.isArray(topTrips?.trips)
-    ? topTrips.trips
+  const topTripsData = Array.isArray(stats?.data?.topTrips)
+    ? stats?.data?.topTrips
     : Array.isArray(topTrips?.data)
-    ? topTrips.data
-    : Array.isArray(topTrips)
-    ? topTrips
-    : []
+      ? topTrips.data
+      : Array.isArray(topTrips)
+        ? topTrips
+        : [];
 
-  const recentBookings = Array.isArray(activity?.bookings)
-    ? activity.bookings
+  const recentBookings = Array.isArray(stats?.data?.recentBookings)
+    ? stats.data?.recentBookings
     : Array.isArray(activity?.recentBookings)
-    ? activity.recentBookings
-    : []
+      ? activity.recentBookings
+      : [];
+
+  console.log(recentBookings);
 
   const recentUsers = Array.isArray(activity?.users)
     ? activity.users
     : Array.isArray(activity?.recentUsers)
-    ? activity.recentUsers
-    : []
+      ? activity.recentUsers
+      : [];
 
+ console.log(recentUsers)
   return (
     <>
       <Helmet>
@@ -491,7 +500,7 @@ export default function Dashboard() {
 
       <PageHeader
         title="Dashboard Overview"
-        breadcrumbs={[{ label: 'Dashboard' }]}
+        breadcrumbs={[{ label: "Dashboard" }]}
         actions={
           <Link
             to="/admin/trips/create"
@@ -506,7 +515,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
         <StatsCard
           title="Total Revenue"
-          value={formatPrice(s.data?.totalRevenue?.totalRevenue)}
+          value={formatPrice(s.data?.overview?.totalRevenue)}
           icon={DollarSign}
           color="blue"
           change={calculatePercentageChange(s.totalRevenue, s.prevRevenue)}
@@ -514,7 +523,7 @@ export default function Dashboard() {
         />
         <StatsCard
           title="Total Bookings"
-          value={s.totalBookings?.toLocaleString() || '—'}
+          value={s.data?.overview?.totalBookings?.toLocaleString() || "—"}
           icon={Calendar}
           color="green"
           change={calculatePercentageChange(s.totalBookings, s.prevBookings)}
@@ -522,7 +531,7 @@ export default function Dashboard() {
         />
         <StatsCard
           title="Active Users"
-          value={s.data?.overview.totalUsers?.toLocaleString() || '—'}
+          value={s.data?.overview.totalUsers?.toLocaleString() || "—"}
           icon={Users}
           color="purple"
           change={calculatePercentageChange(s.totalUsers, s.prevUsers)}
@@ -530,10 +539,33 @@ export default function Dashboard() {
         />
         <StatsCard
           title="Active Trips"
-          value={s.data?.overview.activeTrips?.toLocaleString() || '—'}
+          value={s.data?.overview.activeTrips?.toLocaleString() || "—"}
           icon={Compass}
           color="amber"
           change={calculatePercentageChange(s.activeTrips, s.prevTrips)}
+          loading={statsLoading}
+        />
+
+        <StatsCard
+          title="New Users This Month"
+          value={s.data?.overview.newUsersThisMonth?.toLocaleString() || "—"}
+          icon={UserPlus}
+          color="amber"
+          change={calculatePercentageChange(
+            s.newUsersThisMonth,
+            s.prevnewUsersThisMonth,
+          )}
+          loading={statsLoading}
+        />
+        <StatsCard
+          title="Monthly Revenue"
+          value={s.data?.overview.monthlyRevenue?.toLocaleString() || "—"}
+          icon={DollarSign}
+          color="amber"
+          change={calculatePercentageChange(
+            s.monthlyRevenue,
+            s.prevmonthlyRevenue,
+          )}
           loading={statsLoading}
         />
       </div>
@@ -544,8 +576,12 @@ export default function Dashboard() {
         <div className="xl:col-span-2 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden flex flex-col justify-between">
           <div className="p-5 border-b border-slate-100 flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-slate-800 text-base">Revenue Overview</h3>
-              <p className="text-xs text-slate-400 mt-0.5">Monthly revenue generated this year</p>
+              <h3 className="font-semibold text-slate-800 text-base">
+                Revenue Overview
+              </h3>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Monthly revenue generated this year
+              </p>
             </div>
             <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
               <TrendingUp size={18} />
@@ -560,16 +596,47 @@ export default function Dashboard() {
               </div>
             ) : (
               <ResponsiveContainer width="100%" height={230}>
-                <AreaChart data={revenueData} margin={{ top: 10, right: 10, left: -15, bottom: 0 }}>
+                <AreaChart
+                  data={revenueData}
+                  margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
+                >
                   <defs>
-                    <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.35} />
-                      <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.0} />
+                    <linearGradient
+                      id="colorRevenue"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop
+                        offset="5%"
+                        stopColor="#3B82F6"
+                        stopOpacity={0.35}
+                      />
+                      <stop
+                        offset="95%"
+                        stopColor="#3B82F6"
+                        stopOpacity={0.0}
+                      />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                  <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} tickFormatter={(v) => `₹${(v/1000).toFixed(0)}k`} />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                    stroke="#f1f5f9"
+                  />
+                  <XAxis
+                    dataKey="month"
+                    tick={{ fontSize: 11, fill: "#64748b" }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 11, fill: "#64748b" }}
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}k`}
+                  />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
                     type="monotone"
@@ -578,7 +645,12 @@ export default function Dashboard() {
                     stroke="#3B82F6"
                     strokeWidth={2.5}
                     fill="url(#colorRevenue)"
-                    activeDot={{ r: 6, strokeWidth: 2, stroke: '#FFFFFF', fill: '#3B82F6' }}
+                    activeDot={{
+                      r: 6,
+                      strokeWidth: 2,
+                      stroke: "#FFFFFF",
+                      fill: "#3B82F6",
+                    }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -590,8 +662,12 @@ export default function Dashboard() {
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden flex flex-col">
           <div className="p-5 border-b border-slate-100 flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-slate-800 text-base">Bookings Status</h3>
-              <p className="text-xs text-slate-400 mt-0.5">Distribution by booking stage</p>
+              <h3 className="font-semibold text-slate-800 text-base">
+                Bookings Status
+              </h3>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Distribution by booking stage
+              </p>
             </div>
             <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
               <PieIcon size={18} />
@@ -621,7 +697,10 @@ export default function Dashboard() {
                       {analyticsData.map((entry, i) => (
                         <Cell
                           key={`cell-${i}`}
-                          fill={PIE_COLORS[entry.name?.toLowerCase()] || CHART_COLORS[i % CHART_COLORS.length]}
+                          fill={
+                            PIE_COLORS[entry.name?.toLowerCase()] ||
+                            CHART_COLORS[i % CHART_COLORS.length]
+                          }
                           className="hover:opacity-80 transition-opacity cursor-pointer"
                         />
                       ))}
@@ -632,15 +711,24 @@ export default function Dashboard() {
 
                 <div className="flex flex-wrap gap-x-4 gap-y-2 justify-center mt-3 pt-3 border-t border-slate-50 w-full">
                   {analyticsData.map((entry, i) => (
-                    <div key={i} className="flex items-center gap-1.5 text-xs text-slate-600">
+                    <div
+                      key={i}
+                      className="flex items-center gap-1.5 text-xs text-slate-600"
+                    >
                       <span
                         className="w-2.5 h-2.5 rounded-full"
                         style={{
-                          background: PIE_COLORS[entry.name?.toLowerCase()] || CHART_COLORS[i % CHART_COLORS.length],
+                          background:
+                            PIE_COLORS[entry.name?.toLowerCase()] ||
+                            CHART_COLORS[i % CHART_COLORS.length],
                         }}
                       />
-                      <span className="capitalize text-slate-500">{entry.name}</span>
-                      <span className="font-semibold text-slate-800">{entry.value}</span>
+                      <span className="capitalize text-slate-500">
+                        {entry.name}
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        {entry.value}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -654,8 +742,12 @@ export default function Dashboard() {
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden mb-6">
         <div className="p-5 border-b border-slate-100 flex items-center justify-between">
           <div>
-            <h3 className="font-semibold text-slate-800 text-base">Top 5 Trips by Bookings</h3>
-            <p className="text-xs text-slate-400 mt-0.5">Most popular travel destinations</p>
+            <h3 className="font-semibold text-slate-800 text-base">
+              Top 5 Trips by Bookings
+            </h3>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Most popular travel destinations
+            </p>
           </div>
           <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
             <BarChart2 size={18} />
@@ -670,20 +762,39 @@ export default function Dashboard() {
             </div>
           ) : (
             <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={topTripsData} layout="vertical" margin={{ top: 0, right: 20, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
-                <XAxis type="number" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
+              <BarChart
+                data={topTripsData}
+                layout="vertical"
+                margin={{ top: 0, right: 20, left: 0, bottom: 0 }}
+              >
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="#f1f5f9"
+                  horizontal={false}
+                />
                 <YAxis
+                  type="number"
+                  tick={{ fontSize: 11, fill: "#64748b" }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <XAxis
                   dataKey="title"
                   type="category"
                   width={160}
-                  tick={{ fontSize: 12, fill: '#475569' }}
+                  tick={{ fontSize: 12, fill: "#475569" }}
                   axisLine={false}
                   tickLine={false}
                   tickFormatter={(v) => truncateText(v, 22)}
                 />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="bookings" name="Bookings" fill="#3B82F6" radius={[0, 6, 6, 0]} barSize={20} />
+                <Bar
+                  dataKey="bookings"
+                  name="Bookings"
+                  fill="#3B82F6"
+                  radius={[0, 6, 6, 0]}
+                  barSize={20}
+                />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -695,7 +806,9 @@ export default function Dashboard() {
         {/* Recent Bookings Table */}
         <div className="xl:col-span-2 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden flex flex-col">
           <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-            <h3 className="font-semibold text-slate-800 text-base">Recent Bookings</h3>
+            <h3 className="font-semibold text-slate-800 text-base">
+              Recent Bookings
+            </h3>
             <Link
               to="/admin/bookings"
               className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors"
@@ -716,39 +829,52 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {activityLoading
-                  ? Array.from({ length: 5 }).map((_, i) => (
-                      <tr key={i}>
-                        {[1, 2, 3, 4, 5, 6].map((c) => (
-                          <td key={c} className="p-4">
-                            <div className="h-4 bg-slate-100 animate-pulse rounded" />
-                          </td>
-                        ))}
-                      </tr>
-                    ))
-                  : recentBookings.length === 0
-                  ? (
-                    <tr>
-                      <td colSpan={6} className="text-center text-slate-400 py-10">
-                        No recent bookings found
+                {activityLoading ? (
+                  Array.from({ length: 5 }).map((_, i) => (
+                    <tr key={i}>
+                      {[1, 2, 3, 4, 5, 6].map((c) => (
+                        <td key={c} className="p-4">
+                          <div className="h-4 bg-slate-100 animate-pulse rounded" />
+                        </td>
+                      ))}
+                    </tr>
+                  ))
+                ) : recentBookings.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={6}
+                      className="text-center text-slate-400 py-10"
+                    >
+                      No recent bookings found
+                    </td>
+                  </tr>
+                ) : (
+                  recentBookings.map((b) => (
+                    <tr
+                      key={b._id}
+                      className="hover:bg-slate-50/60 transition-colors"
+                    >
+                      <td className="py-3.5 px-4 font-mono text-xs text-slate-400">
+                        #{(b.bookingId || b._id)?.slice(-6)}
+                      </td>
+                      <td className="py-3.5 px-4 font-medium text-slate-800">
+                        {b.user?.name || "—"}
+                      </td>
+                      <td className="py-3.5 px-4 text-slate-500 max-w-[150px] truncate">
+                        {b.trip?.title || "—"}
+                      </td>
+                      <td className="py-3.5 px-4 text-slate-500 text-xs">
+                        {formatDate(b.startDate)}
+                      </td>
+                      <td className="py-3.5 px-4 font-semibold text-slate-800">
+                        {formatPrice(b.totalAmount)}
+                      </td>
+                      <td className="py-3.5 px-4">
+                        <StatusBadge status={b.bookingStatus} />
                       </td>
                     </tr>
-                  ) : (
-                    recentBookings.map((b) => (
-                      <tr key={b._id} className="hover:bg-slate-50/60 transition-colors">
-                        <td className="py-3.5 px-4 font-mono text-xs text-slate-400">
-                          #{(b.bookingId || b._id)?.slice(-6)}
-                        </td>
-                        <td className="py-3.5 px-4 font-medium text-slate-800">{b.user?.name || '—'}</td>
-                        <td className="py-3.5 px-4 text-slate-500 max-w-[150px] truncate">{b.trip?.title || '—'}</td>
-                        <td className="py-3.5 px-4 text-slate-500 text-xs">{formatDate(b.travelDate)}</td>
-                        <td className="py-3.5 px-4 font-semibold text-slate-800">{formatPrice(b.totalAmount)}</td>
-                        <td className="py-3.5 px-4">
-                          <StatusBadge status={b.status} />
-                        </td>
-                      </tr>
-                    ))
-                  )}
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -759,7 +885,9 @@ export default function Dashboard() {
           {/* Recent Users Card */}
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
             <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-              <h3 className="font-semibold text-slate-800 text-base">Recent Users</h3>
+              <h3 className="font-semibold text-slate-800 text-base">
+                Recent Users
+              </h3>
               <Link
                 to="/admin/users"
                 className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors"
@@ -768,52 +896,78 @@ export default function Dashboard() {
               </Link>
             </div>
             <div className="p-4 space-y-2">
-              {activityLoading
-                ? Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} className="flex items-center gap-3 p-2">
-                      <div className="w-8 h-8 bg-slate-100 animate-pulse rounded-full" />
-                      <div className="flex-1 space-y-1">
-                        <div className="h-3 bg-slate-100 animate-pulse rounded w-24" />
-                        <div className="h-2.5 bg-slate-100 animate-pulse rounded w-32" />
-                      </div>
+              {activityLoading ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="flex items-center gap-3 p-2">
+                    <div className="w-8 h-8 bg-slate-100 animate-pulse rounded-full" />
+                    <div className="flex-1 space-y-1">
+                      <div className="h-3 bg-slate-100 animate-pulse rounded w-24" />
+                      <div className="h-2.5 bg-slate-100 animate-pulse rounded w-32" />
                     </div>
-                  ))
-                : recentUsers.length === 0
-                ? (
-                  <p className="text-center text-slate-400 text-sm py-6">No users found</p>
-                ) : (
-                  recentUsers.map((u) => (
-                    <Link
-                      to={`/admin/users/${u._id}`}
-                      key={u._id}
-                      className="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-xl transition-colors group"
-                    >
-                      <div className="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                        {u.name?.charAt(0)?.toUpperCase() || 'U'}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-slate-800 truncate">{u.name}</p>
-                        <p className="text-xs text-slate-400 truncate">{u.email}</p>
-                      </div>
-                      <span className="text-[11px] text-slate-400 flex-shrink-0">{formatDate(u.createdAt)}</span>
-                    </Link>
-                  ))
-                )}
+                  </div>
+                ))
+              ) : recentUsers.length === 0 ? (
+                <p className="text-center text-slate-400 text-sm py-6">
+                  No users found
+                </p>
+              ) : (
+                recentUsers.map((u) => (
+                  <Link
+                    to={`/admin/users/${u._id}`}
+                    key={u._id}
+                    className="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-xl transition-colors group"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                      {u.name?.charAt(0)?.toUpperCase() || "U"}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-800 truncate">
+                        {u?.name}
+                      </p>
+                      <p className="text-xs text-slate-400 truncate">
+                        {u?.email}
+                      </p>
+                    </div>
+                    <span className="text-[11px] text-slate-400 flex-shrink-0">
+                      {formatDate(u.createdAt)}
+                    </span>
+                  </Link>
+                ))
+              )}
             </div>
           </div>
 
           {/* Quick Actions Panel */}
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200 p-5">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold text-slate-800 text-base">Quick Actions</h3>
+              <h3 className="font-semibold text-slate-800 text-base">
+                Quick Actions
+              </h3>
               <Sparkles size={16} className="text-amber-500" />
             </div>
             <div className="grid grid-cols-2 gap-2.5">
               {[
-                { label: 'New Trip', to: '/admin/trips/create', color: 'bg-blue-50/80 text-blue-700 hover:bg-blue-100' },
-                { label: 'New Blog', to: '/admin/blogs/create', color: 'bg-purple-50/80 text-purple-700 hover:bg-purple-100' },
-                { label: 'All Bookings', to: '/admin/bookings', color: 'bg-emerald-50/80 text-emerald-700 hover:bg-emerald-100' },
-                { label: 'Reviews', to: '/admin/reviews', color: 'bg-amber-50/80 text-amber-700 hover:bg-amber-100' },
+                {
+                  label: "New Trip",
+                  to: "/admin/trips/create",
+                  color: "bg-blue-50/80 text-blue-700 hover:bg-blue-100",
+                },
+                {
+                  label: "New Blog",
+                  to: "/admin/blogs/create",
+                  color: "bg-purple-50/80 text-purple-700 hover:bg-purple-100",
+                },
+                {
+                  label: "All Bookings",
+                  to: "/admin/bookings",
+                  color:
+                    "bg-emerald-50/80 text-emerald-700 hover:bg-emerald-100",
+                },
+                {
+                  label: "Reviews",
+                  to: "/admin/reviews",
+                  color: "bg-amber-50/80 text-amber-700 hover:bg-amber-100",
+                },
               ].map((a) => (
                 <Link
                   key={a.label}
@@ -828,5 +982,5 @@ export default function Dashboard() {
         </div>
       </div>
     </>
-  )
+  );
 }

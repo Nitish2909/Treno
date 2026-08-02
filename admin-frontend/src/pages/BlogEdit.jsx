@@ -70,6 +70,7 @@
 
 
 import { Helmet } from 'react-helmet-async'
+import {useSelector} from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { Loader2, AlertCircle } from 'lucide-react'
@@ -88,6 +89,7 @@ export default function BlogEdit() {
   console.log(data)
   console.log(categories)
   
+  const {user} = useSelector(state=>state.adminAuth)
 
   async function handleSubmit(formData) {
     try {
@@ -95,6 +97,7 @@ export default function BlogEdit() {
         id,
         ...formData,
         featuredImage: typeof formData.featuredImage === 'object' ? formData.featuredImage?.preview || '' : formData.featuredImage,
+        author: user.name,
         tags: formData.tags.filter(Boolean),
       }
       await updateBlog(payload).unwrap()

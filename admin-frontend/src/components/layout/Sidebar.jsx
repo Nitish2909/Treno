@@ -2,7 +2,8 @@ import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, Map, Compass, BookOpen, Calendar,
   Users, Star, Settings, LogOut, Mountain, ChevronRight,
-  Tag, FileText,MessageSquare
+  Tag, FileText,MessageSquare,
+  Plane
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useAdminAuth } from '../../hooks/useAdminAuth'
@@ -77,7 +78,7 @@ export default function Sidebar({ onClose }) {
       {/* Logo */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border flex-shrink-0">
         <div className="w-9 h-9 rounded-xl bg-primary-600 flex items-center justify-center">
-          <Mountain size={20} className="text-white" />
+          <Plane size={20} className="text-white" />
         </div>
         <div>
           <span className="text-white font-bold text-base leading-tight">TRENO</span>

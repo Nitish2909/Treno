@@ -307,7 +307,7 @@ export default function Blogs() {
         onPageChange={setPage}
         onPageSizeChange={(s) => { setPageSize(s); setPage(1) }}
         searchable
-        searchPlaceholder="Search blogs…"
+        searchPlaceholder="    Search blogs…"
         onSearch={(v) => { setSearch(v); setPage(1) }}
         searchValue={search}
         emptyText="No blogs found"

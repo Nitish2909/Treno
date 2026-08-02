@@ -130,12 +130,11 @@ export default function Users() {
         onPageChange={setPage}
         onPageSizeChange={(s) => { setPageSize(s); setPage(1) }}
         searchable
-        searchPlaceholder="Search by name or email…"
+        searchPlaceholder="    Search by name or email…"
         onSearch={(v) => { setSearch(v); setPage(1) }}
         searchValue={search}
         emptyText="No users found"
       />
-
       <ConfirmDialog
         open={!!deactivateId}
         onClose={() => setDeactivateId(null)}

@@ -252,8 +252,8 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
       e.description = 'Description must be at least 50 characters.'
     }
 
-    if (form.shortDescription && form.shortDescription.trim().length > 300) {
-      e['shortDescription'] = 'Short description must not exceed 300 characters.'
+    if (form.shortDescription && form.shortDescription.trim().length > 400) {
+      e['shortDescription'] = 'Short description must not exceed 400 characters.'
     }
 
     if (!form.type) e.type = 'Trip type is required.'
@@ -358,9 +358,9 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
           </div>
           <div>
             <label className="form-label">Short Description</label>
-            <textarea className={clsx('form-textarea', errors.shortDescription && 'error')} rows={2} value={form.shortDescription} onChange={(e) => set('shortDescription', e.target.value)} placeholder="Brief summary shown in cards (max 300 chars)" maxLength={300} />
+            <textarea className={clsx('form-textarea', errors.shortDescription && 'error')} rows={2} value={form.shortDescription} onChange={(e) => set('shortDescription', e.target.value)} placeholder="Brief summary shown in cards (max 300 chars)" maxLength={400} />
             <div className="flex justify-between items-center text-xs mt-1">
-              <p className="form-hint">{(form.shortDescription || '').length}/300</p>
+              <p className="form-hint">{(form.shortDescription || '').length}/400</p>
               {errors.shortDescription && <p className="form-error">{errors.shortDescription}</p>}
             </div>
           </div>
