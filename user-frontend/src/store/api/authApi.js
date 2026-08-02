@@ -114,6 +114,8 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    
+
     getWishlist: builder.query({
       query: () => '/auth/wishlist',
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -134,7 +136,17 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Wishlist'],
     }),
+
+    sendMessage: builder.mutation({
+      query: (data) => ({
+        url: '/messages',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
+
+
 })
 
 export const {
@@ -148,5 +160,6 @@ export const {
   useResetPasswordMutation,
   useChangePasswordMutation,
   useGetWishlistQuery,
+  useSendMessageMutation,
   useToggleWishlistApiMutation,
 } = authApi

@@ -30,7 +30,9 @@ const authSlice = createSlice({
       state.accessToken = null
       state.isAuthenticated = false
       state.isLoading = false
-      localStorage.removeItem('accessToken')
+      localStorage.setItem("user",null);
+      localStorage.setItem("accessToken",null)
+      localStorage.setItem("isAuthenticated",null)
     },
     updateUser: (state, action) => {
       state.user = { ...state.user, ...action.payload }

@@ -351,7 +351,7 @@ export default function Blog() {
           className="relative z-10 text-center px-4"
         >
           <p className="text-amber-400 font-semibold uppercase tracking-widest text-sm mb-3">
-            Treno
+            Treno Your Travel Partner
           </p>
           <h1 className="font-playfair text-4xl md:text-6xl font-bold text-white leading-tight">
             Travel Stories &amp; Inspiration

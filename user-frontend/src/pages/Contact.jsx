@@ -15,6 +15,8 @@ import {
   Youtube,
 } from "lucide-react";
 import SEOHead from "../components/common/SEOHead.jsx";
+import { useSendMessageMutation } from "../store/api/authApi.js";
+import LocationMapSection from "../components/common/LocationMapSection.jsx";
 
 //  Data
 
@@ -100,6 +102,7 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  const [sendMessage, {isLoading }] = useSendMessageMutation()
   const validate = () => {
     const e = {};
     if (!form.name.trim()) e.name = "Name is required";
@@ -129,9 +132,12 @@ export default function Contact() {
       return;
     }
     setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1400));
+    console.log(form)
+    sendMessage(form)
     setSubmitting(false);
-    setSubmitted(true);
+    setTimeout(()=>{
+      setSubmitted(true);
+    },1000)
   };
 
   const handleReset = () => {
@@ -233,7 +239,7 @@ export default function Contact() {
                       href="tel:+919876543210"
                       className="text-slate-800 font-semibold hover:text-amber-600 transition-colors"
                     >
-                      +91- 88169 42362
+                      +91-8816942362
                       <br />
                       or 9034447109
                     </a>
@@ -300,28 +306,28 @@ export default function Contact() {
                   {
                     Icon: Instagram,
                     label: "Instagram",
-                    href: "#",
+                    href: "https://www.instagram.com/treno.travels/",
                     color:
                       "hover:bg-pink-50 hover:border-pink-200 hover:text-pink-500",
                   },
                   {
                     Icon: Facebook,
                     label: "Facebook",
-                    href: "#",
+                    href: "https://www.facebook.com/profile.php?id=61580526790627#",
                     color:
                       "hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600",
                   },
                   {
                     Icon: Youtube,
                     label: "YouTube",
-                    href: "#",
+                    href: "https://youtube.com",
                     color:
                       "hover:bg-red-50 hover:border-red-200 hover:text-red-500",
                   },
                   {
                     Icon: MessageCircle,
                     label: "WhatsApp",
-                    href: "https://wa.me/9188169 42362",
+                    href: "https://wa.me/918816942362",
                     color:
                       "hover:bg-green-50 hover:border-green-200 hover:text-green-600",
                   },
@@ -542,7 +548,7 @@ export default function Contact() {
 
       {/* Map placeholder */}
       <section className="max-w-screen-xl mx-auto px-4 pb-12">
-        <div
+        {/* <div
           className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm"
           style={{ height: 320 }}
         >
@@ -567,12 +573,14 @@ export default function Contact() {
               >
                 Open in Google Maps →
               </a>
+
             </div>
             <p className="absolute bottom-4 text-xs text-slate-400">
               Interactive map coming soon
             </p>
           </div>
-        </div>
+        </div> */}
+        <LocationMapSection/>
       </section>
 
       {/* FAQ */}

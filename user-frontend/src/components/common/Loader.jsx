@@ -23,7 +23,7 @@
  */
 
 import clsx from "clsx";
-import { Mountain } from "lucide-react";
+import { Mountain,Plane } from "lucide-react";
 // import { Link } from 'react-router-dom';
 // import TrenoLogo from "../../assets/TrenoLogo.webp";
 
@@ -79,7 +79,7 @@ export function FullPageLoader({ message = "Loading your adventure…" }) {
         {/* Brand icon centred inside ring */}
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-200">
-            <Mountain size={22} className="text-white" />
+            <Plane size={22} className="text-white" />
           </span>
         </div>
       </div>

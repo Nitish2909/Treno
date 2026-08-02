@@ -1,77 +1,91 @@
-import { motion } from 'framer-motion'
-import SEOHead from '../components/common/SEOHead.jsx'
-import HeroBanner from '../components/home/HeroBanner.jsx'
-import Categories from '../components/home/Categories.jsx'
-import FeaturedTrips from '../components/home/FeaturedTrips.jsx'
-import PopularDestinations from '../components/home/PopularDestinations.jsx'
-import WhyChooseUs from '../components/home/WhyChooseUs.jsx'
-import TrendingDestinations from '../components/home/TrendingDestinations.jsx'
-import Testimonials from '../components/home/Testimonials.jsx'
-import NewsletterSection from '../components/home/NewsletterSection.jsx'
-import EventBanner from '../components/home/EventBanner.jsx'
-import IndiaTrips from './IndiaTrips.jsx'
+import { motion } from "framer-motion";
+import SEOHead from "../components/common/SEOHead.jsx";
+import HeroBanner from "../components/home/HeroBanner.jsx";
+import Categories from "../components/home/Categories.jsx";
+import FeaturedTrips from "../components/home/FeaturedTrips.jsx";
+import PopularDestinations from "../components/home/PopularDestinations.jsx";
+import WhyChooseUs from "../components/home/WhyChooseUs.jsx";
+import TrendingDestinations from "../components/home/TrendingDestinations.jsx";
+import Testimonials from "../components/home/Testimonials.jsx";
+import NewsletterSection from "../components/home/NewsletterSection.jsx";
+import EventBanner from "../components/home/EventBanner.jsx";
+import IndiaTrips from "./IndiaTrips.jsx";
 // import WhatsApp from '../components/home/Whatsapp.jsx'
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
+    transition: { duration: 0.5, ease: "easeOut" },
   },
-}
+};
 
 export default function Home() {
   return (
     <>
-     <SEOHead
-  title="Terno- Your Travel Partner | Best Travel Agency in Karnal | Tour Packages, Flight & Hotel Booking | Trip With Treno"
-  description="Treno- Your Travel Partner is a trusted travel agency in Karnal offering domestic and international tour packages, flight booking, hotel booking, train and bus ticket booking, visa assistance, honeymoon packages, family vacations, group tours, customized holiday packages, and affordable travel deals across India and worldwide."
-  keywords={[
-    "Treno Your Travel Partner",
-    "Trip With Treno",
-    "TripWithTreno",
-    "Treno",
-    "Best Travel Agency in Karnal",
-    "Travel Agency Karnal",
-    "Tour Packages Karnal",
-    "Holiday Packages Karnal",
-    "Domestic Tour Packages",
-    "International Tour Packages",
-    "Travel Booking",
-    "Online Travel Booking",
-    "Flight Booking",
-    "Hotel Booking",
-    "Train Ticket Booking",
-    "Bus Booking",
-    "Cab Booking",
-    "Travel Planner",
-    "Travel Consultant",
-    "Family Tour Packages",
-    "Honeymoon Packages",
-    "Group Tour Packages",
-    "Customized Tour Packages",
-    "Adventure Tours",
-    "Weekend Getaways",
-    "Vacation Packages",
-    "Travel Deals",
-    "Visa Assistance",
-    "Travel Insurance",
-    "Manali Tour Package",
-    "Shimla Tour Package",
-    "Kashmir Tour Package",
-    "Goa Tour Package",
-    "Kerala Tour Package",
-    "Leh Ladakh Tour Package",
-    "Andaman Tour Package",
-    "Dubai Tour Package",
-    "Thailand Tour Package",
-    "Bali Tour Package",
-    "Singapore Tour Package",
-    "Maldives Tour Package",
-    "Europe Tour Package"
-  ]}
-  ogImage="/og-home.jpg"
-/>
+      <SEOHead
+        title="Treno - Your Travel Partner | Best Travel Agency in Karnal | Tour Packages, Flight & Hotel Booking | Trip With Treno"
+        description="Book domestic and international tour packages, honeymoon packages, flights, hotels, train and bus tickets, visa services, and customized holidays at affordable prices."
+        keywords={[
+          // Brand
+          "Trip With Treno",
+          "Treno",
+          "Treno Your Travel Partner",
+
+          // Core Services
+          "Travel Agency",
+          "Best Travel Agency",
+          "Travel Agency Karnal",
+          "Travel Packages",
+          "Tour Packages",
+          "Holiday Packages",
+          "Domestic Tour Packages",
+          "International Tour Packages",
+          "Customized Tour Packages",
+          "Affordable Tour Packages",
+
+          // Booking Services
+          "Flight Booking",
+          "Hotel Booking",
+          "Train Ticket Booking",
+          "Bus Ticket Booking",
+          "Cab Booking",
+          "Online Travel Booking",
+
+          // Travel Types
+          "Honeymoon Packages",
+          "Family Tour Packages",
+          "Group Tour Packages",
+          "Corporate Tour Packages",
+          "Adventure Tours",
+          "Weekend Getaways",
+          "Vacation Packages",
+          "Pilgrimage Tour Packages",
+
+          // Travel Support
+          "Visa Assistance",
+          "Travel Insurance",
+          "Travel Planner",
+          "Travel Consultant",
+
+          // Popular Destinations
+          "Manali Tour Package",
+          "Shimla Tour Package",
+          "Kashmir Tour Package",
+          "Goa Tour Package",
+          "Kerala Tour Package",
+          "Leh Ladakh Tour Package",
+          "Andaman Tour Package",
+          "Rajasthan Tour Package",
+          "Dubai Tour Package",
+          "Thailand Tour Package",
+          "Bali Tour Package",
+          "Singapore Tour Package",
+          "Maldives Tour Package",
+          "Europe Tour Package",
+        ]}
+        ogImage="/og-home.jpg"
+      />
 
       <motion.div
         variants={pageVariants}
@@ -83,7 +97,7 @@ export default function Home() {
         <HeroBanner />
 
         {/* New Events Banner */}
-        <EventBanner/>
+        <EventBanner />
 
         {/* Trip Categories */}
         <section className="">
@@ -125,11 +139,11 @@ export default function Home() {
           <NewsletterSection />
         </section>
 
-         {/* Whatapp */}
+        {/* Whatapp */}
         {/* <section className="">
           <WhatsApp/>
         </section> */}
       </motion.div>
     </>
-  )
+  );
 }
