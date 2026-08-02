@@ -1,9 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+// Helper function to safely parse localStorage items without crashing
+const getSafeParsedStorage = (key) => {
+  try {
+    const item = localStorage.getItem(key)
+    return item ? JSON.parse(item) : null
+  } catch (error) {
+    console.error(`Error parsing ${key} from localStorage:`, error)
+    return null
+  }
+}
+
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  user: getSafeParsedStorage('user'),
   accessToken: localStorage.getItem('accessToken') || null,
-  isAuthenticated: JSON.parse(localStorage.getItem("isAuthenticated")) || null,
+  isAuthenticated: getSafeParsedStorage('isAuthenticated') ?? false,
   isLoading: false,
 }
 
@@ -12,37 +23,51 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      console.log(action.payload)
       const { user, accessToken } = action.payload
-      localStorage.setItem("user",JSON.stringify(user))
-      state.user = JSON.parse(localStorage.getItem("user")) || user
+
+      state.user = user
       state.accessToken = accessToken
-      localStorage.setItem("isAuthenticated",true)
-      state.isAuthenticated = localStorage.getItem("isAuthenticated")
+      state.isAuthenticated = Boolean(accessToken)
       state.isLoading = false
+
+      // Sync with localStorage
+      if (user) {
+        localStorage.setItem('user', JSON.stringify(user))
+      }
       if (accessToken) {
-        
         localStorage.setItem('accessToken', accessToken)
       }
+      localStorage.setItem('isAuthenticated', JSON.stringify(Boolean(accessToken)))
     },
     logout: (state) => {
       state.user = null
       state.accessToken = null
       state.isAuthenticated = false
       state.isLoading = false
-      localStorage.setItem("user",null);
-      localStorage.setItem("accessToken",null)
-      localStorage.setItem("isAuthenticated",null)
+
+      // Properly remove keys from storage
+      localStorage.removeItem('user')
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('isAuthenticated')
     },
     updateUser: (state, action) => {
       state.user = { ...state.user, ...action.payload }
+      
+      // Keep localStorage in sync with user updates
+      if (state.user) {
+        localStorage.setItem('user', JSON.stringify(state.user))
+      }
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload
     },
     setToken: (state, action) => {
       state.accessToken = action.payload
-      localStorage.setItem('accessToken', action.payload)
+      if (action.payload) {
+        localStorage.setItem('accessToken', action.payload)
+      } else {
+        localStorage.removeItem('accessToken')
+      }
     },
   },
 })

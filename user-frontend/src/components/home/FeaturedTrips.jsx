@@ -299,7 +299,7 @@ export default function FeaturedTrips() {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
   const { data, isLoading, isError } = useGetFeaturedTripsQuery(6);
 
-  const trips = isError || !data?.trips ? FALLBACK_TRIPS : data.trips;
+  const trips = isError || !data?.data ? FALLBACK_TRIPS : data.data;
 
   return (
     <section

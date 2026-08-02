@@ -103,8 +103,8 @@ export default function TripCard({
   const { min: minGroupSize, max: maxGroupSize } = groupSize;
 
   // Handle image mapping cleanly
-  const primaryImage = images?.[0] ?? {
-    url: trip.thumbnail?.url || "",
+  const primaryImage = images[0] ?? {
+    url: trip.images[0]?.url || "",
     alt: title,
   };
 
