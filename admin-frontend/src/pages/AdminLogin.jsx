@@ -15,8 +15,8 @@ import {
 import { motion } from "framer-motion";
 import { setCredentials } from "../store/slices/adminAuthSlice";
 import { useAdminLoginMutation } from "../store/api/adminApi";
-import TrenoLogo from "../assets/TrenoLogo.webp"
-import clsx from "clsx"
+import TrenoLogo from "../assets/TrenoLogo.webp";
+import clsx from "clsx";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -41,13 +41,13 @@ export default function AdminLogin() {
     e.preventDefault();
     if (!validate()) return;
     try {
-      const {data:result} = await adminLogin({ email, password }).unwrap();
-      console.log(result)
+      const { data: result } = await adminLogin({ email, password }).unwrap();
+      console.log(result);
       dispatch(setCredentials({ admin: result.admin, token: result.token }));
       toast.success(`Welcome back, ${result.admin?.name || "Admin"}!`);
       navigate("/admin/dashboard", { replace: true });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       const msg = err?.data?.message || "Invalid email or password";
       toast.error(msg);
       if (msg.toLowerCase().includes("email")) {
@@ -68,8 +68,12 @@ export default function AdminLogin() {
         <div
           className="absolute inset-0 opacity-10"
           style={{
-            backgroundImage:
-              "radial-gradient(circle at 20% 50%, #3b82f6 0%, transparent 40%), radial-gradient(circle at 80% 20%, #8b5cf6 0%, transparent 40%)",
+            backgroundImage: `radial-gradient(circle at 20% 50%, #3b82f6 0%, transparent 40%), radial-gradient(circle at 80% 20%, #8b5cf6 0%, transparent 40%)
+              url:('https://images.pexels.com/photos/35126703/pexels-photo-35126703.jpeg')
+              `,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
           }}
         />
 
@@ -102,7 +106,7 @@ export default function AdminLogin() {
                   <img
                     src={TrenoLogo}
                     alt="Treno Logo"
-                    className="w-16 h-16 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
+                    className="w-20 h-20 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
                   />
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900">
@@ -129,7 +133,7 @@ export default function AdminLogin() {
                       id="email"
                       type="email"
                       className={`form-input pl-10 ${errors.email ? "error" : ""}`}
-                      placeholder="admin@treno.in"
+                      placeholder="      admin@treno.in"
                       value={email}
                       onChange={(e) => {
                         setEmail(e.target.value);
@@ -160,7 +164,7 @@ export default function AdminLogin() {
                       id="password"
                       type={showPw ? "text" : "password"}
                       className={`form-input pl-10 pr-11 ${errors.password ? "error" : ""}`}
-                      placeholder="••••••••"
+                      placeholder="     ••••••••"
                       value={password}
                       onChange={(e) => {
                         setPassword(e.target.value);

@@ -356,6 +356,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   DollarSign,
+  IndianRupee ,
   Calendar,
   Users,
   Compass,
@@ -455,8 +456,8 @@ export default function Dashboard() {
   console.log(s);
 
   // Safe array extractions to prevent runtime type errors
-  const revenueData = Array.isArray(stats?.data?.monthlyRevenue)
-    ? stats?.data?.monthlyRevenue
+  const revenueData = Array.isArray(stats?.data?.overview?.monthlyRevenue)
+    ? stats?.data?.overview?.monthlyRevenue
     : Array.isArray(revenue)
       ? revenue
       : [];
@@ -516,7 +517,7 @@ export default function Dashboard() {
         <StatsCard
           title="Total Revenue"
           value={formatPrice(s.data?.overview?.totalRevenue)}
-          icon={DollarSign}
+          icon={IndianRupee }
           color="blue"
           change={calculatePercentageChange(s.totalRevenue, s.prevRevenue)}
           loading={statsLoading}
@@ -560,11 +561,34 @@ export default function Dashboard() {
         <StatsCard
           title="Monthly Revenue"
           value={s.data?.overview.monthlyRevenue?.toLocaleString() || "—"}
-          icon={DollarSign}
-          color="amber"
+          icon={IndianRupee }
+          color="green"
           change={calculatePercentageChange(
             s.monthlyRevenue,
             s.prevmonthlyRevenue,
+          )}
+          loading={statsLoading}
+        />
+
+         <StatsCard
+          title="Total Trips"
+          value={s.data?.overview.totalTrips?.toLocaleString() || "—"}
+          icon={Compass}
+          color="amber"
+          change={calculatePercentageChange(
+            s.totalTrips,
+            s.prevtotalTrips,
+          )}
+          loading={statsLoading}
+        />
+          <StatsCard
+          title="Total Users"
+          value={s.data?.overview.totalUsers?.toLocaleString() || "—"}
+          icon={Users}
+          color="purple"
+          change={calculatePercentageChange(
+            s.totalUsers,
+            s.prevtotalUsers,
           )}
           loading={statsLoading}
         />

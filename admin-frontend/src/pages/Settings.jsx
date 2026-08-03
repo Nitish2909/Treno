@@ -143,7 +143,7 @@ export default function Settings() {
 
         {/* Content */}
         <div className="flex-1">
-          {/* ── Profile ─────────────────────────── */}
+          {/* ── Profile  */}
           {tab === "profile" && (
             <div className="card card-body space-y-5 max-w-xl">
               <h2 className="text-base font-semibold text-gray-900">
@@ -218,7 +218,7 @@ export default function Settings() {
             </div>
           )}
 
-          {/* ── Password ────────────────────────── */}
+          {/* ── Password  */}
           {tab === "password" && (
             <div className="card card-body space-y-5 max-w-md">
               <h2 className="text-base font-semibold text-gray-900">
@@ -348,7 +348,7 @@ export default function Settings() {
             </div>
           )}
 
-          {/* ── Notifications ───────────────────── */}
+          {/* ── Notifications  */}
           {tab === "notifications" && (
             <div className="card card-body space-y-5 max-w-lg">
               <h2 className="text-base font-semibold text-gray-900">

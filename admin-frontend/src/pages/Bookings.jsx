@@ -34,6 +34,7 @@ export default function Bookings() {
   const [exportBookings, { isLoading: exporting }] = useExportBookingsMutation()
 
   const bookings = data?.data?.bookings || []
+ 
   const total    = data?.total    || 0
 
   async function handleExport() {
@@ -69,7 +70,7 @@ export default function Bookings() {
       ),
     },
     {
-      key: 'travelDate', label: 'Travel Date', sortable: true,
+      key: 'startDate', label: 'Travel Date', sortable: true,
       render: (v) => formatDate(v),
     },
     {
@@ -85,7 +86,7 @@ export default function Bookings() {
       render: (v) => <StatusBadge status={v} />,
     },
     {
-      key: 'status', label: 'Status',
+      key: 'bookingStatus', label: 'Status',
       render: (v) => <StatusBadge status={v} />,
     },
     {
