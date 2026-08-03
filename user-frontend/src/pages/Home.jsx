@@ -9,7 +9,9 @@ import TrendingDestinations from "../components/home/TrendingDestinations.jsx";
 import Testimonials from "../components/home/Testimonials.jsx";
 import NewsletterSection from "../components/home/NewsletterSection.jsx";
 import EventBanner from "../components/home/EventBanner.jsx";
-import IndiaTrips from "./IndiaTrips.jsx";
+import IndiaTrips from "../components/home/IndiaTrips.jsx";
+import InternationalTrips from "../components/home/InternationalTrips.jsx";
+import RomanticEscapes from "../components/home/RomanticEscapes.jsx";
 // import WhatsApp from '../components/home/Whatsapp.jsx'
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -99,20 +101,30 @@ export default function Home() {
         {/* New Events Banner */}
         <EventBanner />
 
-        {/* Trip Categories */}
+        {/* India Trip  */}
+        <section className="">
+          <IndiaTrips/>
+        </section>
+          
+           {/* International Trip  */}
+         <section className="">
+          <InternationalTrips/>
+        </section>
+
+          {/* RomanticEscapes */}
+         <section className="">
+          <RomanticEscapes/>
+        </section>
+
+         {/* Trip Categories */}
         <section className="">
           <Categories />
         </section>
 
-        {/*  */}
-        {/* <section className="">
-          <IndiaTrips/>
-        </section> */}
-
         {/* Featured Trips */}
-        <section className="">
+        {/* <section className="">
           <FeaturedTrips />
-        </section>
+        </section> */}
 
         {/* Popular Destinations */}
         <section className="">
