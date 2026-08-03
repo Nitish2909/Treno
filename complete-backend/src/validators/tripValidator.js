@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-// ── Create Trip ───────────────────────────────────────────────────────────────
+// ── Create Trip 
 export const validateCreateTrip = [
   body("title")
     .trim()
@@ -142,7 +142,7 @@ export const validateCreateTrip = [
     .isInt({ min: 0 }).withMessage("Slots must be a non-negative integer."),
 ];
 
-// ── Update Trip ───────────────────────────────────────────────────────────────
+// ── Update Trip 
 export const validateUpdateTrip = [
   body("title")
     .optional()

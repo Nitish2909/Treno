@@ -28,7 +28,7 @@ import { uploadAvatar } from "../middleware/upload.js";
 
 const router = express.Router();
 
-// ── Auth-specific rate limiter (5 requests / hour) ────────────────────────────
+// ── Auth-specific rate limiter (5 requests / hour) 
 export const authLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
   max: 5,
@@ -41,7 +41,7 @@ export const authLimiter = rateLimit({
   skip: (req) => process.env.NODE_ENV === "development",
 });
 
-// ── Public routes ─────────────────────────────────────────────────────────────
+// ── Public routes 
 router.post("/register", authLimiter, validateRegister, register);
 router.post("/login", authLimiter, validateLogin, login);
 router.post("/refresh-token", refreshAccessToken);
@@ -49,7 +49,7 @@ router.get("/verify-email/:token", verifyEmail);
 router.post("/forgot-password", authLimiter, validateForgotPassword, forgotPassword);
 router.post("/reset-password/:token", authLimiter, validateResetPassword, resetPassword);
 
-// ── Protected routes ──────────────────────────────────────────────────────────
+// ── Protected routes 
 router.use(verifyToken);
 
 router.get("/profile", getProfile);

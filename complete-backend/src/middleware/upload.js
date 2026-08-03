@@ -6,14 +6,14 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ─── Temp Upload Directory ────────────────────────────────────────────────────
+// ─── Temp Upload Directory 
 const TEMP_DIR = path.join(__dirname, "../../uploads/temp");
 
 if (!fs.existsSync(TEMP_DIR)) {
   fs.mkdirSync(TEMP_DIR, { recursive: true });
 }
 
-// ─── Storage Engine ───────────────────────────────────────────────────────────
+// ─── Storage Engine 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
     cb(null, TEMP_DIR);
@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
   },
 });
 
-// ─── File Filters ─────────────────────────────────────────────────────────────
+// ─── File Filters 
 const imageFilter = (_req, file, cb) => {
   const ALLOWED_TYPES = /jpeg|jpg|png|gif|webp|avif/;
   const extOk = ALLOWED_TYPES.test(path.extname(file.originalname).toLowerCase());
@@ -60,7 +60,7 @@ const imagePdfFilter = (_req, file, cb) => {
   }
 };
 
-// ─── Multer Instances ─────────────────────────────────────────────────────────
+// ─── Multer Instances 
 const imageUploader = multer({
   storage,
   fileFilter: imageFilter,
@@ -88,7 +88,7 @@ const mixedUploader = multer({
   },
 });
 
-// ─── Exported Upload Helpers ──────────────────────────────────────────────────
+// ─── Exported Upload Helpers 
 
 /** Single image upload – field name: "image" by default */
 export const uploadSingleImage = (fieldName = "image") =>
@@ -110,7 +110,7 @@ export const uploadSinglePDF = (fieldName = "document") =>
 export const uploadMixed = (fields = []) =>
   mixedUploader.fields(fields);
 
-// ─── Pre-configured upload sets ──────────────────────────────────────────────
+// ─── Pre-configured upload sets 
 
 /** For trip creation: thumbnail + images gallery */
 export const uploadTripImages = uploadFields([

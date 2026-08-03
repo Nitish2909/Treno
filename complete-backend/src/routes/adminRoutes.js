@@ -79,6 +79,7 @@ router.get('/dashboard/top-trips',getPopularTrips)
 //  Analytics 
 router.get("/dashboard/revenue", getRevenueStats);
 router.get("/dashboard/booking-analytics", getBookingAnalytics);
+// router.get("/dashboard/recent-activity")
 
 //  Users 
 router.get("/users", getAllUsers);

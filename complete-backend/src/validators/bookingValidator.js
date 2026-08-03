@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-// ── Create Booking ────────────────────────────────────────────────────────────
+// ── Create Booking 
 export const validateCreateBooking = [
   body("tripId")
     .notEmpty().withMessage("Trip ID is required.")
@@ -65,7 +65,7 @@ export const validateCreateBooking = [
     .isLength({ max: 30 }).withMessage("Coupon code must not exceed 30 characters."),
 ];
 
-// ── Cancel Booking ────────────────────────────────────────────────────────────
+// ── Cancel Booking 
 export const validateCancelBooking = [
   body("cancellationReason")
     .trim()

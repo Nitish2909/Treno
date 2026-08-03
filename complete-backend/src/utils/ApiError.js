@@ -28,7 +28,7 @@ class ApiError extends Error {
     }
   }
 
-  // ── Convenience static factories ─────────────────────────────────────────
+  // ── Convenience static factories 
 
   static badRequest(message = "Bad Request", errors = []) {
     return new ApiError(400, message, errors);

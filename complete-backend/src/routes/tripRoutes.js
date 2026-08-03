@@ -21,7 +21,7 @@ import { uploadTripImages, uploadTripPDF as uploadTripPDFMiddleware } from "../m
 
 const router = express.Router();
 
-// ── Public routes ─────────────────────────────────────────────────────────────
+// ── Public routes ------------
 router.get("/", optionalAuth, getAllTrips);
 router.get("/featured", getFeaturedTrips);
 router.get("/popular", getPopularTrips);
@@ -30,7 +30,7 @@ router.get("/category/:slug", getTripsByCategory);
 router.get("/:slug", optionalAuth, getTripBySlug);
 router.get("/trip/:id",getTripById)
 
-// ── Admin-only routes ─────────────────────────────────────────────────────────
+// ── Admin-only routes -----
 router.use(verifyToken, isAdmin);
 
 router.post("/", uploadTripImages, validateCreateTrip, createTrip);

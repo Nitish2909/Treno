@@ -9,7 +9,7 @@ import ApiError from "../utils/ApiError.js";
 export const errorHandler = (err, req, res, next) => {
   let error = err;
 
-  // ── Convert known error types to ApiError ────────────────────────────────
+  // ── Convert known error types to ApiError 
 
   // Mongoose – CastError (invalid ObjectId)
   if (err.name === "CastError") {
