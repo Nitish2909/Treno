@@ -283,7 +283,7 @@ export default function TripCard({
         )}
 
         {/* Rating stars */}
-        {averageRating !== undefined && (
+        {/* {averageRating !== undefined && (
           <div className="flex items-center gap-1.5 mb-3">
             <div className="flex items-center gap-0.5">
               {stars.length > 0
@@ -310,7 +310,7 @@ export default function TripCard({
               ({totalReviews?.toLocaleString() || 0} reviews)
             </span>
           </div>
-        )}
+        )} */}
 
         {/* Price row */}
         <div className="flex items-center justify-between gap-2">
