@@ -34,9 +34,9 @@ import { useAuth } from "../../hooks/useAuth.js";
 import { useScrollPosition } from "../../hooks/useScrollAnimation.js";
 import TrenoLogo from "../../assets/TrenoLogo.webp";
 
-// ---------------------------------------------------------------------------
+// --------------------
 // Data
-// ---------------------------------------------------------------------------
+// --------------------
 
 /** @type {{ label: string, icon: import('react').ElementType, href: string }[]} */
 const TRIP_CATEGORIES = [
@@ -605,7 +605,8 @@ export default function Navbar() {
                   <Link
                     to="/auth/login"
                     className={clsx(
-                      "px-4 py-2 rounded-full text-sm font-medium transition-colors border",
+                      
+                      "px-4 py-2 rounded-full text-sm font-medium transition-colors border transform-gpu perspective-1000 hover:-translate-y-1 hover:rotate-x-6 hover:shadow-2xl",
                       isScrolled
                         ? "border-slate-300 text-slate-700 hover:bg-slate-50"
                         : "border-white/50 text-white hover:bg-white/10",
@@ -615,7 +616,9 @@ export default function Navbar() {
                   </Link>
                   <Link
                     to="/auth/register"
-                    className="px-4 py-2 rounded-full text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white transition-colors shadow-sm shadow-amber-200"
+                    className="px-4 py-2 rounded-full text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white transition-colors shadow-sm shadow-amber-200
+                    transform-gpu perspective-1000 hover:-translate-y-1 hover:rotate-x-6 hover:shadow-2xl
+                    "
                   >
                     Register
                   </Link>

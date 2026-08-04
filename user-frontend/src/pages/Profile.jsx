@@ -710,10 +710,12 @@ export default function Profile() {
   const [activeTab, setActiveTab] = useState("personal");
 
   const {
-    data: profile,
+    data,
     isLoading: profileLoading,
     isError: profileError,
   } = useGetProfileQuery();
+
+  const profile = data?.data
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">

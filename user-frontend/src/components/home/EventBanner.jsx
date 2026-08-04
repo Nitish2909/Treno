@@ -194,7 +194,6 @@
 
 
 
-
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -229,7 +228,6 @@ const bannerData = [
     duration: "4N–5D",
     imageSrc: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1920&q=80"
   },
-  // --- Indian Festivals ---
   {
     id: 4,
     title: "GOA'S",
@@ -260,7 +258,6 @@ const bannerData = [
     duration: "4N–5D",
     imageSrc: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80"
   },
-  // --- Added New Festivals ---
   {
     id: 7,
     title: "RAJASTHAN'S",
@@ -312,6 +309,7 @@ const bannerData = [
     imageSrc: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80"
   }
 ];
+
 export default function EventBanner() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -321,7 +319,6 @@ export default function EventBanner() {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % bannerData.length);
     }, 5000);
 
-    // Cleanup timer on unmount or slide change
     return () => clearInterval(timer);
   }, []);
 
@@ -333,71 +330,115 @@ export default function EventBanner() {
     setCurrentIndex((prev) => (prev === bannerData.length - 1 ? 0 : prev + 1));
   };
 
+  // Helper to calculate 3D transform metrics per index relative to current
+  const getCardStyle = (index) => {
+    const total = bannerData.length;
+    // Calculate shortest distance in a loop
+    let offset = (index - currentIndex + total) % total;
+    if (offset > total / 2) offset -= total;
+
+    const isActive = offset === 0;
+    const isVisible = Math.abs(offset) <= 2; // Render active + 2 items on left & right
+
+    if (!isVisible) {
+      return {
+        opacity: 0,
+        pointerEvents: 'none',
+        transform: 'translate3d(0, 0, -1000px) scale(0)',
+      };
+    }
+
+    const translateX = offset * 65; // Horizontal offset percentage
+    const translateZ = -Math.abs(offset) * 200; // Z-depth push back
+    const rotateY = offset * -25; // 3D Y-axis angle
+    const scale = 1 - Math.abs(offset) * 0.12;
+    const opacity = isActive ? 1 : 0.45 - Math.abs(offset) * 0.15;
+    const zIndex = 20 - Math.abs(offset);
+
+    return {
+      transform: `translateX(${translateX}%) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
+      opacity: opacity,
+      zIndex: zIndex,
+      pointerEvents: isActive ? 'auto' : 'none',
+    };
+  };
+
   return (
-    <div className="relative w-full max-w-8xl mx-auto p-4 font-sans">
-      {/* Banner Container */}
-      <div className="relative overflow-hidden shadow-2xl h-[320px] md:h-[420px] w-full rounded ">
+    <div className="relative w-full max-w-8xl mx-auto p-4 font-sans [perspective:1200px]">
+      {/* 3D Stage Wrapper */}
+      <div className="relative w-full h-[320px] md:h-[420px] [transform-style:preserve-3d]">
         
-        {/* Background Image */}
-        <img
-          key={bannerData[currentIndex].imageSrc}
-          src={bannerData[currentIndex].imageSrc}
-          alt={bannerData[currentIndex].mainHeader}
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
-        />
+        {/* Render all slides in a 3D depth stack */}
+        {bannerData.map((item, index) => {
+          const style = getCardStyle(index);
+          return (
+            <div
+              key={item.id}
+              style={style}
+              className="absolute inset-0 w-full h-full rounded shadow-2xl overflow-hidden transition-all duration-700 ease-out border border-white/10 bg-black/40 backdrop-blur-xs"
+            >
+              {/* Background Image */}
+              <img
+                src={item.imageSrc}
+                alt={item.mainHeader}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
 
-        {/* Dark Gradient Overlay for Readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent z-10" />
+              {/* Dark Gradient Overlay for Readability */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent z-10" />
 
-        {/* Content Container */}
-        <div className="relative z-20 h-full flex flex-col justify-center px-8 md:px-16 text-white max-w-xl">
-          <span className="tracking-[0.25em] text-xs md:text-sm font-semibold text-gray-200 uppercase mb-1">
-            {bannerData[currentIndex].title}
-          </span>
+              {/* Content Container */}
+              <div className="relative z-20 h-full flex flex-col justify-center px-8 md:px-16 text-white max-w-xl">
+                <span className="tracking-[0.25em] text-xs md:text-sm font-semibold text-gray-200 uppercase mb-1">
+                  {item.title}
+                </span>
 
-          <h1 className="text-3xl md:text-5xl font-black tracking-wider text-amber-200 drop-shadow-lg">
-            {bannerData[currentIndex].mainHeader}
-          </h1>
+                <h1 className="text-3xl md:text-5xl font-black tracking-wider text-amber-200 drop-shadow-lg">
+                  {item.mainHeader}
+                </h1>
 
-          <p className="font-serif italic text-2xl md:text-4xl text-amber-100 my-1 font-light">
-            {bannerData[currentIndex].tagline}
-          </p>
+                <p className="font-serif italic text-2xl md:text-4xl text-amber-100 my-1 font-light">
+                  {item.tagline}
+                </p>
 
-          <h2 className="text-2xl md:text-4xl font-extrabold tracking-widest text-amber-300 drop-shadow-md mb-6">
-            {bannerData[currentIndex].subHeader}
-          </h2>
+                <h2 className="text-2xl md:text-4xl font-extrabold tracking-widest text-amber-300 drop-shadow-md mb-6">
+                  {item.subHeader}
+                </h2>
 
-          {/* Pricing Box */}
-          <div className="inline-block border-2 border-amber-200/80 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-sm w-fit">
-            <div className="text-[10px] tracking-widest uppercase font-bold text-gray-300 text-center mb-0.5">
-              Starting Price
+                {/* Pricing Box */}
+                <div className="inline-block border-2 border-amber-200/80 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-sm w-fit">
+                  <div className="text-[10px] tracking-widest uppercase font-bold text-gray-300 text-center mb-0.5">
+                    Starting Price
+                  </div>
+                  <div className="text-xl md:text-2xl font-bold text-amber-200 tracking-tight">
+                    {item.price}
+                  </div>
+                  <div className="flex justify-between items-center text-[9px] text-gray-300 font-semibold mt-0.5 border-t border-amber-200/40 pt-0.5 gap-3">
+                    <span>Per Person</span>
+                    <span className="bg-amber-200 text-black px-1.5 py-0.5 rounded-sm font-bold">
+                      {item.duration}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="text-xl md:text-2xl font-bold text-amber-200 tracking-tight">
-              {bannerData[currentIndex].price}
-            </div>
-            <div className="flex justify-between items-center text-[9px] text-gray-300 font-semibold mt-0.5 border-t border-amber-200/40 pt-0.5 gap-3">
-              <span>Per Person</span>
-              <span className="bg-amber-200 text-black px-1.5 py-0.5 rounded-sm font-bold">
-                {bannerData[currentIndex].duration}
-              </span>
-            </div>
-          </div>
-        </div>
+          );
+        })}
 
         {/* Carousel Navigation Buttons */}
         {bannerData.length > 1 && (
           <>
-            <button 
+            <button
               onClick={handlePrev}
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-30 bg-white/90 text-gray-800 p-2 rounded-full shadow-md hover:bg-white hover:scale-105 transition cursor-pointer"
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-40 bg-white/90 text-gray-800 p-2 rounded-full shadow-md hover:bg-white hover:scale-105 transition cursor-pointer"
               aria-label="Previous Slide"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
 
-            <button 
+            <button
               onClick={handleNext}
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-30 bg-white/90 text-gray-800 p-2 rounded-full shadow-md hover:bg-white hover:scale-105 transition cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-40 bg-white/90 text-gray-800 p-2 rounded-full shadow-md hover:bg-white hover:scale-105 transition cursor-pointer"
               aria-label="Next Slide"
             >
               <ChevronRight className="w-5 h-5" />
@@ -408,7 +449,7 @@ export default function EventBanner() {
 
       {/* Dynamic Pagination Dots */}
       {bannerData.length > 1 && (
-        <div className="flex justify-center items-center gap-2 mt-4">
+        <div className="flex justify-center items-center gap-2 mt-4 relative z-40">
           {bannerData.map((_, idx) => (
             <button
               key={idx}

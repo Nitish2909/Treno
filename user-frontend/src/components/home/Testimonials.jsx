@@ -1,13 +1,14 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
 import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
 
 const TESTIMONIALS = [
   {
@@ -137,7 +138,7 @@ export default function Testimonials() {
   const nextRef = useRef(null);
 
   return (
-    <section className="bg-white py-16 sm:py-20">
+    <section className="bg-white py-16 sm:py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -159,7 +160,17 @@ export default function Testimonials() {
         {/* Swiper */}
         <div className="relative">
           <Swiper
-            modules={[Autoplay, Navigation, Pagination]}
+            modules={[Autoplay, Navigation, Pagination, EffectCoverflow]}
+            effect="coverflow"
+            grabCursor={true}
+            centeredSlides={true}
+            coverflowEffect={{
+              rotate: 30,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: false,
+            }}
             slidesPerView={1}
             spaceBetween={24}
             autoplay={{ delay: 4000, disableOnInteraction: false }}

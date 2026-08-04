@@ -400,7 +400,7 @@ export default function TripReviews({ tripId }) {
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 flex items-center gap-3 text-gray-500 text-sm">
           <AlertCircle className="w-5 h-5 text-amber-400 shrink-0" />
           Please{' '}
-          <a href="/login" className="text-amber-500 font-semibold hover:underline">
+          <a href="/auth/login" className="text-amber-500 font-semibold hover:underline">
             log in
           </a>{' '}
           to write a review.

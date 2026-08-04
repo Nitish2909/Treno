@@ -163,7 +163,7 @@ const ALL_PACKAGES = [
 
 export default function EventsAndFestivals() {
   const [activeSlide, setActiveSlide] = useState(0);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -189,25 +189,27 @@ export default function EventsAndFestivals() {
         <img
           src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80"
           alt="Travel Background"
-          className="w-full h-full object-cover object-center scale-105 filter blur-sm"
+          className="w-full h-full object-cover object-center scale-105 filter blur-sm opacity-60"
         />
-        <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-xs" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/90 to-slate-950" />
       </div>
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-amber-500/15 blur-[120px] pointer-events-none rounded-full z-0" />
+      {/* Ambient background glows */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-500/10 blur-[140px] pointer-events-none rounded-full z-0" />
+      <div className="absolute top-3/4 left-1/3 w-[400px] h-[300px] bg-orange-600/10 blur-[130px] pointer-events-none rounded-full z-0" />
 
       {/* 2. HERO SLIDER */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto rounded-3xl group/slider min-h-[560px] sm:min-h-[580px] md:min-h-[480px] lg:min-h-[540px] bg-slate-900/90 border border-slate-700/60 shadow-2xl shadow-black/80 backdrop-blur-xl overflow-hidden">
+      <div className="relative z-10 w-full max-w-6xl mx-auto rounded-3xl group/slider min-h-[560px] sm:min-h-[580px] md:min-h-[480px] lg:min-h-[540px] bg-slate-900/80 border border-slate-700/50 shadow-2xl shadow-amber-500/5 backdrop-blur-2xl overflow-hidden ring-1 ring-white/10">
         {HERO_SLIDES.map((slide, index) => {
           const isActive = index === activeSlide;
           return (
             <div
               key={index}
               data-active={isActive}
-              className={`absolute inset-0 w-full h-full grid grid-cols-1 md:grid-cols-12 transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1) ${
+              className={`absolute inset-0 w-full h-full grid grid-cols-1 md:grid-cols-12 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 isActive
                   ? "opacity-100 z-10 pointer-events-auto scale-100"
-                  : "opacity-0 z-0 pointer-events-none scale-[0.97]"
+                  : "opacity-0 z-0 pointer-events-none scale-[0.98]"
               }`}
             >
               <div
@@ -216,32 +218,32 @@ export default function EventsAndFestivals() {
                 }`}
               >
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-5">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-lg shadow-amber-500/20">
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 text-slate-950 shadow-lg shadow-amber-500/25">
                     <Sparkles className="w-3.5 h-3.5" />
                     {slide.tag}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-800/80 border border-slate-700/80 text-slate-300 backdrop-blur-md">
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-800/80 border border-slate-700/80 text-amber-300 backdrop-blur-md shadow-inner">
                     <Calendar className="w-3.5 h-3.5 text-amber-400" />
                     {slide.duration}
                   </span>
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-[1.15] text-white">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.15] bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent drop-shadow-sm">
                   {slide.title}
                 </h1>
 
-                <p className="mt-3 text-xs sm:text-sm text-slate-300 font-normal leading-relaxed max-w-lg">
+                <p className="mt-3.5 text-xs sm:text-sm text-slate-300/90 font-normal leading-relaxed max-w-lg">
                   {slide.subtitle}
                 </p>
 
-                <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                  <button className="px-5 py-3 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 group cursor-pointer">
+                <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+                  <button className="px-6 py-3.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-500/30 shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 group cursor-pointer">
                     <span>Explore Itinerary</span>
                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </button>
-                  <div className="flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-800/60 border border-slate-700/60 text-xs text-slate-300 backdrop-blur-md">
+                  <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-800/60 border border-slate-700/60 text-xs text-slate-300 backdrop-blur-md shadow-inner hover:border-slate-600 transition-colors">
                     <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span className="truncate">{slide.location}</span>
+                    <span className="truncate font-medium">{slide.location}</span>
                   </div>
                 </div>
               </div>
@@ -260,7 +262,7 @@ export default function EventsAndFestivals() {
                   className="w-full h-full object-cover object-center"
                   src={slide.videoUrl}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent md:bg-gradient-to-r md:from-slate-900 md:via-transparent md:to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent md:bg-gradient-to-r md:from-slate-900 md:via-slate-900/40 md:to-transparent" />
               </div>
             </div>
           );
@@ -268,34 +270,34 @@ export default function EventsAndFestivals() {
 
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-slate-900/70 border border-white/10 backdrop-blur-md text-white/80 hover:text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover/slider:opacity-100 hover:bg-amber-500 hover:border-amber-500 hover:text-slate-950 hover:scale-110 shadow-xl hidden md:flex cursor-pointer"
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-slate-950/60 border border-white/15 backdrop-blur-md text-white/90 hover:text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover/slider:opacity-100 hover:bg-amber-400 hover:border-amber-400 hover:text-slate-950 hover:scale-110 hover:shadow-lg hover:shadow-amber-500/30 hidden md:flex cursor-pointer"
           aria-label="Previous Slide"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-slate-900/70 border border-white/10 backdrop-blur-md text-white/80 hover:text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover/slider:opacity-100 hover:bg-amber-500 hover:border-amber-500 hover:text-slate-950 hover:scale-110 shadow-xl hidden md:flex cursor-pointer"
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-slate-950/60 border border-white/15 backdrop-blur-md text-white/90 hover:text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover/slider:opacity-100 hover:bg-amber-400 hover:border-amber-400 hover:text-slate-950 hover:scale-110 hover:shadow-lg hover:shadow-amber-500/30 hidden md:flex cursor-pointer"
           aria-label="Next Slide"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
 
-        <div className="absolute bottom-5 left-6 sm:left-10 md:left-12 flex items-center gap-2.5 z-30">
+        <div className="absolute bottom-6 left-6 sm:left-10 md:left-12 flex items-center gap-2.5 z-30">
           {HERO_SLIDES.map((_, index) => {
             const isCurrent = index === activeSlide;
             return (
               <button
                 key={index}
                 onClick={() => setActiveSlide(index)}
-                className={`relative h-1.5 rounded-full overflow-hidden transition-all duration-500 bg-slate-800 border border-slate-700 cursor-pointer ${
-                  isCurrent ? "w-14 bg-slate-800" : "w-3 hover:bg-slate-700"
+                className={`relative h-2 rounded-full overflow-hidden transition-all duration-500 bg-slate-800/90 border border-slate-700/80 cursor-pointer ${
+                  isCurrent ? "w-16 bg-slate-800" : "w-3 hover:bg-slate-700"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               >
                 {isCurrent && (
                   <span
-                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full"
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full shadow-sm shadow-amber-500/50"
                     style={{
                       animation: "sliderProgress 5500ms linear forwards",
                     }}
@@ -308,76 +310,75 @@ export default function EventsAndFestivals() {
       </div>
 
       {/* DISCOVER EVENTS SECTION */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto mt-6">
+      <div className="relative z-10 w-full max-w-6xl mx-auto mt-8">
         <DiscoverEvents />
       </div>
 
       {/* MONTHLY EVENTS LIST SECTION */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto mt-12 flex flex-col gap-12">
+      <div className="relative z-10 w-full max-w-6xl mx-auto mt-14 flex flex-col gap-12">
         <MonthEventSection monthTitle="SEPTEMBER-2026" events={MONTHLY_EVENTS.september} />
         <MonthEventSection monthTitle="OCTOBER-2026" events={MONTHLY_EVENTS.october} />
         <MonthEventSection monthTitle="DECEMBER-2026" events={MONTHLY_EVENTS.december} />
       </div>
 
       {/* EXPLORE ALL EVENT PACKAGES SECTION */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto mt-16">
+      <div className="relative z-10 w-full max-w-6xl mx-auto mt-20">
         {/* Header with Title and Nav Controls */}
         <div className="flex items-center justify-between mb-8">
-          <div className="h-[1px] flex-1 bg-slate-800" />
-          <h2 className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-slate-400 uppercase px-4 text-center">
+          <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-slate-800 to-slate-800" />
+          <h2 className="text-xs sm:text-sm font-bold tracking-[0.25em] text-amber-400/90 uppercase px-6 text-center drop-shadow-sm">
             EXPLORE ALL EVENT PACKAGES
           </h2>
-          <div className="h-[1px] flex-1 bg-slate-800" />
+          <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-slate-800 to-slate-800" />
         </div>
 
         {/* Carousel Container */}
         <div className="relative group/cards">
           {/* Left Arrow */}
-          <button className="absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 flex items-center justify-center transition-all cursor-pointer shadow-lg">
+          <button className="absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-slate-900/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-amber-400 hover:bg-slate-900 flex items-center justify-center transition-all cursor-pointer shadow-xl shadow-black/50">
             <ChevronLeft className="w-5 h-5" />
           </button>
 
           {/* Cards Grid / Carousel */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 overflow-hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-hidden">
             {ALL_PACKAGES.map((pkg) => (
               <div
                 key={pkg.id}
-                className="flex flex-col bg-slate-900/90 rounded-2xl overflow-hidden border border-slate-800/80 hover:border-slate-700 transition-all duration-300"
+                className="group flex flex-col bg-slate-900/70 rounded-2xl overflow-hidden border border-slate-800/80 hover:border-amber-500/40 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-amber-500/10 backdrop-blur-md"
               >
                 {/* Image Container */}
                 <div className="relative h-52 w-full overflow-hidden">
                   <img
                     src={pkg.image}
                     alt={pkg.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent" />
+                  <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-950/70 backdrop-blur-md border border-white/10 text-amber-400">
+                    {pkg.category}
+                  </span>
                 </div>
 
                 {/* Card Content */}
-                <div className="p-4 flex flex-col justify-between flex-1">
+                <div className="p-5 flex flex-col justify-between flex-1">
                   <div>
                     {/* Meta header */}
-                    <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium">
-                      <span>{pkg.duration}</span>
+                    <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium pb-2 border-b border-slate-800/50">
+                      <span className="text-amber-400/90 font-semibold">{pkg.duration}</span>
                       <span>{pkg.date}</span>
                     </div>
 
-                    {/* Category */}
-                    <h4 className="text-sm font-bold text-white mt-2">
-                      {pkg.category}
-                    </h4>
-
                     {/* Title */}
-                    <p className="text-xs text-slate-300 mt-1 line-clamp-2 leading-relaxed font-normal">
+                    <p className="text-xs font-semibold text-slate-100 mt-3 line-clamp-2 leading-relaxed group-hover:text-amber-300 transition-colors">
                       {pkg.title}
                     </p>
 
                     {/* Stop tags */}
-                    <div className="flex flex-wrap items-center gap-1.5 mt-3">
+                    <div className="flex flex-wrap items-center gap-1.5 mt-3.5">
                       {pkg.stops.map((stop, i) => (
                         <span
                           key={i}
-                          className="px-2 py-0.5 rounded bg-slate-800/90 border border-slate-700/60 text-[10px] text-slate-400"
+                          className="px-2.5 py-0.5 rounded-md bg-slate-800/80 border border-slate-700/50 text-[10px] text-slate-300"
                         >
                           {stop}
                         </span>
@@ -386,12 +387,12 @@ export default function EventsAndFestivals() {
                   </div>
 
                   {/* Price & Action */}
-                  <div className="mt-5 flex items-center justify-between pt-3 border-t border-slate-800/60">
+                  <div className="mt-6 flex items-center justify-between pt-3.5 border-t border-slate-800/60">
                     <div>
-                      <span className="text-[10px] text-slate-400 block leading-none">
+                      <span className="text-[10px] text-slate-400 font-medium block leading-none tracking-wider">
                         STARTS FROM
                       </span>
-                      <span className="text-sm font-bold text-white">
+                      <span className="text-sm font-bold bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">
                         {pkg.price}
                       </span>
                       <span className="text-[10px] text-slate-400 font-normal">
@@ -400,8 +401,9 @@ export default function EventsAndFestivals() {
                       </span>
                     </div>
                     <button
-                    onClick={()=>navigate('/trips')}
-                    className="px-4 py-1.5 rounded-full border border-slate-600 hover:border-amber-400 hover:bg-amber-400 hover:text-slate-950 text-xs text-slate-200 font-medium transition-all cursor-pointer">
+                      onClick={() => navigate('/trips')}
+                      className="px-4 py-1.5 rounded-full border border-amber-500/40 hover:border-amber-400 bg-amber-500/10 hover:bg-amber-400 hover:text-slate-950 text-xs text-amber-300 font-semibold transition-all duration-300 cursor-pointer shadow-sm hover:shadow-amber-500/20"
+                    >
                       Book Now
                     </button>
                   </div>
@@ -411,17 +413,17 @@ export default function EventsAndFestivals() {
           </div>
 
           {/* Right Arrow */}
-          <button className="absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 flex items-center justify-center transition-all cursor-pointer shadow-lg">
+          <button className="absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-slate-900/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-amber-400 hover:bg-slate-900 flex items-center justify-center transition-all cursor-pointer shadow-xl shadow-black/50">
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
 
         {/* Carousel Pagination Dots */}
-        <div className="flex items-center justify-center gap-2 mt-6">
-          <span className="w-4 h-1.5 rounded-full bg-slate-300" />
-          <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
-          <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
-          <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
+        <div className="flex items-center justify-center gap-2 mt-8">
+          <span className="w-6 h-1.5 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50" />
+          <span className="w-1.5 h-1.5 rounded-full bg-slate-700 hover:bg-slate-600 transition-colors" />
+          <span className="w-1.5 h-1.5 rounded-full bg-slate-700 hover:bg-slate-600 transition-colors" />
+          <span className="w-1.5 h-1.5 rounded-full bg-slate-700 hover:bg-slate-600 transition-colors" />
         </div>
       </div>
     </section>
@@ -431,43 +433,45 @@ export default function EventsAndFestivals() {
 function MonthEventSection({ monthTitle, events }) {
   if (!events || events.length === 0) return null;
 
+  const navigate = useNavigate();
+
   return (
     <div className="w-full flex flex-col gap-8">
       <div className="flex items-center gap-4">
-        <span className="text-sm font-semibold tracking-widest text-slate-400 uppercase">
+        <span className="text-xs font-bold tracking-[0.2em] text-amber-400/90 uppercase">
           {monthTitle}
         </span>
-        <div className="h-[1px] flex-1 bg-slate-800" />
+        <div className="h-[1px] flex-1 bg-gradient-to-r from-slate-800 via-slate-800/60 to-transparent" />
       </div>
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-8">
         {events.map((event) => (
-          <div key={event.id} className="flex gap-4 sm:gap-6 items-start">
-            <div className="flex items-start gap-2 pt-1 shrink-0">
-              <div className="flex flex-col items-center justify-center">
-                <Calendar className="w-4 h-4 text-slate-300 mb-1" />
-                <span className="text-lg sm:text-xl font-bold text-white leading-none">
+          <div key={event.id} className="group relative flex gap-4 sm:gap-6 items-start p-4 sm:p-6 rounded-2xl bg-slate-900/40 border border-slate-800/80 hover:border-amber-500/30 transition-all duration-500 hover:bg-slate-900/70 hover:shadow-xl hover:shadow-amber-500/5 backdrop-blur-sm">
+            <div className="flex items-start gap-3 pt-1 shrink-0">
+              <div className="flex flex-col items-center justify-center bg-slate-800/70 border border-slate-700/60 p-2.5 rounded-xl shadow-inner min-w-[50px]">
+                <Calendar className="w-4 h-4 text-amber-400 mb-1" />
+                <span className="text-xl sm:text-2xl font-black text-white leading-none">
                   {event.dateDay}
                 </span>
-                <span className="text-xs text-slate-400 uppercase font-medium">
+                <span className="text-[10px] text-amber-400 uppercase font-bold tracking-wider mt-0.5">
                   {event.dateMonth}
                 </span>
               </div>
-              <div className="w-1.5 h-36 bg-amber-400 rounded-full ml-2 hidden sm:block" />
+              <div className="w-1.5 h-full min-h-[120px] bg-gradient-to-b from-amber-400 to-orange-500 rounded-full ml-1 hidden sm:block opacity-80" />
             </div>
 
             <div className="flex-1 flex flex-col lg:flex-row gap-6 items-start">
-              <div className="relative w-full lg:w-48 h-36 rounded-xl overflow-hidden shrink-0 border border-slate-800 bg-slate-900">
+              <div className="relative w-full lg:w-56 h-40 rounded-xl overflow-hidden shrink-0 border border-slate-700/60 bg-slate-900 shadow-md">
                 <img
                   src={event.image}
                   alt={event.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-slate-950/40 flex flex-col items-center justify-center p-2 text-center">
-                  <span className="text-xs font-light text-slate-200">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent flex flex-col items-center justify-end p-3 text-center">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-amber-400">
                     {event.category.split(" ")[0]}
                   </span>
-                  <span className="text-base font-bold text-amber-400 leading-tight">
+                  <span className="text-sm font-black text-white leading-tight drop-shadow-sm">
                     {event.category}
                   </span>
                 </div>
@@ -475,52 +479,53 @@ function MonthEventSection({ monthTitle, events }) {
 
               <div className="flex-1 flex flex-col justify-between h-full py-0.5">
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200">
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-amber-400/90">
                     {event.category}
                   </h3>
-                  <h2 className="text-lg sm:text-xl font-bold text-white mt-1">
+                  <h2 className="text-lg sm:text-xl font-bold text-white mt-1 group-hover:text-amber-200 transition-colors">
                     {event.title}
                   </h2>
-                  <p className="text-xs text-slate-400 font-medium mt-1">
-                    {event.duration} | {event.route}
+                  <p className="text-xs text-slate-300 font-medium mt-1.5">
+                    {event.duration} <span className="text-slate-600 font-normal">|</span> {event.route}
                   </p>
 
-                  <div className="flex flex-wrap items-center gap-1.5 mt-3">
+                  <div className="flex flex-wrap items-center gap-1.5 mt-3.5">
                     {event.stops.map((stop, i) => (
                       <span
                         key={i}
-                        className="px-2.5 py-0.5 rounded-full text-[11px] bg-slate-800 text-slate-300 border border-slate-700/60"
+                        className="px-2.5 py-1 rounded-lg text-[11px] bg-slate-800/90 text-slate-300 border border-slate-700/60 shadow-xs"
                       >
                         {stop}
                       </span>
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-3 mt-3 text-xs text-slate-300">
+                  <div className="flex flex-wrap items-center gap-3.5 mt-4 text-xs text-slate-300">
                     {event.inclusions.map((inc, i) => (
-                      <span key={i} className="flex items-center gap-1">
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        {inc}
+                      <span key={i} className="flex items-center gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>{inc}</span>
                       </span>
                     ))}
                     {event.badge && (
-                      <span className="flex items-center gap-1 px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-semibold uppercase">
-                        <Ticket className="w-3 h-3" />
+                      <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] font-bold uppercase tracking-wider">
+                        <Ticket className="w-3 h-3 text-amber-400" />
                         {event.badge}
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3">
+                <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-4 pt-3 border-t border-slate-800/60">
                   <button 
-                  onClick={()=>navigate('/trips')}
-                  className="w-full sm:w-auto px-8 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-colors cursor-pointer shadow-md">
+                    onClick={() => navigate('/trips')}
+                    className="w-full sm:w-auto px-7 py-2.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold text-xs sm:text-sm transition-all duration-300 cursor-pointer shadow-md shadow-amber-500/20 hover:shadow-lg hover:shadow-amber-500/30 active:scale-95"
+                  >
                     Book Now
                   </button>
                   <div className="text-xs text-slate-400">
                     STARTS FROM{" "}
-                    <span className="text-sm font-bold text-white ml-1">
+                    <span className="text-base font-extrabold text-white ml-1">
                       {event.price}
                     </span>{" "}
                     /Per Person

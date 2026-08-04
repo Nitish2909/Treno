@@ -1,6 +1,5 @@
-
 import React, { useRef, useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Flame, MapPin, ChevronLeft, ChevronRight, TrendingUp, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useGetAllDestinationQuery } from '../../store/api/destinationApi';
@@ -83,44 +82,107 @@ const STATIC_TRENDING = [
 function DestinationCard({ dest }) {
   const navigate = useNavigate();
   const route = dest?.stateSlug || dest?.slug || '';
+  const cardRef = useRef(null);
+
+  // 3D Tilt Motion Values
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
+
+  const rotateX = useSpring(useTransform(y, [0, 1], [15, -15]), { stiffness: 300, damping: 20 });
+  const rotateY = useSpring(useTransform(x, [0, 1], [-15, 15]), { stiffness: 300, damping: 20 });
+  const glareX = useTransform(x, [0, 1], [0, 100]);
+  const glareY = useTransform(y, [0, 1], [0, 100]);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    x.set(mouseX / width);
+    y.set(mouseY / height);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0.5);
+    y.set(0.5);
+  };
 
   return (
-    <div
-      onClick={() => route && navigate(`/destination/${route}`)}
-      className="group relative flex-shrink-0 cursor-pointer overflow-hidden rounded-2xl shadow-md"
-      style={{ width: '220px', height: '300px' }}
-    >
-      {/* Image */}
-      <img
-        src={dest?.image || 'https://via.placeholder.com/800'}
-        alt={dest?.name || 'Destination'}
-        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-        loading="lazy"
-      />
-      {/* Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+    <div style={{ perspective: '1000px' }} className="py-2">
+      <motion.div
+        ref={cardRef}
+        onClick={() => route && navigate(`/destination/${route}`)}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: 'preserve-3d',
+          width: '220px',
+          height: '300px',
+        }}
+        whileHover={{
+          scale: 1.06,
+          boxShadow: '0px 20px 40px rgba(0, 0, 0, 0.35)',
+        }}
+        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        className="group relative flex-shrink-0 cursor-pointer overflow-hidden rounded-2xl shadow-md transition-shadow duration-300"
+      >
+        {/* Dynamic Light/Glare Overlay */}
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{
+            background: useTransform(
+              [glareX, glareY],
+              ([gx, gy]) =>
+                `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%)`
+            ),
+          }}
+        />
 
-      {/* Trending badge */}
-      {dest?.trending && (
-        <span className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-amber-500 px-2.5 py-1 text-[11px] font-bold text-white shadow">
-          <Flame size={10} />
-          Trending
-        </span>
-      )}
+        {/* Image with 3D Depth */}
+        <img
+          src={dest?.image || 'https://via.placeholder.com/800'}
+          alt={dest?.name || 'Destination'}
+          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-115"
+          style={{ transform: 'translateZ(0px)' }}
+          loading="lazy"
+        />
 
-      {/* Bottom info */}
-      <div className="absolute bottom-0 left-0 right-0 p-4">
-        <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-white">
-          {dest?.name || 'Unknown'}
-        </h3>
-        <div className="mt-0.5 flex items-center gap-1">
-          <MapPin size={11} className="text-amber-400" />
-          <span className="text-xs text-white/80">{dest?.location || 'India'}</span>
+        {/* Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent transition-opacity duration-300 group-hover:from-black/95" />
+
+        {/* Trending badge floating on 3D Layer */}
+        {dest?.trending && (
+          <span
+            className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-amber-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-lg transition-transform duration-300 group-hover:scale-110"
+            style={{ transform: 'translateZ(30px)' }}
+          >
+            <Flame size={10} />
+            Trending
+          </span>
+        )}
+
+        {/* Bottom info elevated on 3D Z-axis */}
+        <div
+          className="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-300 group-hover:translate-y-[-4px]"
+          style={{ transform: 'translateZ(40px)' }}
+        >
+          <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-white drop-shadow-md transition-colors duration-300 group-hover:text-amber-300">
+            {dest?.name || 'Unknown'}
+          </h3>
+          <div className="mt-0.5 flex items-center gap-1">
+            <MapPin size={11} className="text-amber-400 transition-transform duration-300 group-hover:scale-125" />
+            <span className="text-xs text-white/80">{dest?.location || 'India'}</span>
+          </div>
+          <span className="mt-2 inline-block rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-medium text-white/90 backdrop-blur-md transition-all duration-300 group-hover:bg-amber-500/80 group-hover:text-white">
+            {dest?.tripCount ?? 0} trips available
+          </span>
         </div>
-        <span className="mt-2 inline-block rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-medium text-white/90 backdrop-blur-sm">
-          {dest?.tripCount ?? 0} trips available
-        </span>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -207,7 +269,7 @@ export default function TrendingDestinations() {
           <div
             ref={scrollRef}
             onScroll={updateScrollState}
-            className="flex gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex gap-4 overflow-x-auto pb-4 pt-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {destinations.map((dest, i) => (
               <motion.div

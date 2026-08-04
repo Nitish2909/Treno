@@ -1,72 +1,83 @@
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
-import { MapPin, Users, Star, ChevronDown } from 'lucide-react';
-import SearchBar from './SearchBar.jsx';
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination, EffectFade } from "swiper/modules";
+import { MapPin, Users, Star, ChevronDown } from "lucide-react";
+import SearchBar from "./SearchBar.jsx";
 
-import 'swiper/css';
-import 'swiper/css/autoplay';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-fade';
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-fade";
 
 const slides = [
   {
-    image: 'https://images.pexels.com/photos/1483053/pexels-photo-1483053.jpeg',
-    tag: 'Himalayas',
-    title: 'Discover the Himalayas',
-    subtitle: 'Stand atop the roof of the world and feel the mountain breeze carry your worries away.',
+    image: "https://images.pexels.com/photos/1483053/pexels-photo-1483053.jpeg",
+    tag: "Himalayas",
+    title: "Discover the Himalayas",
+    subtitle:
+      "Stand atop the roof of the world and feel the mountain breeze carry your worries away.",
   },
   {
-    image: 'https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg',
-    tag: 'Goa',
-    title: 'Escape to Paradise',
-    subtitle: 'Golden sands, azure waters, and vibrant sunsets — your perfect coastal retreat awaits.',
+    image: "https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg",
+    tag: "Goa",
+    title: "Escape to Paradise",
+    subtitle:
+      "Golden sands, azure waters, and vibrant sunsets — your perfect coastal retreat awaits.",
   },
   {
-    image: 'https://images.pexels.com/photos/3278215/pexels-photo-3278215.jpeg',
-    tag: 'Kerala',
+    image: "https://images.pexels.com/photos/3278215/pexels-photo-3278215.jpeg",
+    tag: "Kerala",
     title: "Serenity in God's Own Country",
-    subtitle: 'Drift through emerald backwaters and lush spice gardens in the land of timeless beauty.',
+    subtitle:
+      "Drift through emerald backwaters and lush spice gardens in the land of timeless beauty.",
   },
   {
     // image: 'https://images.pexels.com/photos/2409953/pexels-photo-2409953.jpeg',
-    image: 'https://images.pexels.com/photos/176880/pexels-photo-176880.jpeg',
-    tag: 'Rajasthan',
-    title: 'Royal Rajasthan Awaits',
-    subtitle: 'Majestic forts, desert dunes, and royal hospitality — live like royalty in the desert kingdom.',
+    image: "https://images.pexels.com/photos/176880/pexels-photo-176880.jpeg",
+    tag: "Rajasthan",
+    title: "Royal Rajasthan Awaits",
+    subtitle:
+      "Majestic forts, desert dunes, and royal hospitality — live like royalty in the desert kingdom.",
   },
- {
-  image: 'https://images.pexels.com/photos/27496413/pexels-photo-27496413.jpeg',
-  tag: 'Jammu & Kashmir',
-  title: 'Gulmarg: The Meadow of Flowers',
-  subtitle: 'Walk through endless meadows that turn into snow-laden ski slopes in the heart of the Kashmir Valley.'
-},
-{
-  image: 'https://images.pexels.com/photos/35151736/pexels-photo-35151736.jpeg',
-  tag: 'West Bengal',
-  title: 'Darjeeling: The Queen of Hills',
-  subtitle: 'Sip world-famous tea and watch the sunrise over the majestic Kanchenjunga range.'
-},
-{
-  image: 'https://images.pexels.com/photos/2070307/pexels-photo-2070307.jpeg',
-  tag: 'Uttarakhand',
-  title: 'Mussoorie: Charm of the Doon Valley',
-  subtitle: 'Stroll down the iconic Mall Road and enjoy panoramic views of the spectacular Garhwal Himalayan range.'
-},
-{
-  image: 'https://images.pexels.com/photos/28488400/pexels-photo-28488400.jpeg',
-  tag: 'Himachal Pradesh',
-  title: 'Manali: A Himalayan Paradise',
-  subtitle: 'Embrace the thrill of adventure among snow-capped peaks, rushing rivers, and pine-scented valleys.'
-}
+  {
+    image:
+      "https://images.pexels.com/photos/27496413/pexels-photo-27496413.jpeg",
+    tag: "Jammu & Kashmir",
+    title: "Gulmarg: The Meadow of Flowers",
+    subtitle:
+      "Walk through endless meadows that turn into snow-laden ski slopes in the heart of the Kashmir Valley.",
+  },
+  {
+    image:
+      "https://images.pexels.com/photos/35151736/pexels-photo-35151736.jpeg",
+    tag: "West Bengal",
+    title: "Darjeeling: The Queen of Hills",
+    subtitle:
+      "Sip world-famous tea and watch the sunrise over the majestic Kanchenjunga range.",
+  },
+  {
+    image: "https://images.pexels.com/photos/2070307/pexels-photo-2070307.jpeg",
+    tag: "Uttarakhand",
+    title: "Mussoorie: Charm of the Doon Valley",
+    subtitle:
+      "Stroll down the iconic Mall Road and enjoy panoramic views of the spectacular Garhwal Himalayan range.",
+  },
+  {
+    image:
+      "https://images.pexels.com/photos/28488400/pexels-photo-28488400.jpeg",
+    tag: "Himachal Pradesh",
+    title: "Manali: A Himalayan Paradise",
+    subtitle:
+      "Embrace the thrill of adventure among snow-capped peaks, rushing rivers, and pine-scented valleys.",
+  },
 ];
 
 const badges = [
-  { icon: MapPin, label: '1000+ Curated Trips' },
-  { icon: Users, label: '50K+ Happy Travelers' },
-  { icon: Star, label: 'Expert Guided Tours' },
+  { icon: MapPin, label: "1000+ Curated Trips" },
+  { icon: Users, label: "50K+ Happy Travelers" },
+  { icon: Star, label: "Expert Guided Tours" },
 ];
 
 const taglineVariants = {
@@ -76,7 +87,7 @@ const taglineVariants = {
 
 const wordVariant = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
 };
 
 const fadeUp = {
@@ -84,11 +95,11 @@ const fadeUp = {
   visible: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, delay: i * 0.15, ease: 'easeOut' },
+    transition: { duration: 0.6, delay: i * 0.15, ease: "easeOut" },
   }),
 };
 
-const tagline = 'Explore. Experience. Remember.';
+const tagline = "Explore. Experience. Remember.";
 
 export default function HeroBanner() {
   const prevRef = useRef(null);
@@ -101,7 +112,7 @@ export default function HeroBanner() {
         effect="fade"
         speed={1200}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
-        pagination={{ clickable: true, el: '.hero-pagination' }}
+        pagination={{ clickable: true, el: ".hero-pagination" }}
         navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
         onBeforeInit={(swiper) => {
           swiper.params.navigation.prevEl = prevRef.current;
@@ -115,7 +126,9 @@ export default function HeroBanner() {
             {/* Background image */}
             <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
-              style={{ backgroundImage: `url('${slide.image}?auto=compress&cs=tinysrgb&w=1920&q=80')` }}
+              style={{
+                backgroundImage: `url('${slide.image}?auto=compress&cs=tinysrgb&w=1920&q=80')`,
+              }}
             />
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
@@ -142,7 +155,7 @@ export default function HeroBanner() {
                 animate="visible"
                 className="mb-3 flex flex-wrap justify-center gap-x-3 font-['Playfair_Display',serif] text-4xl font-bold leading-tight drop-shadow-lg sm:text-5xl md:text-6xl lg:text-7xl"
               >
-                {tagline.split(' ').map((word, i) => (
+                {tagline.split(" ").map((word, i) => (
                   <motion.span key={i} variants={wordVariant}>
                     {word}
                   </motion.span>
@@ -181,14 +194,13 @@ export default function HeroBanner() {
               >
                 <a
                   href="/trips"
-                  className="rounded-full bg-orange-500 px-7 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-orange-600 hover:shadow-amber-500/40 hover:shadow-xl active:scale-95"
+                  className="perspective-1000 transform-gpu rounded-full bg-orange-500 px-7 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:rotate-x-6 hover:bg-orange-600 hover:shadow-amber-500/40 hover:shadow-2xl active:scale-95 active:translate-y-0 active:shadow-md"
                 >
-                  
                   Explore Trips
                 </a>
                 <a
                   href="/destinations"
-                  className="rounded-full border-2 border-white/70 bg-white/10 px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-gray-900 active:scale-95"
+                  className="perspective-1000 transform-gpu rounded-full border-2 border-white/70 bg-white/10 px-7 py-3 text-sm font-semibold text-white shadow-[0_10px_20px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:rotate-x-6 hover:shadow-[0_20px_30px_rgba(0,0,0,0.4)] active:scale-95 active:translate-y-0 active:shadow-md "
                 >
                   View Destinations
                 </a>
@@ -229,7 +241,7 @@ export default function HeroBanner() {
         </svg>
       </button> */}
 
-      {/* Pagination dots */} 
+      {/* Pagination dots */}
       <div className="hero-pagination absolute bottom-24 left-1/2 z-20 -translate-x-1/2 [&_.swiper-pagination-bullet-active]:bg-amber-400 [&_.swiper-pagination-bullet-active]:w-6 [&_.swiper-pagination-bullet]:bg-white/60 [&_.swiper-pagination-bullet]:transition-all" />
 
       {/* Floating Badges — bottom-left */}
@@ -254,7 +266,12 @@ export default function HeroBanner() {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2, duration: 0.6, repeat: Infinity, repeatType: 'reverse' }}
+        transition={{
+          delay: 2,
+          duration: 0.6,
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
         className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2 flex flex-col items-center gap-1 text-white/70"
       >
         <span className="text-[10px] uppercase tracking-widest">Scroll</span>

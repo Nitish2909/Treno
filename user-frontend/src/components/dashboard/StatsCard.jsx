@@ -38,6 +38,7 @@ function Skeleton({ className }) {
 }
 
 export default function StatsCard(card) {
+  console.log(card)
   const { title, value, icon, color = 'amber', change, isLoading } = card;
   const palette = COLOR_MAP[color] || COLOR_MAP.amber;
 

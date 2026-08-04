@@ -126,10 +126,12 @@ export default function Dashboard() {
     status: 'all',
   });
  
+  
+
   const stats = statsData?.data
 
   console.log(stats)
-  console.log(recentBookingsData)
+  // console.log(recentBookingsData)
   const recentBookings = stats?.bookings || [];
   // const recentBookings = recentBookingsData?.data || recentBookingsData?.bookings || [];
 

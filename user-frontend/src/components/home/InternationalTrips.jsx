@@ -1,68 +1,16 @@
 import React, { useRef } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Compass, Sparkles } from 'lucide-react';
-import {Link} from "react-router-dom"
-
-const destinations = [
-  {
-    id: 1,
-    name: 'Europe',
-    subtitle: 'Classic Heritage & Iconic Landmarks',
-    price: '₹89,990',
-    tag: 'Popular',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    id: 2,
-    name: 'Vietnam',
-    subtitle: 'Emerald Waters & Scenic Landscapes',
-    price: '₹34,999',
-    tag: 'Trending',
-    image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    id: 3,
-    name: 'Bali',
-    subtitle: 'Tropical Paradise & Sacred Temples',
-    price: '₹22,500',
-    tag: 'Best Seller',
-    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    id: 4,
-    name: 'Thailand',
-    subtitle: 'Vibrant Nightlife & Exotic Beaches',
-    price: '₹26,499',
-    tag: 'Budget Friendly',
-    image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    id: 5,
-    name: 'Japan',
-    subtitle: 'The Land of the Rising Sun',
-    price: '₹1,29,990',
-    tag: 'Luxury',
-    image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    id: 6,
-    name: 'Kenya',
-    subtitle: "Nature's Hidden Magic Awaits",
-    price: '₹1,49,990',
-    tag: 'Wildlife Safari',
-    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    id: 7,
-    name: 'Sri Lanka',
-    subtitle: 'Island Magic & Deep Sea Diving',
-    price: '₹32,999',
-    tag: 'Adventure',
-    image: 'https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&q=80&w=800',
-  },
-];
+import { ArrowLeft, ArrowRight, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useGetFeaturedTripsQuery } from '../../store/api/tripApi';
 
 export default function InternationalTrips() {
   const scrollContainerRef = useRef(null);
+  const { data, isLoading, isError } = useGetFeaturedTripsQuery(6);
+
+  const trips = data?.data || [];
+
+  console.log(trips);
+  
 
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
@@ -85,10 +33,9 @@ export default function InternationalTrips() {
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=2000"
-            alt="Bhutan Temple Background"
+            alt="Hero Background"
             className="w-full h-full object-cover object-center opacity-40 scale-105 transition-transform duration-1000 ease-out hover:scale-100"
           />
-          {/* Gradient Overlays for better text contrast */}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-transparent" />
         </div>
@@ -106,22 +53,21 @@ export default function InternationalTrips() {
             </h2>
             
             <p className="text-slate-300 text-base md:text-lg font-normal">
-              Discover the world, one destination at a time. Handcrafted itineraries designed for memory making.
+              Discover the world, one trip at a time. Handcrafted itineraries designed for memory making.
             </p>
           </div>
 
-           <Link
-                to="/trips"
-                className="group inline-flex items-center gap-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-semibold px-6 py-3 rounded-full shadow-md shadow-amber-400/20 hover:shadow-lg hover:shadow-amber-400/30 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
-              >
-                <span onClick={() => {window.scrollTo(0, 0);}}>
-                  Explore All
-                </span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-              </Link>
+          <Link
+            to="/trips"
+            onClick={() => window.scrollTo(0, 0)}
+            className="group inline-flex items-center gap-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-semibold px-6 py-3 rounded-full shadow-md shadow-amber-400/20 hover:shadow-lg hover:shadow-amber-400/30 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
+          >
+            <span>Explore All</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+          </Link>
         </div>
 
-        {/* Destination Cards Overlay Wrapper */}
+        {/* Trip Cards Overlay Wrapper */}
         <div className="-mt-32 pb-8 px-4 md:px-8 relative z-20">
           
           {/* Carousel Control Buttons */}
@@ -148,54 +94,83 @@ export default function InternationalTrips() {
             className="flex gap-5 overflow-x-auto scrollbar-none scroll-smooth pb-4 pt-1 snap-x snap-mandatory"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {destinations.map((destination) => (
-              <div
-                key={destination.id}
-                className="group relative min-w-[240px] sm:min-w-[260px] md:min-w-[270px] h-[380px] rounded-2xl overflow-hidden bg-slate-800 border border-white/10 shadow-xl snap-start cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/10 hover:border-amber-400/30 flex-shrink-0"
-              >
-                {/* Background Image with Zoom Effect */}
-                <img
-                  src={destination.image}
-                  alt={destination.name}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                />
+            {isLoading && (
+              <div className="text-slate-400 py-10 w-full text-center">Loading featured trips...</div>
+            )}
 
-                {/* Dark Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
+            {isError && (
+              <div className="text-red-400 py-10 w-full text-center">Failed to load trips.</div>
+            )}
 
-                {/* Badge Tag */}
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="px-3 py-1 rounded-full text-[11px] font-semibold bg-slate-950/60 text-amber-300 border border-amber-400/30 backdrop-blur-md shadow-sm">
-                    {destination.tag}
-                  </span>
-                </div>
+            {!isLoading && !isError && trips.filter(trip=>trip.type=="international").map((trip) => {
+              // Extract fields dynamically from API structure
+              const imageUrl = trip.images[0]?.url || trip.thumbnail?.url || 'https://via.placeholder.com/400';
+              const priceFormatted = trip.price?.discounted 
+                ? `₹${trip.price.discounted.toLocaleString('en-IN')}`
+                : trip.price?.original 
+                ? `₹${trip.price.original.toLocaleString('en-IN')}`
+                : 'N/A';
+              
+              const subtitle = trip.duration?.days 
+                ? `${trip.duration.days} Days / ${trip.duration.nights} Nights`
+                : trip.location?.destinations?.[0] || trip.category?.name || '';
 
-                {/* Action Icon on Hover */}
-                <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                  <div className="p-2 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30">
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
-                </div>
+              const badgeTag = trip.isPopular 
+                ? 'Popular' 
+                : trip.isFeatured 
+                ? 'Featured' 
+                : trip.type || 'Trending';
 
-                {/* Card Bottom Details */}
-                <div className="absolute bottom-0 left-0 right-0 p-5 z-10 flex flex-col justify-end">
-                  <span className="text-xs font-medium text-amber-300/90 tracking-wide line-clamp-1 mb-1">
-                    {destination.subtitle}
-                  </span>
-                  
-                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
-                    {destination.name}
-                  </h3>
+              return (
+                <Link
+                  key={trip._id}
+                  to={`/trips/${trip.slug}`}
+                  className="group relative min-w-[240px] sm:min-w-[260px] md:min-w-[270px] h-[380px] rounded-2xl overflow-hidden bg-slate-800 border border-white/10 shadow-xl snap-start cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/10 hover:border-amber-400/30 flex-shrink-0"
+                >
+                  {/* Background Image */}
+                  <img
+                    src={imageUrl}
+                    alt={trip.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  />
 
-                  <div className="pt-2 border-t border-white/10 flex items-center justify-between">
-                    <span className="text-xs text-slate-300 font-light">Starting Price</span>
-                    <span className="text-lg font-extrabold text-white">
-                      {destination.price}
+                  {/* Dark Vignette Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
+
+                  {/* Badge Tag */}
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="px-3 py-1 rounded-full text-[11px] font-semibold bg-slate-950/60 text-amber-300 border border-amber-400/30 backdrop-blur-md shadow-sm capitalize">
+                      {badgeTag}
                     </span>
                   </div>
-                </div>
-              </div>
-            ))}
+
+                  {/* Action Icon on Hover */}
+                  <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                    <div className="p-2 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30">
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
+                  </div>
+
+                  {/* Card Bottom Details */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 z-10 flex flex-col justify-end">
+                    <span className="text-xs font-medium text-amber-300/90 tracking-wide line-clamp-1 mb-1">
+                      {subtitle}
+                    </span>
+                    
+                    <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors line-clamp-1">
+                      {trip.title}
+                    </h3>
+
+                    <div className="pt-2 border-t border-white/10 flex items-center justify-between">
+                      <span className="text-xs text-slate-300 font-light">Starting Price</span>
+                      <span className="text-lg font-extrabold text-white">
+                        {priceFormatted}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
 
         </div>

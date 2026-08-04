@@ -60,14 +60,6 @@ export const authApi = baseApi.injectEndpoints({
 
     getProfile: builder.query({
       query: () => '/auth/profile',
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled
-          dispatch(setCredentials({ user: data.user, accessToken: undefined }))
-        } catch {
-          dispatch(logout())
-        }
-      },
       providesTags: ['User'],
     }),
 
