@@ -188,9 +188,9 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken, { ...cookieOptions, maxAge: 15* 60 * 1000 })
+    .cookie("accessToken", accessToken, { ...cookieOptions })
     .cookie("refreshToken", refreshToken, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1000 })
-    .json(new ApiResponse(200, { accessToken, refreshToken }, "Access token refreshed."));
+    .json(new ApiResponse(200, { accessToken, refreshToken,user }, "Access token refreshed."));
 });
 
 /**
@@ -268,9 +268,11 @@ export const getProfile = asyncHandler(async (req, res) => {
   });
 
   if (!user) throw ApiError.notFound("User not found.");
+  console.log(user)
 
   return new ApiResponse(200, user.toPublicJSON(), "Profile fetched successfully.").send(res);
 });
+
 
 /**
  * PUT /api/v1/auth/profile

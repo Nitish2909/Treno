@@ -147,7 +147,7 @@ export const validateUpdateTrip = [
   body("title")
     .optional()
     .trim()
-    .isLength({ min: 5, max: 150 }).withMessage("Title must be between 5 and 150 characters."),
+    .isLength({ min: 3, max: 150 }).withMessage("Title must be between 3 and 150 characters."),
 
   body("description")
     .optional()

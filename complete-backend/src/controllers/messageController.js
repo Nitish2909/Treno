@@ -39,3 +39,14 @@ export const createMessage = asyncHandler(async (req, res) => {
     "Your message has been received successfully."
   ).send(res);
 });
+
+export const getMessages = asyncHandler(async (req,res)=>{
+
+  const messages = await Message.find({});
+
+  return new ApiResponse(
+    200,
+    messages,
+    "Messages has been fetched successfully."
+  ).send(res);
+})

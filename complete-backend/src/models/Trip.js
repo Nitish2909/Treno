@@ -48,7 +48,7 @@ const tripSchema = new mongoose.Schema(
       type: String,
       required: [true, "Trip title is required"],
       trim: true,
-      minlength: [5, "Title must be at least 5 characters"],
+      minlength: [3, "Title must be at least 3 characters"],
       maxlength: [150, "Title must not exceed 150 characters"],
     },
     slug: {
