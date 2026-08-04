@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import Modal from "../components/common/Modal";
+import { useGetMessagesQuery } from "../store/api/adminApi";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -8,12 +9,13 @@ const Messages = () => {
   const [selected, setSelected] = useState(null);
   const [reply, setReply] = useState("");
 
-  // const load = () => {
-  //   setLoading(true);
-  //   getContactMessages().then(({ data }) => setMessages(data.data.messages)).finally(() => setLoading(false));
-  // };
+  const {data,isLoading} = useGetMessagesQuery()
 
-  // useEffect(() => { load(); }, []);
+  console.log(data);
+  useEffect(() => { 
+    setMessages(data?.data);
+    setLoading(isLoading)
+  }, [data,isLoading]);
 
   const openMsg = (m) => { setSelected(m); setReply(m.adminReply || ""); };
   const saveReply = async (resolved) => {

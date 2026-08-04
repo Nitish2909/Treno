@@ -355,6 +355,12 @@ export const adminApi = createApi({
       query: (id) => ({ url: `/admin/categories/${id}`, method: 'DELETE' }),
       invalidatesTags: [{ type: 'Category', id: 'LIST' }],
     }),
+
+    /* get message*/
+    getMessages: builder.query({
+      query: () => '/messages',
+      providesTags: ['Messages'],
+    }),
   }),
 })
 
@@ -406,4 +412,6 @@ export const {
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
+
+  useGetMessagesQuery
 } = adminApi

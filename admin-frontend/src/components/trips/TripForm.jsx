@@ -239,8 +239,8 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
     // Basic validations mapped directly to backend parameters
     if (!form.title.trim()) {
       e.title = 'Trip title is required.'
-    } else if (form.title.trim().length < 5 || form.title.trim().length > 150) {
-      e.title = 'Title must be between 5 and 150 characters.'
+    } else if (form.title.trim().length < 3 || form.title.trim().length > 150) {
+      e.title = 'Title must be between 3 and 150 characters.'
     }
 
     if (!form.slug.trim()) e.slug = 'Slug is required'
