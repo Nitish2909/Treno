@@ -95,7 +95,7 @@ export default function InternationalTrips() {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {isLoading && (
-              <div className="text-slate-400 py-10 w-full text-center">Loading featured trips...</div>
+              <div className="text-slate-400 py-10 w-full text-center">Loading International Trips...</div>
             )}
 
             {isError && (
