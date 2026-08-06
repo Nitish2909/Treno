@@ -663,7 +663,7 @@ export default function TripDetail() {
               </section>
 
               {/* 11. Similar Trips */}
-              <section className="pb-10">
+              {/* <section className="pb-10">
                 <h2 className="text-xl font-bold text-gray-900 font-playfair mb-4">
                   You Might Also Like
                 </h2>
@@ -671,7 +671,7 @@ export default function TripDetail() {
                   currentTripId={trip._id}
                   category={trip.category}
                 />
-              </section>
+              </section> */}
             </article>
 
             {/*  Sticky Booking Sidebar (right, 1/3) */}
