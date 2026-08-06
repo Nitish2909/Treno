@@ -84,7 +84,7 @@ const DestinationDetails = ({ destination: propDestination, TripCardCustom }) =>
       </button>
 
       {/* Hero Banner */}
-      <div className="relative h-[350px] md:h-[480px] rounded-xl overflow-hidden shadow-2xl mb-6">
+      <div className="relative h-[350px] md:h-[480px] rounded overflow-hidden shadow-2xl mb-6">
         <img 
           src={activeImage || destination.destination.image} 
           alt={destination.destination.name} 

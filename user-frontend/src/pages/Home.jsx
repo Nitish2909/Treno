@@ -26,14 +26,15 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title="Treno - Your Travel Partner | Best Travel Agency in Karnal| Trip With Treno"
+        title="Treno - Your Travel Partner | Treno Travel | Best Travel Agency in Karnal| Trip With Treno"
         description="Book domestic and international tour packages, honeymoon packages and customized holidays at affordable prices."
         keywords={[
           // Brand
-          "Trip With Treno",
-          "Treno",
           "Treno Your Travel Partner",
-
+          "Trip With Treno",
+          "Treno Travel",
+          "Treno",
+          
           // Core Services
           "Travel Agency",
           "Best Travel Agency",
