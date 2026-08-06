@@ -127,9 +127,10 @@ export default function MyBookings() {
     page,
     limit: PAGE_SIZE,
   });
+  console.log(data)
 
-  const bookings = data?.bookings || [];
-  const total = data?.total || 0;
+  const bookings = data?.data?.bookings || [];
+  const total = data?.data?.total || 0;
   const hasMore = bookings.length < total;
 
   console.log(bookings)

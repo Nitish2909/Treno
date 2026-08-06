@@ -104,11 +104,11 @@ export default function Footer() {
             </Link>
 
             <p className="text-amber-400 text-xs font-semibold tracking-wider uppercase">
-              Treno- Your Travel Partner
+              Treno - Your Trusted Travel Partner
             </p>
 
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
-              Treno- Your Travel Partner is your trusted travel companion for curated group trips,
+              Treno- Your Trusted Travel Partner is your trusted travel companion for curated group trips,
               adventure getaways, and transformative journeys across India and
               beyond.
             </p>

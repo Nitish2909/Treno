@@ -127,13 +127,13 @@ export default function Dashboard() {
   });
  
   
-
+  console.log(statsData)
   const stats = statsData?.data
 
   console.log(stats)
   // console.log(recentBookingsData)
-  const recentBookings = stats?.bookings || [];
-  // const recentBookings = recentBookingsData?.data || recentBookingsData?.bookings || [];
+  // const recentBookings = stats?.bookings || [];
+  const recentBookings = recentBookingsData?.data?.bookings || recentBookingsData?.bookings || [];
 
   console.log(recentBookings);
 
@@ -146,6 +146,7 @@ export default function Dashboard() {
       b.startDate &&
       isAfter(new Date(b.startDate), new Date())
   );
+
 
   const daysToGo = upcomingTrip
     ? differenceInDays(new Date(upcomingTrip.startDate), new Date())
@@ -248,7 +249,7 @@ export default function Dashboard() {
           {/* Stats row */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {statsCards.map((card) => (
-              <StatsCard key={card.label} card ={card} />
+              <StatsCard key={card.label} card={card} />
             ))}
           </div>
 

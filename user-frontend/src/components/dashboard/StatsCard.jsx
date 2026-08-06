@@ -38,22 +38,23 @@ function Skeleton({ className }) {
 }
 
 export default function StatsCard(card) {
-  console.log(card)
-  const { title, value, icon, color = 'amber', change, isLoading } = card;
+  const cardData = card?.card
+  const { title, value, color = 'amber', change } = cardData;
+  console.log(title)
   const palette = COLOR_MAP[color] || COLOR_MAP.amber;
 
-  if (isLoading) {
-    return (
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex items-center gap-4">
-        <Skeleton className="w-12 h-12 rounded-xl flex-shrink-0" />
-        <div className="flex-1 space-y-2">
-          <Skeleton className="h-3 w-24" />
-          <Skeleton className="h-7 w-16" />
-          {change && <Skeleton className="h-3 w-20" />}
-        </div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex items-center gap-4">
+  //       <Skeleton className="w-12 h-12 rounded-xl flex-shrink-0" />
+  //       <div className="flex-1 space-y-2">
+  //         <Skeleton className="h-3 w-24" />
+  //         <Skeleton className="h-7 w-16" />
+  //         {change && <Skeleton className="h-3 w-20" />}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all duration-200 cursor-default group">
@@ -61,9 +62,9 @@ export default function StatsCard(card) {
       <div
         className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ring-4 ${palette.bg} ${palette.ring} transition-transform duration-200 group-hover:scale-110`}
       >
-        <span className={`text-xl ${palette.icon}`}>
-          {icon}
-        </span>
+        {/* <span className={`text-xl ${palette.icon}`}> */}
+          {/* {icon} */}
+        {/* </span> */}
       </div>
 
       {/* Content */}

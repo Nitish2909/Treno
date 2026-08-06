@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { getBookingStatusColor, formatPrice, formatDate } from '../../utils/helpers.js';
 import { useCancelBookingMutation } from '../../store/api/bookingApi.js';
 
-//  Status config 
-
+// Status config 
 const STATUS_STYLES = {
   pending:   { label: 'Pending',   bg: 'bg-amber-100',   text: 'text-amber-700',   dot: 'bg-amber-400' },
   confirmed: { label: 'Confirmed', bg: 'bg-blue-100',    text: 'text-blue-700',    dot: 'bg-blue-400' },
@@ -24,8 +23,7 @@ function StatusBadge({ status }) {
   );
 }
 
-//  Confirmation modal 
-
+// Confirmation modal 
 function CancelModal({ bookingId, onConfirm, onClose, isLoading }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" aria-modal="true" role="dialog">
@@ -87,8 +85,7 @@ function CancelModal({ bookingId, onConfirm, onClose, isLoading }) {
   );
 }
 
-//  Main component 
-
+// Main component 
 export default function BookingCard({ booking, onCancel }) {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelBooking, { isLoading: cancelling }] = useCancelBookingMutation();
@@ -97,14 +94,59 @@ export default function BookingCard({ booking, onCancel }) {
     _id,
     bookingId,
     trip,
-    status,
+    bookingStatus,
     startDate,
     endDate,
-    travelers,
+    numberOfPassengers,
+    passengers,
+    finalAmount,
     totalAmount,
     createdAt,
   } = booking;
 
+  // Status mapping
+  const status = bookingStatus || booking.status;
+  const travelersCount = numberOfPassengers ?? passengers?.length ?? 1;
+  const amountToDisplay = finalAmount ?? totalAmount;
+
+  // --- TRIP DATA EXTRACTIONS ---
+  
+  // 1. Image extraction (checks thumbnail first, falls back to images array)
+  const tripImage =
+    trip?.thumbnail?.url ||
+    trip?.images?.[0]?.url ||
+    null;
+
+  // 2. Location string extraction (handles object format { destinations, state, country })
+  const formatLocation = (loc) => {
+    if (!loc) return null;
+    if (typeof loc === 'string') return loc;
+
+    const parts = [];
+    if (loc.destinations?.length) parts.push(loc.destinations.join(', '));
+    else if (loc.state) parts.push(loc.state);
+    if (loc.country) parts.push(loc.country);
+
+    return parts.length ? parts.join(', ') : null;
+  };
+
+  const locationText = formatLocation(trip?.location);
+
+  // 3. Duration formatting (handles object { days, nights } or primitive)
+  const formatDuration = (dur) => {
+    if (!dur) return null;
+    if (typeof dur === 'object') {
+      const parts = [];
+      if (dur.days) parts.push(`${dur.days}D`);
+      if (dur.nights) parts.push(`${dur.nights}N`);
+      return parts.length ? parts.join(' / ') : null;
+    }
+    return `${dur} days`;
+  };
+
+  const durationText = formatDuration(trip?.duration);
+
+  // Action privileges
   const canCancel = status === 'confirmed' || status === 'pending';
   const canReview = status === 'completed';
 
@@ -133,14 +175,11 @@ export default function BookingCard({ booking, onCancel }) {
     }
   };
 
-  const tripImage = trip?.images?.[0] || null;
-  const statusStyle = STATUS_STYLES[status] || STATUS_STYLES.pending;
-
   return (
     <>
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
         <div className="flex flex-col sm:flex-row gap-0">
-          {/* ── Left: Trip image ── */}
+          {/* Left: Trip image */}
           <div className="sm:w-28 sm:h-auto h-36 flex-shrink-0">
             {tripImage ? (
               <img
@@ -158,19 +197,19 @@ export default function BookingCard({ booking, onCancel }) {
             )}
           </div>
 
-          {/* ── Middle: Details ── */}
+          {/* Middle: Details */}
           <div className="flex-1 p-4 min-w-0">
             <div className="flex items-start justify-between gap-2 flex-wrap">
               <div className="min-w-0">
                 <h3 className="font-bold text-slate-800 text-base truncate leading-tight">
                   {trip?.title || 'Trip'}
                 </h3>
-                {trip?.location && (
+                {locationText && (
                   <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     </svg>
-                    {trip.location}
+                    <span className="truncate">{locationText}</span>
                   </p>
                 )}
               </div>
@@ -193,15 +232,15 @@ export default function BookingCard({ booking, onCancel }) {
                 <svg className="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                {travelers} traveler{travelers !== 1 ? 's' : ''}
+                {travelersCount} passenger{travelersCount !== 1 ? 's' : ''}
               </span>
               {/* Duration */}
-              {trip?.duration && (
+              {durationText && (
                 <span className="flex items-center gap-1">
                   <svg className="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  {trip.duration} days
+                  {durationText}
                 </span>
               )}
             </div>
@@ -217,7 +256,7 @@ export default function BookingCard({ booking, onCancel }) {
             </div>
           </div>
 
-          {/* ── Right: Status + Amount + Actions ── */}
+          {/* Right: Status + Amount + Actions */}
           <div className="flex sm:flex-col flex-row items-center sm:items-end justify-between sm:justify-start gap-3 px-4 pb-4 sm:p-4 sm:border-l sm:border-slate-100">
             {/* Status badge (desktop) */}
             <div className="hidden sm:block">
@@ -227,7 +266,7 @@ export default function BookingCard({ booking, onCancel }) {
             {/* Amount */}
             <div className="text-right">
               <p className="text-xs text-slate-400">Total paid</p>
-              <p className="text-lg font-extrabold text-slate-800">{fmt(totalAmount)}</p>
+              <p className="text-lg font-extrabold text-slate-800">{fmt(amountToDisplay)}</p>
             </div>
 
             {/* Action buttons */}

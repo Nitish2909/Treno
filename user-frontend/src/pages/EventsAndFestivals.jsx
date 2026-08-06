@@ -10,7 +10,7 @@ import {
   Ticket
 } from "lucide-react";
 import DiscoverEvents from "./DiscoverEvents";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const HERO_SLIDES = [
   {
@@ -400,12 +400,14 @@ export default function EventsAndFestivals() {
                         /Per Person
                       </span>
                     </div>
-                    <button
-                      onClick={() => navigate('/trips')}
+                    <Link
+                    to='/trips'
+
+                      onClick={() =>window.scrollTo(0,0)}
                       className="px-4 py-1.5 rounded-full border border-amber-500/40 hover:border-amber-400 bg-amber-500/10 hover:bg-amber-400 hover:text-slate-950 text-xs text-amber-300 font-semibold transition-all duration-300 cursor-pointer shadow-sm hover:shadow-amber-500/20"
                     >
                       Book Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -517,12 +519,13 @@ function MonthEventSection({ monthTitle, events }) {
                 </div>
 
                 <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-4 pt-3 border-t border-slate-800/60">
-                  <button 
-                    onClick={() => navigate('/trips')}
+                  <Link
+                  to='/trips'
+                     onClick={() =>window.scrollTo(0,0)}
                     className="w-full sm:w-auto px-7 py-2.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold text-xs sm:text-sm transition-all duration-300 cursor-pointer shadow-md shadow-amber-500/20 hover:shadow-lg hover:shadow-amber-500/30 active:scale-95"
                   >
                     Book Now
-                  </button>
+                  </Link>
                   <div className="text-xs text-slate-400">
                     STARTS FROM{" "}
                     <span className="text-base font-extrabold text-white ml-1">

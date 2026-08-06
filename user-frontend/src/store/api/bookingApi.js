@@ -40,7 +40,7 @@ export const bookingApi = baseApi.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result?.bookings.map(({ _id }) => ({ type: 'Booking', id: _id })),
+              ...result?.data?.bookings.map(({ _id }) => ({ type: 'Booking', id: _id })),
               { type: 'Booking', id: 'LIST' },
             ]
           : [{ type: 'Booking', id: 'LIST' }],
@@ -71,7 +71,7 @@ export const bookingApi = baseApi.injectEndpoints({
     }),
 
     getBookingStats: builder.query({
-      query: () => '/bookings/stats',
+      query: () => '/bookings/user-booking-stats',
       providesTags: [{ type: 'Booking', id: 'STATS' }],
     }),
   }),

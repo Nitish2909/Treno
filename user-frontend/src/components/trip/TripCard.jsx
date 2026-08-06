@@ -339,7 +339,7 @@ export default function TripCard({
               hover:bg-amber-400 hover:text-white transition-colors duration-200
               ${compact ? "px-3 py-1 text-xs" : "px-4 py-1.5 text-sm"}`}
           >
-            View Details
+            Book Now
           </Link>
         </div>
       </div>

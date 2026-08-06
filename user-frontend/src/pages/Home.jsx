@@ -26,8 +26,8 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title="Treno - Your Travel Partner | Best Travel Agency in Karnal | Tour Packages, Flight & Hotel Booking | Trip With Treno"
-        description="Book domestic and international tour packages, honeymoon packages, flights, hotels, train and bus tickets, visa services, and customized holidays at affordable prices."
+        title="Treno - Your Travel Partner | Best Travel Agency in Karnal| Trip With Treno"
+        description="Book domestic and international tour packages, honeymoon packages and customized holidays at affordable prices."
         keywords={[
           // Brand
           "Trip With Treno",
