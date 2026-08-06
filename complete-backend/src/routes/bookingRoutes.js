@@ -4,6 +4,8 @@ import {
   getUserBookings,
   getBookingById,
   cancelBooking,
+  getBookingStats,
+  getUserBookingStats,
 } from "../controllers/bookingController.js";
 import { verifyToken } from "../middleware/auth.js";
 import {
@@ -17,7 +19,8 @@ const router = express.Router();
 router.use(verifyToken);
 
 router.post("/", validateCreateBooking, createBooking);
-router.get("/stats", getUserBookings);
+router.get("/user-booking-stats", getUserBookingStats);
+router.get("/stats", getBookingStats);
 router.get("/my-bookings",getUserBookings)
 router.get("/:bookingId", getBookingById);
 router.post("/:bookingId/cancel", validateCancelBooking, cancelBooking);

@@ -56,6 +56,7 @@ router.get("/profile", getProfile);
 router.put("/profile", uploadAvatar, validateUpdateProfile, updateProfile);
 router.put("/change-password", validateChangePassword, changePassword);
 router.post("/logout", logout);
+router.put("/update-profile",updateProfile)
 
 // Wishlist
 router.get("/wishlist", getWishlist);

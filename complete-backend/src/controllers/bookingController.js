@@ -162,7 +162,7 @@ export const getUserBookings = asyncHandler(async (req, res) => {
 
   const [bookings, total] = await Promise.all([
     Booking.find(query)
-      .populate("trip", "title slug thumbnail duration location type")
+      .populate("trip", "title slug images thumbnail duration location type")
       .sort("-createdAt")
       .skip(skip)
       .limit(limitNum)
@@ -289,6 +289,93 @@ export const cancelBooking = asyncHandler(async (req, res) => {
   ).send(res);
 });
 
+
+
+export const getUserBookingStats = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const currentDate = new Date();
+
+    // Aggregation pipeline matching your Booking schema definitions
+    const bookingStats = await Booking.aggregate([
+      {
+        $match: {
+          user: userId,
+          bookingStatus: { $ne: 'cancelled' }, // Exclude cancelled bookings from stats
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          // Upcoming: startDate >= currentDate AND status is confirmed or pending
+          upcomingCount: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $gte: ['$startDate', currentDate] },
+                    { $in: ['$bookingStatus', ['confirmed', 'pending']] },
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          },
+          // Completed: status is 'completed' OR (startDate < currentDate AND not cancelled)
+          completedCount: {
+            $sum: {
+              $cond: [
+                {
+                  $or: [
+                    { $eq: ['$bookingStatus', 'completed'] },
+                    { $lt: ['$startDate', currentDate] },
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          },
+          // Total Spent: Sum finalAmount (or fallback to totalAmount) for paid bookings
+          totalSpent: {
+            $sum: {
+              $cond: [
+                { $eq: ['$paymentStatus', 'paid'] },
+                { $ifNull: ['$finalAmount', '$totalAmount'] },
+                0,
+              ],
+            },
+          },
+        },
+      },
+    ]);
+
+    // Extract aggregated values or default to 0
+    const statsData = bookingStats[0] || {
+      upcomingCount: 0,
+      completedCount: 0,
+      totalSpent: 0,
+    };
+
+    return res.status(200).json({
+      success: true,
+      message: 'User booking statistics retrieved successfully',
+      data: {
+        upcoming: statsData.upcomingCount,
+        completed: statsData.completedCount,
+        totalSpent: statsData.totalSpent,
+      },
+    });
+  } catch (error) {
+    console.error('Error in getUserBookingStats controller:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to retrieve booking statistics',
+      error: error.message,
+    });
+  }
+};
 /**
  * GET /api/v1/admin/bookings – Admin: all bookings
  */
