@@ -46,7 +46,7 @@ const STEP_PLACEHOLDERS = {
   name: "Type your name...",
   companyName: "Company / Organization name...",
   groupSize: "e.g. 15 adults",
-  destination: "e.g. Goa, Bali, Kashmir",
+  destination: "e.g. Goa, Bali, Kashmir,Manali,Agra,Thiland,Switzerland",
   travellers: "e.g. 2 adults, 1 child",
   children: "e.g. 2 kids aged 5 and 8, or No",
   departureCity: "e.g. Mumbai",
