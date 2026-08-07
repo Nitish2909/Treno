@@ -250,7 +250,7 @@ export const cancelBooking = asyncHandler(async (req, res) => {
     booking.paymentStatus === "paid" ? calculateRefundAmount(booking, trip) : 0;
 
   booking.bookingStatus = "cancelled";
-  booking.cancellationReason = cancellationReason;
+  booking.cancellationReason = cancellationReason || "NA";
   booking.refundAmount = refundAmount;
   booking.refundStatus = booking.paymentStatus === "paid" ? "pending" : "not_applicable";
 
