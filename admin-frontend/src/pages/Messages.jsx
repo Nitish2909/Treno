@@ -44,9 +44,9 @@ const Messages = () => {
                 <p className="text-sm text-slate-600 mt-1 line-clamp-2">{m.message}</p>
               </div>
               <div className="flex items-center gap-2">
-                <span className={`px-2 py-0.5 text-xs rounded-full ${m.isResolved ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
+                {/* <span className={`px-2 py-0.5 text-xs rounded-full ${m.isResolved ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
                   {m.isResolved ? "Resolved" : "Pending"}
-                </span>
+                </span> */}
                 <button onClick={() => openMsg(m)} className="px-3 py-1 text-sm text-blue-600 hover:bg-blue-50 rounded">View</button>
               </div>
             </div>
@@ -65,14 +65,14 @@ const Messages = () => {
               <p><span className="text-slate-500">Date:</span> {new Date(selected.createdAt).toLocaleString()}</p>
             </div>
             <div className="bg-slate-50 p-3 rounded-lg text-sm text-slate-700">{selected.message}</div>
-            <div>
+            {/* <div>
               <label className="block text-sm text-slate-600 mb-1">Admin Reply</label>
               <textarea value={reply} onChange={(e) => setReply(e.target.value)} rows={4} className="w-full px-3 py-2 rounded-lg border border-slate-300" placeholder="Type your reply..." />
             </div>
             <div className="flex gap-2">
               <button onClick={() => saveReply(true)} className="flex-1 bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700">Mark Resolved</button>
               <button onClick={() => saveReply(false)} className="flex-1 bg-slate-200 text-slate-700 py-2 rounded-lg hover:bg-slate-300">Save Draft</button>
-            </div>
+            </div> */}
           </div>
         )}
       </Modal>
