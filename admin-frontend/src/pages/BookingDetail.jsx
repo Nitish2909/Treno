@@ -8,6 +8,7 @@ import PageHeader from '../components/common/PageHeader'
 export default function BookingDetail() {
   const { id } = useParams()
   const { data, isLoading, isError } = useGetBookingByIdQuery(id)
+  console.log(data)
 
   if (isLoading) {
     return (
@@ -17,7 +18,7 @@ export default function BookingDetail() {
     )
   }
 
-  if (isError || !data?.booking) {
+  if (isError || !data?.data) {
     return (
       <div className="flex flex-col items-center justify-center h-64 gap-3 text-gray-400">
         <AlertCircle size={40} strokeWidth={1.5} />
@@ -35,7 +36,7 @@ export default function BookingDetail() {
         breadcrumbs={[
           { label: 'Business' },
           { label: 'Bookings', to: '/admin/bookings' },
-          { label: `#${(data.booking.bookingId || data.booking._id)?.slice(-8)}` },
+          { label: `#${(data.data.bookingId || data.data._id)?.slice(-8)}` },
         ]}
         actions={
           <Link to="/admin/bookings" className="btn btn-secondary btn-sm">
@@ -43,7 +44,7 @@ export default function BookingDetail() {
           </Link>
         }
       />
-      <BookingDetails booking={data.booking} />
+      <BookingDetails booking={data.data} />
     </>
   )
 }

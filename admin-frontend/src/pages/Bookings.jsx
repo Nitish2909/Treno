@@ -92,7 +92,7 @@ export default function Bookings() {
     {
       key: 'actions', label: '',
       render: (_, row) => (
-        <Link to={`/admin/bookings/${row._id}`} className="btn-icon text-primary-500 hover:bg-primary-50">
+        <Link to={`/admin/bookings/${row.bookingId}`} className="btn-icon text-primary-500 hover:bg-primary-50">
           <Eye size={15} />
         </Link>
       ),
