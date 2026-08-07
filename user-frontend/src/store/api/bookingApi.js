@@ -52,10 +52,10 @@ export const bookingApi = baseApi.injectEndpoints({
     }),
 
     cancelBooking: builder.mutation({
-      query: ({ bookingId, reason }) => ({
+      query: ({ bookingId, cancellationReason }) => ({
         url: `/bookings/${bookingId}/cancel`,
-        method: 'PUT',
-        body: { reason },
+        method: 'POST',
+        body: { cancellationReason },
       }),
       invalidatesTags: (result, error, { bookingId }) => [
         { type: 'Booking', id: bookingId },

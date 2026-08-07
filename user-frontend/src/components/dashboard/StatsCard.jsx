@@ -39,8 +39,8 @@ function Skeleton({ className }) {
 
 export default function StatsCard(card) {
   const cardData = card?.card
-  const { title, value, color = 'amber', change } = cardData;
-  console.log(title)
+  const { label, value, icon, color = 'amber', change } = cardData;
+
   const palette = COLOR_MAP[color] || COLOR_MAP.amber;
 
   // if (isLoading) {
@@ -62,14 +62,14 @@ export default function StatsCard(card) {
       <div
         className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ring-4 ${palette.bg} ${palette.ring} transition-transform duration-200 group-hover:scale-110`}
       >
-        {/* <span className={`text-xl ${palette.icon}`}> */}
+        <span className={`text-xl ${palette.icon}`}>
           {/* {icon} */}
-        {/* </span> */}
+        </span>
       </div>
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <p className="text-xs text-slate-500 font-medium uppercase tracking-wide truncate">{title}</p>
+        <p className="text-xs text-slate-500 font-medium uppercase tracking-wide truncate">{label}</p>
         <p className="text-2xl font-bold text-slate-800 mt-0.5 leading-none">{value}</p>
         {change && (
           <p className={`text-xs mt-1 font-medium ${

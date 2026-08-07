@@ -12,6 +12,7 @@ import EventBanner from "../components/home/EventBanner.jsx";
 import IndiaTrips from "../components/home/IndiaTrips.jsx";
 import InternationalTrips from "../components/home/InternationalTrips.jsx";
 import RomanticEscapes from "../components/home/RomanticEscapes.jsx";
+import Chatbot from "../components/home/Chatbot.jsx";
 // import WhatsApp from '../components/home/Whatsapp.jsx'
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -130,6 +131,10 @@ export default function Home() {
         {/* Popular Destinations */}
         <section className="">
           <PopularDestinations />
+        </section>
+
+         <section className="">
+          < Chatbot/>
         </section>
 
         {/* Why Choose Us */}

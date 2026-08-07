@@ -420,7 +420,7 @@ export default function Navbar() {
               <img
                 src={TrenoLogo}
                 alt="Treno Logo"
-                className="w-36 h-36 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
+                className="w-36 h-36 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg "
               />
             </Link>
 

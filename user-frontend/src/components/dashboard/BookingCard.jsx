@@ -89,7 +89,7 @@ function CancelModal({ bookingId, onConfirm, onClose, isLoading }) {
 export default function BookingCard({ booking, onCancel }) {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelBooking, { isLoading: cancelling }] = useCancelBookingMutation();
-
+  console.log(booking)
   const {
     _id,
     bookingId,
@@ -167,7 +167,9 @@ export default function BookingCard({ booking, onCancel }) {
 
   const handleConfirmCancel = async () => {
     try {
-      await cancelBooking(_id).unwrap();
+      const cancellationReason = "I want to cancel the trip due to my personal reason"
+      console.log(bookingId)
+      await cancelBooking({bookingId,cancellationReason}).unwrap();
       setShowCancelModal(false);
       if (typeof onCancel === 'function') onCancel(_id);
     } catch (err) {
@@ -273,7 +275,7 @@ export default function BookingCard({ booking, onCancel }) {
             <div className="flex sm:flex-col flex-row gap-2 mt-auto">
               {/* View Details */}
               <a
-                href={`/dashboard/bookings/${_id}`}
+                href={`/dashboard/bookings/${bookingId}`}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 text-slate-600 hover:border-amber-400 hover:text-amber-600 text-xs font-semibold transition whitespace-nowrap"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -20,6 +20,8 @@ import Careers from "./components/common/Careers.jsx";
 import WeekendGateways from "./pages/WeekendGateways.jsx";
 import Destinations from "./pages/Destinations.jsx";
 import DestinationDetails from "./pages/DestinationDetails.jsx";
+import CustomCursor from "./components/common/CustomCursor.jsx";
+import BookingDetails from "./pages/BookingDetails.jsx";
 
 // Pages - lazy loaded
 const Trips = lazy(() => import("./pages/Trips.jsx"));
@@ -60,6 +62,7 @@ function AppContent() {
       {!isAuthPage && !isNoNavPage && <Navbar />}
       <main className="flex-1">
         <Suspense fallback={<Loader variant="fullpage" />}>
+        {/* <CustomCursor/> */}
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
               {/* Public Routes */}
@@ -129,6 +132,15 @@ function AppContent() {
                 element={
                   <ProtectedRoute>
                     <MyBookings />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/dashboard/bookings/:id"
+                element={
+                  <ProtectedRoute>
+                    <BookingDetails />
                   </ProtectedRoute>
                 }
               />

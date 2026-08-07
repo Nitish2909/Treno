@@ -7,7 +7,7 @@ const SECTIONS = [
     id: 'information-we-collect',
     title: 'Information We Collect',
     content: [
-      'We collect information you provide directly to us when you create an account, make a booking, contact us, subscribe to our newsletter, or otherwise interact with our services.',
+      'We collect information you provide directly to us when you create an account, make a booking, contact us,  or otherwise interact with our services.',
       { heading: 'Personal Information', body: 'This includes your full name, email address, phone number, date of birth, postal address, passport or government-issued ID details (required for certain international bookings), and payment information.' },
       { heading: 'Usage Data', body: 'We automatically collect information about how you interact with our website and app, including your IP address, browser type, pages visited, links clicked, search queries, device identifiers, and referring URLs. This data helps us improve our services and personalise your experience.' },
       { heading: 'Location Data', body: 'With your permission, we may collect precise or approximate location data from your mobile device to provide location-based features such as nearby trip suggestions.' },
@@ -144,7 +144,14 @@ export default function PrivacyPolicy() {
             <Shield className="w-7 h-7 text-white" />
           </div>
           <h1 className="font-playfair text-3xl md:text-4xl font-bold text-white mb-3">Privacy Policy</h1>
-          <p className="text-slate-400 text-sm">Last updated: July 2026</p>
+           <p className="text-slate-400 text-sm">
+            Last updated:{" "}
+            {new Date().toLocaleDateString("en-US", {
+              date:'',
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
           <p className="text-slate-300 mt-4 max-w-xl mx-auto leading-relaxed">
             At Treno, your privacy matters. This policy explains how we collect, use, and protect your personal information when you use our services.
           </p>

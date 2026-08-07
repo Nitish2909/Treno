@@ -30,24 +30,23 @@ export default function InternationalTrips() {
       <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-800">
         
         {/* Background Image & Overlays */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 ">
           <img
             src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=2000"
             alt="Hero Background"
             className="w-full h-full object-cover object-center opacity-40 scale-105 transition-transform duration-1000 ease-out hover:scale-100"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"  />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-transparent" />
         </div>
 
         {/* Hero Section Content */}
-        <div className="relative z-10 px-6 pt-10 pb-40 md:pt-16 md:pb-52 md:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="relative z-10 px-6 pt-10 pb-40 md:pt-16 md:pb-52 md:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6  ">
           <div className="max-w-xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold tracking-wide uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold tracking-wide uppercase ">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Unforgettable Journeys</span>
             </div>
-            
             <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
               International Trips
             </h2>
