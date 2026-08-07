@@ -364,7 +364,7 @@ export default function Chatbot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="flex flex-col items-center justify-center w-20 h-20 bg-[#1e5629] rounded-full shadow-2xl overflow-hidden hover:scale-105 transition-transform duration-200 border-2 border-[#2d7d3d] focus:outline-none mb-11"
+          className="flex flex-col items-center justify-center w-20 h-20 bg-[#1e5629] rounded-full shadow-2xl overflow-hidden hover:scale-105 transition-transform duration-200 border-2 border-[#2d7d3d] focus:outline-none "
         >
           <img
             src={AVATAR_URL}

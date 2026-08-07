@@ -248,6 +248,7 @@ export default function Categories() {
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
           className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-4 lg:gap-6"
+          onClick={()=>{window.scrollTo(0,0)}}
         >
           {CATEGORIES.map((cat) => (
             <Card3D key={cat.slug} cat={cat} navigate={navigate} />
