@@ -227,7 +227,7 @@ export default function TripDetail() {
 
   const { data, isLoading, isError } = useGetTripBySlugQuery(slug);
   const trip = data?.data || (isError || !data ? MOCK_TRIP : null);
-  console.log(trip)
+  console.log(trip);
 
   // Booking sidebar state
   const [selectedDate, setSelectedDate] = useState(null);
@@ -294,11 +294,11 @@ export default function TripDetail() {
     }
 
     if (!trip?._id) {
-    alert("Trip details are still loading.");
-    return;
-  }
+      alert("Trip details are still loading.");
+      return;
+    }
     navigate(`/booking/${trip?._id}`, {
-      state: { selectedDate, travelers, tripTitle: trip?.title,trip:trip },
+      state: { selectedDate, travelers, tripTitle: trip?.title, trip: trip },
     });
   };
 
@@ -794,18 +794,20 @@ export default function TripDetail() {
                   {/* Book Now */}
                   <button
                     onClick={handleBookNow}
+                    // onClick={()=>{window.scrollTo(0,0)}}
                     className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 rounded-xl transition text-base shadow-md shadow-amber-200"
                   >
                     Book Now
                   </button>
 
                   {/* Enquire */}
-                  <button
-                  onClick={() => navigate('/contact')}
-                    className="w-full border-2 border-amber-500 text-amber-600 hover:bg-amber-50 font-semibold py-3 rounded-xl transition text-sm cursor-pointer"
+                  <Link
+                    to="/contact"
+                    onClick={()=>{window.scrollTo(0,0)}}
+                    className="flex items-center justify-center w-full border-2 border-amber-500 text-amber-600 hover:bg-amber-50 font-semibold py-3 rounded-xl transition text-sm cursor-pointer"
                   >
                     Enquire About This Trip
-                  </button>
+                  </Link>
 
                   {/* Trust Badges */}
                   <div className="grid grid-cols-3 gap-2 pt-1">

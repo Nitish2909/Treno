@@ -394,6 +394,21 @@ export default function Navbar() {
 
   return (
     <>
+      {/* <div class="w-full bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 text-white py-1 shadow-lg overflow-hidden relative">
+        <marquee
+          behavior="scroll"
+          direction="left"
+          scrollamount="15"
+          onmouseover="this.stop();"
+          onmouseout="this.start();"
+        >
+          <h1 class="text-sm md:text-sm font-extrabold tracking-wide inline-flex items-center mx-4 select-none">
+            <span class="bg-white text-indigo-700 px-3 py-1 rounded-full text-sm font-black mr-3 shadow-md">HOT DEAL</span> 
+            Treno Your Trusted Travel Partner Offers Best and Affordable Travel
+            Packages in Karnal!
+          </h1>
+        </marquee>
+      </div> */}
       <header
         ref={navRef}
         className={clsx(
@@ -431,7 +446,7 @@ export default function Navbar() {
                 <Link
                   to="/"
                   className={clsx(
-                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
                   )}
                 >
@@ -444,7 +459,7 @@ export default function Navbar() {
                 <button
                   onClick={() => toggleDropdown("trips")}
                   className={clsx(
-                    "flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "flex items-center gap-1 px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
                     activeDropdown === "trips" && "text-amber-500",
                   )}
@@ -466,7 +481,7 @@ export default function Navbar() {
                 <button
                   onClick={() => toggleDropdown("destinations")}
                   className={clsx(
-                    "flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "flex items-center gap-1 px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
                     activeDropdown === "destinations" && "text-amber-500",
                   )}
@@ -485,40 +500,41 @@ export default function Navbar() {
                 />
               </li>
 
+              {/* Packages */}
+              <li>
+                <Link
+                  to="/packages"
+                  onClick={() => window.scrollTo(0, 0)}
+                  className={clsx(
+                    "px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    isScrolled ? "text-slate-700" : "text-white",
+                  )}
+                >
+                  Packages
+                </Link>
+              </li>
+
               {/* Event and Festivels */}
               <li>
                 <Link
                   to="/event-and-festivels"
                   onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
-                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
                   )}
                 >
                   Event & Festivals
                 </Link>
               </li>
-              {/* Weekend Gateways */}
-              <li>
-                <Link
-                  to="/weekend-gateways"
-                  onClick={() => window.scrollTo(0, 0)}
-                  className={clsx(
-                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
-                    isScrolled ? "text-slate-700" : "text-white",
-                  )}
-                >
-                  Weekend Gateways
-                </Link>
-              </li>
-
-              {/* Blog */}
+            
+          {/* Blog */}
               <li>
                 <Link
                   to="/blog"
                   onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
-                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
                   )}
                 >
@@ -532,7 +548,7 @@ export default function Navbar() {
                   to="/about"
                   onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
-                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
                   )}
                 >
@@ -546,7 +562,7 @@ export default function Navbar() {
                   to="/contact"
                   onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
-                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
                   )}
                 >
@@ -605,7 +621,6 @@ export default function Navbar() {
                   <Link
                     to="/auth/login"
                     className={clsx(
-                      
                       "px-4 py-2 rounded-full text-sm font-medium transition-colors border transform-gpu perspective-1000 hover:-translate-y-1 hover:rotate-x-6 hover:shadow-2xl",
                       isScrolled
                         ? "border-slate-300 text-slate-700 hover:bg-slate-50"
@@ -684,7 +699,7 @@ export default function Navbar() {
                   <img
                     src={TrenoLogo}
                     alt="Treno Logo"
-                    className="w-28 h-28 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
+                    className="w-32 h-32 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
                   />
                 </Link>
                 <button

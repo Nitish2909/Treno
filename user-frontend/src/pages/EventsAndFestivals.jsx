@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  Calendar, 
-  MapPin, 
-  Sparkles, 
+import {
+  ChevronLeft,
+  ChevronRight,
+  Calendar,
+  MapPin,
+  Sparkles,
   ArrowUpRight,
   Check,
-  Ticket
+  Ticket,
 } from "lucide-react";
 import DiscoverEvents from "./DiscoverEvents";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,7 +15,8 @@ import { Link, useNavigate } from "react-router-dom";
 const HERO_SLIDES = [
   {
     title: "11 Days Europe Trip with Oktoberfest",
-    subtitle: "Experience authentic Bavarian culture, scenic alpine views, and lively community celebrations.",
+    subtitle:
+      "Experience authentic Bavarian culture, scenic alpine views, and lively community celebrations.",
     tag: "Community Trip",
     duration: "11 Days / 10 Nights",
     location: "Munich & Central Europe",
@@ -23,7 +24,8 @@ const HERO_SLIDES = [
   },
   {
     title: "8 Days Bali with Gili Island Trip",
-    subtitle: "Zamna Festival Edition — dive into crystal waters, island vibes, and world-class soundscapes.",
+    subtitle:
+      "Zamna Festival Edition — dive into crystal waters, island vibes, and world-class soundscapes.",
     tag: "Festival Special",
     duration: "8 Days / 7 Nights",
     location: "Bali & Gili Islands",
@@ -31,7 +33,8 @@ const HERO_SLIDES = [
   },
   {
     title: "Magic of Tomorrowland & Thailand",
-    subtitle: "Bucket list journey combining high-energy festival nights with Bangkok's vibrant city life.",
+    subtitle:
+      "Bucket list journey combining high-energy festival nights with Bangkok's vibrant city life.",
     tag: "Bucket List",
     duration: "9 Days / 8 Nights",
     location: "Bangkok & Pattaya",
@@ -39,7 +42,8 @@ const HERO_SLIDES = [
   },
   {
     title: "10 Days Alpine Wonders & Scenic Trains",
-    subtitle: "Traverse snow-capped Swiss peaks, turquoise glacial lakes, and world-famous mountain passes.",
+    subtitle:
+      "Traverse snow-capped Swiss peaks, turquoise glacial lakes, and world-famous mountain passes.",
     tag: "Adventure Special",
     duration: "10 Days / 9 Nights",
     location: "Switzerland & Italian Lakes",
@@ -47,12 +51,13 @@ const HERO_SLIDES = [
   },
   {
     title: "7 Days Cherry Blossoms & Neon Lights",
-    subtitle: "Immerse yourself in Tokyo's futuristic skyline, historic shrines, and blooming spring gardens.",
+    subtitle:
+      "Immerse yourself in Tokyo's futuristic skyline, historic shrines, and blooming spring gardens.",
     tag: "Cultural Expedition",
     duration: "7 Days / 6 Nights",
     location: "Tokyo, Kyoto & Mt. Fuji",
     videoUrl: "https://www.pexels.com/download/video/5737256/",
-  }
+  },
 ];
 
 const MONTHLY_EVENTS = {
@@ -66,10 +71,18 @@ const MONTHLY_EVENTS = {
       duration: "10 NIGHTS 11 DAYS",
       route: "Prague International Airport - Munich International Airport",
       stops: ["3N Prague", "3N Budapest", "2N Salzburg", "2N Munich"],
-      inclusions: ["Stay", "Breakfast", "Sightseeing & Activities", "Event ticket", "Local Transport", "Trip Assistance"],
+      inclusions: [
+        "Stay",
+        "Breakfast",
+        "Sightseeing & Activities",
+        "Event ticket",
+        "Local Transport",
+        "Trip Assistance",
+      ],
       badge: "Event Tickets Additional",
       price: "2,09,990/-",
-      image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
+      image:
+        "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
     },
     {
       id: "sep-2",
@@ -79,11 +92,25 @@ const MONTHLY_EVENTS = {
       title: "7 Days Ziro Music Festival Tour Package",
       duration: "6 NIGHTS 7 DAYS",
       route: "Guwahati Airport/Khanapara - Guwahati Airport/Khanapara",
-      stops: ["Guwahati", "Tezpur", "Ziro Valley", "Ziro Valley Music Festival", "Apatani Tribal Village", "Guwahati"],
-      inclusions: ["Stay", "Breakfast", "Sightseeing & Activities", "Local Transport", "Trip Assistance"],
+      stops: [
+        "Guwahati",
+        "Tezpur",
+        "Ziro Valley",
+        "Ziro Valley Music Festival",
+        "Apatani Tribal Village",
+        "Guwahati",
+      ],
+      inclusions: [
+        "Stay",
+        "Breakfast",
+        "Sightseeing & Activities",
+        "Local Transport",
+        "Trip Assistance",
+      ],
       price: "44,999/-",
-      image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80",
-    }
+      image:
+        "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80",
+    },
   ],
   october: [
     {
@@ -93,13 +120,21 @@ const MONTHLY_EVENTS = {
       category: "ZAMNA BALI",
       title: "8 Days Bali with Gili Island Trip | Zamna Festival Edition",
       duration: "7 NIGHTS 8 DAYS",
-      route: "Ngurah Rai International Airport - Ngurah Rai International Airport",
+      route:
+        "Ngurah Rai International Airport - Ngurah Rai International Airport",
       stops: ["3N Seminyak", "2N Gili Trawangan", "2N Ubud"],
-      inclusions: ["Stay", "Breakfast", "Sightseeing & Activities", "Event ticket", "Local Transport"],
+      inclusions: [
+        "Stay",
+        "Breakfast",
+        "Sightseeing & Activities",
+        "Event ticket",
+        "Local Transport",
+      ],
       badge: "Festival Pass Included",
       price: "89,990/-",
-      image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80",
-    }
+      image:
+        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80",
+    },
   ],
   december: [
     {
@@ -111,11 +146,18 @@ const MONTHLY_EVENTS = {
       duration: "5 NIGHTS 6 DAYS",
       route: "Keflavík International Airport - Keflavík International Airport",
       stops: ["3N Reykjavík", "2N Golden Circle"],
-      inclusions: ["Stay", "Breakfast", "Sightseeing & Activities", "Local Transport", "Trip Assistance"],
+      inclusions: [
+        "Stay",
+        "Breakfast",
+        "Sightseeing & Activities",
+        "Local Transport",
+        "Trip Assistance",
+      ],
       price: "1,45,000/-",
-      image: "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=600&q=80",
-    }
-  ]
+      image:
+        "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=600&q=80",
+    },
+  ],
 };
 
 const ALL_PACKAGES = [
@@ -127,7 +169,8 @@ const ALL_PACKAGES = [
     title: "11 Days Europe Trip with Oktoberfest | Community Trip",
     stops: ["3N Prague", "3N Budapest", "2N Salzburg", "2N Munich"],
     price: "2,09,990/-",
-    image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: "pkg-2",
@@ -137,7 +180,8 @@ const ALL_PACKAGES = [
     title: "8 Days Bali With Gili Island Trip - Zamna Festival Edition",
     stops: ["Ubud", "ATV Ride", "Bali Swing", "Gili Island", "Kuta", "Za..."],
     price: "62,999/-",
-    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: "pkg-3",
@@ -147,7 +191,8 @@ const ALL_PACKAGES = [
     title: "Magic of Tomorrowland: Bucket List Thailand Trip with Bangkok",
     stops: ["Bangkok", "Pattaya", "Tomorrowland Festival", "Bangkok"],
     price: "2,29,990/-",
-    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: "pkg-4",
@@ -157,8 +202,9 @@ const ALL_PACKAGES = [
     title: "7 Days Ziro Music Festival Tour Package",
     stops: ["Guwahati", "Tezpur", "Ziro Valley", "Ziro Valley Music Fest..."],
     price: "44,999/-",
-    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80",
-  }
+    image:
+      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80",
+  },
 ];
 
 export default function EventsAndFestivals() {
@@ -172,8 +218,12 @@ export default function EventsAndFestivals() {
     return () => clearInterval(timer);
   }, []);
 
-  const nextSlide = () => setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-  const prevSlide = () => setActiveSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+  const nextSlide = () =>
+    setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+  const prevSlide = () =>
+    setActiveSlide(
+      (prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length,
+    );
 
   return (
     <section className="relative w-full min-h-screen bg-slate-950 text-white overflow-hidden py-12 px-4 sm:px-6 md:px-8 flex flex-col justify-center items-center mt-7">
@@ -214,7 +264,9 @@ export default function EventsAndFestivals() {
             >
               <div
                 className={`col-span-1 md:col-span-7 lg:col-span-6 flex flex-col justify-center px-6 sm:px-10 md:px-12 lg:px-14 py-10 z-10 transition-all duration-700 ease-out ${
-                  isActive ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+                  isActive
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-6 opacity-0"
                 }`}
               >
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-5">
@@ -237,13 +289,20 @@ export default function EventsAndFestivals() {
                 </p>
 
                 <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
-                  <button className="px-6 py-3.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-500/30 shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 group cursor-pointer">
-                    <span>Explore Itinerary</span>
+                  <button
+                    onClick={() => {
+                      navigate("/trips");
+                    }}
+                    className="px-6 py-3.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-500/30 shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 group cursor-pointer"
+                  >
+                    <span>Explore Packages</span>
                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </button>
                   <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-800/60 border border-slate-700/60 text-xs text-slate-300 backdrop-blur-md shadow-inner hover:border-slate-600 transition-colors">
                     <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span className="truncate font-medium">{slide.location}</span>
+                    <span className="truncate font-medium">
+                      {slide.location}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -316,9 +375,18 @@ export default function EventsAndFestivals() {
 
       {/* MONTHLY EVENTS LIST SECTION */}
       <div className="relative z-10 w-full max-w-6xl mx-auto mt-14 flex flex-col gap-12">
-        <MonthEventSection monthTitle="SEPTEMBER-2026" events={MONTHLY_EVENTS.september} />
-        <MonthEventSection monthTitle="OCTOBER-2026" events={MONTHLY_EVENTS.october} />
-        <MonthEventSection monthTitle="DECEMBER-2026" events={MONTHLY_EVENTS.december} />
+        <MonthEventSection
+          monthTitle="SEPTEMBER-2026"
+          events={MONTHLY_EVENTS.september}
+        />
+        <MonthEventSection
+          monthTitle="OCTOBER-2026"
+          events={MONTHLY_EVENTS.october}
+        />
+        <MonthEventSection
+          monthTitle="DECEMBER-2026"
+          events={MONTHLY_EVENTS.december}
+        />
       </div>
 
       {/* EXPLORE ALL EVENT PACKAGES SECTION */}
@@ -364,7 +432,9 @@ export default function EventsAndFestivals() {
                   <div>
                     {/* Meta header */}
                     <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium pb-2 border-b border-slate-800/50">
-                      <span className="text-amber-400/90 font-semibold">{pkg.duration}</span>
+                      <span className="text-amber-400/90 font-semibold">
+                        {pkg.duration}
+                      </span>
                       <span>{pkg.date}</span>
                     </div>
 
@@ -401,9 +471,8 @@ export default function EventsAndFestivals() {
                       </span>
                     </div>
                     <Link
-                    to='/trips'
-
-                      onClick={() =>window.scrollTo(0,0)}
+                      to="/trips"
+                      onClick={() => window.scrollTo(0, 0)}
                       className="px-4 py-1.5 rounded-full border border-amber-500/40 hover:border-amber-400 bg-amber-500/10 hover:bg-amber-400 hover:text-slate-950 text-xs text-amber-300 font-semibold transition-all duration-300 cursor-pointer shadow-sm hover:shadow-amber-500/20"
                     >
                       Book Now
@@ -448,7 +517,10 @@ function MonthEventSection({ monthTitle, events }) {
 
       <div className="flex flex-col gap-8">
         {events.map((event) => (
-          <div key={event.id} className="group relative flex gap-4 sm:gap-6 items-start p-4 sm:p-6 rounded-2xl bg-slate-900/40 border border-slate-800/80 hover:border-amber-500/30 transition-all duration-500 hover:bg-slate-900/70 hover:shadow-xl hover:shadow-amber-500/5 backdrop-blur-sm">
+          <div
+            key={event.id}
+            className="group relative flex gap-4 sm:gap-6 items-start p-4 sm:p-6 rounded-2xl bg-slate-900/40 border border-slate-800/80 hover:border-amber-500/30 transition-all duration-500 hover:bg-slate-900/70 hover:shadow-xl hover:shadow-amber-500/5 backdrop-blur-sm"
+          >
             <div className="flex items-start gap-3 pt-1 shrink-0">
               <div className="flex flex-col items-center justify-center bg-slate-800/70 border border-slate-700/60 p-2.5 rounded-xl shadow-inner min-w-[50px]">
                 <Calendar className="w-4 h-4 text-amber-400 mb-1" />
@@ -488,7 +560,9 @@ function MonthEventSection({ monthTitle, events }) {
                     {event.title}
                   </h2>
                   <p className="text-xs text-slate-300 font-medium mt-1.5">
-                    {event.duration} <span className="text-slate-600 font-normal">|</span> {event.route}
+                    {event.duration}{" "}
+                    <span className="text-slate-600 font-normal">|</span>{" "}
+                    {event.route}
                   </p>
 
                   <div className="flex flex-wrap items-center gap-1.5 mt-3.5">
@@ -520,8 +594,8 @@ function MonthEventSection({ monthTitle, events }) {
 
                 <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-4 pt-3 border-t border-slate-800/60">
                   <Link
-                  to='/trips'
-                     onClick={() =>window.scrollTo(0,0)}
+                    to="/trips"
+                    onClick={() => window.scrollTo(0, 0)}
                     className="w-full sm:w-auto px-7 py-2.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold text-xs sm:text-sm transition-all duration-300 cursor-pointer shadow-md shadow-amber-500/20 hover:shadow-lg hover:shadow-amber-500/30 active:scale-95"
                   >
                     Book Now

@@ -159,6 +159,7 @@ function Card3D({ cat, navigate }) {
         onMouseLeave={handleMouseLeave}
         whileTap={{ scale: 0.96 }}
         onClick={() => navigate(`/trips/category/${cat.slug}`)}
+        onClick={()=>{window.scrollTo(0,0)}}
         className={`group relative flex h-full cursor-pointer flex-col justify-between rounded-3xl border border-slate-200/80 bg-slate-50/50 p-5 shadow-lg transition-shadow duration-300 hover:border-slate-300 hover:bg-white hover:shadow-2xl ${cat.glowColor}`}
       >
         {/* Subtle top indicator arrow */}

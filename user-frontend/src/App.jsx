@@ -23,6 +23,7 @@ import DestinationDetails from "./pages/DestinationDetails.jsx";
 import CustomCursor from "./components/common/CustomCursor.jsx";
 import BookingDetails from "./pages/BookingDetails.jsx";
 
+
 // Pages - lazy loaded
 const Trips = lazy(() => import("./pages/Trips.jsx"));
 const TripDetail = lazy(() => import("./pages/TripDetail.jsx"));
@@ -88,6 +89,8 @@ function AppContent() {
               />
               {/* WeekendGateways*/}
               <Route path="/weekend-gateways" element={<WeekendGateways />} />
+
+              <Route path="/packages" element={<Packages/>} />
 
 
               {/* Auth Routes */}

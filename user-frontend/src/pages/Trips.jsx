@@ -1,3 +1,4 @@
+
 // import { useState, useEffect, useCallback } from 'react'
 // import { useSelector, useDispatch } from 'react-redux'
 // import { useParams, useSearchParams } from 'react-router-dom'
@@ -58,8 +59,8 @@
 //   const sortBy = useSelector(selectSortBy)
 //   const page = useSelector(selectPage)
 
-  
-//   const [searchInput, setSearchInput] = useState('')
+//   const initialSearch = searchParams.get('search') || searchParams.get('q') || filters.search || ''
+//   const [searchInput, setSearchInput] = useState(initialSearch)
 //   const [viewMode, setViewMode] = useState('grid') // 'grid' | 'list'
 //   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
 
@@ -69,7 +70,7 @@
 //   const queryParams = {
 //     ...filters,
 //     search: debouncedSearch || undefined,
-//     sort:sortBy,
+//     sort: sortBy,
 //     page,
 //     limit: PAGE_SIZE,
 //     category: categoryParam || filters.category || searchParams.get('category') || undefined,
@@ -89,14 +90,28 @@
 //     dispatch(setPage(1))
 //   }, [filters, debouncedSearch, sortBy, dispatch])
 
-//   // Build active filter chips from redux filters
+//   // Clear all filters along with search input state
+//   const handleClearAllFilters = useCallback(() => {
+//     setSearchInput('')
+//     dispatch(clearFilters())
+//   }, [dispatch])
+
+//   // Build active filter chips from redux filters & active search
 //   const activeFilterChips = Object.entries(filters)
-//     .filter(([, val]) => val !== undefined && val !== null && val !== '')
+//     .filter(([key, val]) => val !== undefined && val !== null && val !== '' && key !== 'search')
 //     .map(([key, val]) => ({ key, val: String(val) }))
+
+//   if (debouncedSearch) {
+//     activeFilterChips.unshift({ key: 'search', val: debouncedSearch })
+//   }
 
 //   const handleRemoveFilter = useCallback(
 //     (key) => {
-//       dispatch(clearSingleFilter(key))
+//       if (key === 'search') {
+//         setSearchInput('')
+//       } else {
+//         dispatch(clearSingleFilter(key))
+//       }
 //     },
 //     [dispatch]
 //   )
@@ -146,7 +161,7 @@
 //                 <>
 //                   <span>/</span>
 //                   <span className="text-gray-800 font-medium capitalize">{categoryParam}</span>
-//                 </                >
+//                 </>
 //               )}
 //             </nav>
 //             <div className="flex items-center justify-between">
@@ -283,7 +298,7 @@
 //                     </span>
 //                   ))}
 //                   <button
-//                     onClick={() => dispatch(clearFilters())}
+//                     onClick={handleClearAllFilters}
 //                     className="text-xs text-red-500 hover:text-red-700 underline transition ml-1"
 //                   >
 //                     Clear all
@@ -324,7 +339,7 @@
 //                     We couldn't find any trips matching your current filters. Try broadening your search or clearing the filters.
 //                   </p>
 //                   <button
-//                     onClick={() => dispatch(clearFilters())}
+//                     onClick={handleClearAllFilters}
 //                     className="bg-amber-500 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-amber-600 transition"
 //                   >
 //                     Clear Filters
@@ -447,9 +462,6 @@
 
 
 
-
-
-
 import { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useSearchParams } from 'react-router-dom'
@@ -463,6 +475,11 @@ import {
   X as XMarkIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
+  Sparkles,
+  ArrowUpDown,
+  Compass,
+  AlertCircle,
+  RotateCcw,
 } from 'lucide-react'
 
 import { useGetAllTripsQuery } from '../store/api/tripApi.js'
@@ -597,43 +614,48 @@ export default function Trips() {
         description="Browse hundreds of curated trips across India and the world. Filter by destination, duration, budget, and category to find your perfect adventure."
       />
 
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-slate-900/5 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(245,158,11,0.15),rgba(255,255,255,0))]">
         {/* Page Header */}
-        <div className="bg-white border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="relative overflow-hidden bg-white/80 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+          <div className="absolute -right-20 -top-20 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
             {/* Breadcrumb */}
-            <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-3">
-              <Link to="/" className="hover:text-amber-500 transition-colors">
+            <nav className="flex items-center space-x-2 text-xs font-medium tracking-wide text-slate-400 mb-4 uppercase">
+              <Link to="/" className="hover:text-amber-600 transition-colors flex items-center gap-1">
                 Home
               </Link>
-              <span>/</span>
-              <span className="text-gray-800 font-medium">Trips</span>
+              <span className="text-slate-300">/</span>
+              <span className="text-amber-600 font-semibold">Trips</span>
               {categoryParam && (
                 <>
-                  <span>/</span>
-                  <span className="text-gray-800 font-medium capitalize">{categoryParam}</span>
+                  <span className="text-slate-300">/</span>
+                  <span className="text-slate-700 font-semibold capitalize">{categoryParam}</span>
                 </>
               )}
             </nav>
-            <div className="flex items-center justify-between">
+
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 font-playfair">
+                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 font-playfair flex items-center gap-3">
                   {categoryParam
                     ? `${categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1)} Trips`
-                    : 'All Trips'}
+                    : 'Explore Expeditions'}
+                  <Sparkles className="w-6 h-6 text-amber-500 hidden sm:inline-block animate-pulse" />
                 </h1>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-slate-500 mt-1.5 flex items-center gap-2">
                   {isLoading ? (
-                    'Loading trips…'
+                    <span className="inline-flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
+                      Loading journeys…
+                    </span>
                   ) : (
                     <>
                       Showing{' '}
-                      <span className="font-semibold text-gray-700">
+                      <span className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 font-bold border border-amber-200/60 text-xs">
                         {totalCount === 0 ? 0 : (page - 1) * PAGE_SIZE + 1}–
                         {Math.min(page * PAGE_SIZE, totalCount)}
                       </span>{' '}
-                      of{' '}
-                      <span className="font-semibold text-gray-700">{totalCount}</span> trips
+                      of <span className="font-bold text-slate-800">{totalCount}</span> adventures
                     </>
                   )}
                 </p>
@@ -645,8 +667,8 @@ export default function Trips() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex gap-8">
             {/* ── Sidebar Filters (Desktop) ── */}
-            <aside className="hidden lg:block flex-shrink-0 w-[280px]">
-              <div className="sticky top-24">
+            <aside className="hidden lg:block flex-shrink-0 w-[300px]">
+              <div className="sticky top-24 bg-white/70 backdrop-blur-md rounded-2xl p-5 border border-slate-200/80 shadow-xl shadow-slate-200/50">
                 <TripFilters />
               </div>
             </aside>
@@ -654,74 +676,77 @@ export default function Trips() {
             {/* ── Main Content ── */}
             <main className="flex-1 min-w-0">
               {/* Toolbar */}
-              <div className="flex flex-wrap items-center gap-3 mb-5">
+              <div className="bg-white/80 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-wrap items-center gap-3 mb-6">
                 {/* Search */}
-                <div className="relative flex-1 min-w-[200px]">
-                  <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                <div className="relative flex-1 min-w-[220px]">
+                  <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                   <input
                     type="text"
-                    placeholder="Search trips…"
+                    placeholder="Search destinations, experiences…"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
-                    className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                    className="w-full pl-10 pr-9 py-2.5 text-sm border border-slate-200/80 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all placeholder:text-slate-400"
                   />
                   {searchInput && (
                     <button
                       onClick={() => setSearchInput('')}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition"
                     >
-                      <XMarkIcon className="w-4 h-4" />
+                      <XMarkIcon className="w-3.5 h-3.5" />
                     </button>
                   )}
                 </div>
 
                 {/* Sort */}
-                <select
-                  value={sortBy}
-                  onChange={(e) => dispatch(setSortBy(e.target.value))}
-                  className="text-sm border border-gray-200 rounded-lg px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer"
-                >
-                  {SORT_OPTIONS.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => dispatch(setSortBy(e.target.value))}
+                    className="appearance-none text-sm border border-slate-200/80 rounded-xl pl-9 pr-8 py-2.5 bg-slate-50/50 hover:bg-slate-100/80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 cursor-pointer font-medium text-slate-700 transition-all"
+                  >
+                    {SORT_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ArrowUpDown className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
 
                 {/* Mobile Filter Button */}
                 <button
                   onClick={() => setMobileFilterOpen(true)}
-                  className="lg:hidden flex items-center gap-2 text-sm border border-gray-200 rounded-lg px-3 py-2.5 bg-white hover:bg-gray-50 transition"
+                  className="lg:hidden flex items-center gap-2 text-sm font-medium border border-slate-200/80 rounded-xl px-4 py-2.5 bg-slate-50/50 hover:bg-slate-100 active:scale-95 transition-all text-slate-700"
                 >
-                  <FunnelIcon className="w-4 h-4" />
+                  <FunnelIcon className="w-4 h-4 text-amber-500" />
                   Filters
                   {activeFilterChips.length > 0 && (
-                    <span className="bg-amber-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-sm">
                       {activeFilterChips.length}
                     </span>
                   )}
                 </button>
 
                 {/* View Mode Toggle */}
-                <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-white ml-auto">
+                <div className="flex items-center bg-slate-100/80 p-1 rounded-xl border border-slate-200/60 ml-auto">
                   <button
                     onClick={() => setViewMode('grid')}
-                    className={`p-2.5 ${
+                    className={`p-2 rounded-lg transition-all ${
                       viewMode === 'grid'
-                        ? 'bg-amber-500 text-white'
-                        : 'text-gray-500 hover:bg-gray-50'
-                    } transition`}
+                        ? 'bg-white text-amber-600 shadow-sm font-medium'
+                        : 'text-slate-500 hover:text-slate-800'
+                    }`}
                     title="Grid view"
                   >
                     <Squares2X2Icon className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
-                    className={`p-2.5 ${
+                    className={`p-2 rounded-lg transition-all ${
                       viewMode === 'list'
-                        ? 'bg-amber-500 text-white'
-                        : 'text-gray-500 hover:bg-gray-50'
-                    } transition`}
+                        ? 'bg-white text-amber-600 shadow-sm font-medium'
+                        : 'text-slate-500 hover:text-slate-800'
+                    }`}
                     title="List view"
                   >
                     <ListBulletIcon className="w-4 h-4" />
@@ -731,69 +756,80 @@ export default function Trips() {
 
               {/* Active Filter Chips */}
               {activeFilterChips.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2 mb-5">
-                  <span className="text-xs text-gray-500 font-medium">Active filters:</span>
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex flex-wrap items-center gap-2 mb-6 p-3 bg-white/60 backdrop-blur-sm rounded-xl border border-slate-200/60"
+                >
+                  <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider mr-1">
+                    Active filters:
+                  </span>
                   {activeFilterChips.map(({ key, val }) => (
-                    <span
+                    <motion.span
+                      layout
                       key={key}
-                      className="inline-flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-full px-3 py-1"
+                      className="inline-flex items-center gap-1.5 bg-amber-50/80 border border-amber-200/80 text-amber-900 text-xs font-medium rounded-lg px-3 py-1 shadow-sm"
                     >
-                      <span className="capitalize">{key.replace(/_/g, ' ')}:</span>
+                      <span className="capitalize text-amber-600/80">{key.replace(/_/g, ' ')}:</span>
                       <span className="font-semibold">{val}</span>
                       <button
                         onClick={() => handleRemoveFilter(key)}
-                        className="ml-1 hover:text-amber-600 transition"
+                        className="ml-1 hover:bg-amber-200/60 p-0.5 rounded-md text-amber-700 transition"
                       >
                         <XMarkIcon className="w-3 h-3" />
                       </button>
-                    </span>
+                    </motion.span>
                   ))}
                   <button
                     onClick={handleClearAllFilters}
-                    className="text-xs text-red-500 hover:text-red-700 underline transition ml-1"
+                    className="text-xs text-rose-500 hover:text-rose-700 font-semibold transition ml-2 hover:underline inline-flex items-center gap-1"
                   >
-                    Clear all
+                    <RotateCcw className="w-3 h-3" /> Clear all
                   </button>
-                </div>
+                </motion.div>
               )}
 
               {/* Cards List & Container Views */}
               {(isLoading || isFetching) ? (
                 <CardSkeletonGrid count={PAGE_SIZE} />
               ) : isError ? (
-                <div className="flex flex-col items-center justify-center py-20 text-center">
-                  <div className="text-5xl mb-4">⚠️</div>
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                <div className="flex flex-col items-center justify-center py-20 px-4 text-center bg-white/80 backdrop-blur-md rounded-3xl border border-slate-200/80 shadow-sm">
+                  <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center mb-4 border border-rose-100">
+                    <AlertCircle className="w-8 h-8 text-rose-500" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-800 mb-2">
                     Something went wrong
                   </h3>
-                  <p className="text-gray-500 text-sm mb-4">
-                    {error?.data?.message || 'Unable to load trips. Please try again.'}
+                  <p className="text-slate-500 text-sm max-w-md mb-6">
+                    {error?.data?.message || 'Unable to load trips right now. Please check your connection and try again.'}
                   </p>
                   <button
                     onClick={() => window.location.reload()}
-                    className="bg-amber-500 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-amber-600 transition"
+                    className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-amber-500/25 active:scale-95 transition-all"
                   >
-                    Retry
+                    Retry Connection
                   </button>
                 </div>
               ) : trips.length === 0 ? (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex flex-col items-center justify-center py-24 text-center"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center justify-center py-20 px-4 text-center bg-white/80 backdrop-blur-md rounded-3xl border border-slate-200/80 shadow-sm"
                 >
-                  <div className="text-7xl mb-6">🗺️</div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-2 font-playfair">
-                    No trips found
+                  <div className="w-20 h-20 bg-amber-50 rounded-3xl flex items-center justify-center mb-5 border border-amber-100/80 shadow-inner">
+                    <Compass className="w-10 h-10 text-amber-500 animate-spin-slow" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-800 mb-2 font-playfair">
+                    No adventures found
                   </h3>
-                  <p className="text-gray-500 text-sm mb-6 max-w-xs">
-                    We couldn't find any trips matching your current filters. Try broadening your search or clearing the filters.
+                  <p className="text-slate-500 text-sm mb-6 max-w-sm leading-relaxed">
+                    We couldn't find any trips matching your criteria. Try expanding your search scope or clearing selected filters.
                   </p>
                   <button
                     onClick={handleClearAllFilters}
-                    className="bg-amber-500 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-amber-600 transition"
+                    className="bg-slate-900 text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-slate-800 hover:shadow-lg active:scale-95 transition-all"
                   >
-                    Clear Filters
+                    Reset All Filters
                   </button>
                 </motion.div>
               ) : (
@@ -811,10 +847,10 @@ export default function Trips() {
                         <motion.div
                           key={trip._id || trip.id || idx}
                           layout
-                          initial={{ opacity: 0, y: 16 }}
+                          initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.95 }}
-                          transition={{ delay: idx * 0.04, duration: 0.3 }}
+                          exit={{ opacity: 0, scale: 0.9 }}
+                          transition={{ delay: idx * 0.03, duration: 0.35, ease: 'easeOut' }}
                         >
                           <TripCard trip={trip} viewMode={viewMode} />
                         </motion.div>
@@ -824,11 +860,11 @@ export default function Trips() {
 
                   {/* Pagination Section */}
                   {totalPages > 1 && (
-                    <div className="flex items-center justify-center gap-1 mt-10">
+                    <div className="flex items-center justify-center gap-1.5 mt-12 py-3 px-4 bg-white/80 backdrop-blur-md rounded-2xl border border-slate-200/80 shadow-sm w-fit mx-auto">
                       <button
                         onClick={() => handlePageChange(page - 1)}
                         disabled={page === 1}
-                        className="flex items-center gap-1 px-3 py-2 text-sm rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                        className="flex items-center gap-1 px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed active:scale-95 transition-all"
                       >
                         <ChevronLeftIcon className="w-4 h-4" />
                         Prev
@@ -836,17 +872,17 @@ export default function Trips() {
 
                       {getPaginationRange().map((p, i) =>
                         p === '...' ? (
-                          <span key={`ellipsis-${i}`} className="px-2 py-2 text-sm text-gray-400">
+                          <span key={`ellipsis-${i}`} className="px-2 py-2 text-xs text-slate-400 font-medium">
                             …
                           </span>
                         ) : (
                           <button
                             key={p}
                             onClick={() => handlePageChange(p)}
-                            className={`w-9 h-9 text-sm rounded-lg border transition ${
+                            className={`w-9 h-9 text-xs rounded-xl border font-bold transition-all active:scale-95 ${
                               p === page
-                                ? 'bg-amber-500 border-amber-500 text-white font-semibold'
-                                : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                                ? 'bg-gradient-to-r from-amber-500 to-amber-600 border-amber-500 text-white shadow-md shadow-amber-500/20'
+                                : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
                             }`}
                           >
                             {p}
@@ -857,7 +893,7 @@ export default function Trips() {
                       <button
                         onClick={() => handlePageChange(page + 1)}
                         disabled={page === totalPages}
-                        className="flex items-center gap-1 px-3 py-2 text-sm rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                        className="flex items-center gap-1 px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed active:scale-95 transition-all"
                       >
                         Next
                         <ChevronRightIcon className="w-4 h-4" />
@@ -881,26 +917,29 @@ export default function Trips() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setMobileFilterOpen(false)}
-              className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+              className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 lg:hidden"
             />
             <motion.div
               key="drawer"
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
-              transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-              className="fixed top-0 left-0 h-full w-[300px] bg-white z-50 lg:hidden shadow-2xl overflow-y-auto"
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className="fixed top-0 left-0 h-full w-[320px] bg-white z-50 lg:hidden shadow-2xl flex flex-col"
             >
-              <div className="flex items-center justify-between p-4 border-b border-gray-100">
-                <h2 className="font-semibold text-gray-800">Filters</h2>
+              <div className="flex items-center justify-between p-5 border-b border-slate-100 bg-slate-50/50">
+                <div className="flex items-center gap-2">
+                  <FunnelIcon className="w-4 h-4 text-amber-500" />
+                  <h2 className="font-bold text-slate-800">Filter Expeditions</h2>
+                </div>
                 <button
                   onClick={() => setMobileFilterOpen(false)}
-                  className="p-1 rounded-lg hover:bg-gray-100 transition"
+                  className="p-1.5 rounded-xl text-slate-400 hover:bg-slate-200/60 hover:text-slate-700 transition"
                 >
-                  <XMarkIcon className="w-5 h-5 text-gray-500" />
+                  <XMarkIcon className="w-5 h-5" />
                 </button>
               </div>
-              <div className="p-4">
+              <div className="p-5 flex-1 overflow-y-auto">
                 <TripFilters onApply={() => setMobileFilterOpen(false)} />
               </div>
             </motion.div>
