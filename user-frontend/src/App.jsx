@@ -22,6 +22,7 @@ import Destinations from "./pages/Destinations.jsx";
 import DestinationDetails from "./pages/DestinationDetails.jsx";
 import CustomCursor from "./components/common/CustomCursor.jsx";
 import BookingDetails from "./pages/BookingDetails.jsx";
+import BottomNavigation from "./components/home/BottomNavigation.jsx";
 
 
 // Pages - lazy loaded
@@ -179,12 +180,17 @@ function AppContent() {
 
               {/* 404 */}
               <Route path="*" element={<NotFound />} />
+
+
             </Routes>
           </AnimatePresence>
         </Suspense>
       </main>
       {!isAuthPage && !isNoNavPage && <Footer />}
       <ScrollToTop />
+
+      {/* bottom navigation  */}
+      <BottomNavigation />
     </div>
   );
 }
