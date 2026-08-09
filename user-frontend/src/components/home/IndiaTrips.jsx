@@ -464,7 +464,7 @@ export default function IndiaTrips() {
   };
 
   return (
-    <section className="relative w-full max-w-7xl mx-auto px-4 py-8 bg-slate-50 min-h-screen">
+    <section className="relative w-full max-w-7xl mx-auto px-4 py-8 bg-slate-50 min-h-screen overflow-hidden">
       {/* --- HERO BANNER SECTION --- */}
       <div className="relative w-full h-[380px] md:h-[440px] rounded-3xl overflow-hidden shadow-2xl mb-12">
         {/* Background Image */}

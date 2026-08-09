@@ -25,7 +25,7 @@ const pageVariants = {
 
 export default function Home() {
   return (
-    <>
+    <div className="overflow-hidden">
       <SEOHead
         title="Treno - Your Travel Partner | Treno Travel | Best Travel Agency in Karnal| Trip With Treno"
         description="Book domestic and international tour packages, honeymoon packages and customized holidays at affordable prices."
@@ -133,7 +133,7 @@ export default function Home() {
           <PopularDestinations />
         </section>
 
-         <section className="">
+         <section className="overflow-hidden">
           < Chatbot/>
         </section>
 
@@ -162,6 +162,6 @@ export default function Home() {
           <WhatsApp/>
         </section> */}
       </motion.div>
-    </>
+    </div>
   );
 }

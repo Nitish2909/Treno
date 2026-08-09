@@ -357,7 +357,8 @@ export default function Navbar() {
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    console.log(mobileOpen)
+    document.body.style.overflow = mobileOpen ? "hidden !important" : "";
     return () => {
       document.body.style.overflow = "";
     };
@@ -412,7 +413,7 @@ export default function Navbar() {
       <header
         ref={navRef}
         className={clsx(
-          "relative top-0 left-0 right-0 z-40 transition-all duration-300",
+          "relative top-0 left-0 right-0 z-40 transition-all duration-300 overflow-hidden",
           isScrolled ? "bg-white shadow-md" : "header-bg",
         )}
       >
@@ -643,8 +644,9 @@ export default function Navbar() {
 
             {/*  Mobile hamburger  */}
             <button
+            type="button"
               className={clsx(
-                "lg:hidden p-2 rounded-lg transition-colors",
+                "lg:hidden p-2 rounded-lg transition-colors relative z-50",
                 isScrolled
                   ? "text-slate-700 hover:bg-slate-100"
                   : "text-white hover:bg-white/20",
@@ -668,7 +670,7 @@ export default function Navbar() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+              className="fixed inset-0 z-40 bg-black/40 lg:hidden overflow-hidden"
               onClick={() => setMobileOpen(false)}
             />
 
@@ -827,6 +829,14 @@ export default function Navbar() {
                 </div>
 
                 <Link
+                  to="/packages"
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                >
+                  Packages
+                </Link>
+
+                <Link
                   to="/event-and-festivels"
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
@@ -834,13 +844,13 @@ export default function Navbar() {
                   Events & Festivals
                 </Link>
 
-                <Link
+                {/* <Link
                   to="/weekend-gateways"
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
                 >
                   Weekend Gateways
-                </Link>
+                </Link> */}
 
                 <Link
                   to="/blog"

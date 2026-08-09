@@ -24,7 +24,7 @@ export default function InternationalTrips() {
   };
 
   return (
-    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-sans">
+    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-sans overflow-hidden">
       
       {/* Hero Banner Container */}
       <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-800">
