@@ -139,7 +139,7 @@ function TripsDropdown({ isOpen }) {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[540px] bg-white  rounded-2xl shadow-2xl border border-slate-100 p-6 z-50"
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[540px] bg-white  rounded-2xl shadow-2xl border border-slate-100 p-6 z-100"
         >
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">
             Browse by Type
@@ -413,7 +413,7 @@ export default function Navbar() {
       <header
         ref={navRef}
         className={clsx(
-          "relative top-0 left-0 right-0 z-40 transition-all duration-300 overflow-hidden",
+          "relative top-0 left-0 right-0 z-40 transition-all duration-300",
           isScrolled ? "bg-white shadow-md" : "header-bg",
         )}
       >
@@ -646,7 +646,7 @@ export default function Navbar() {
             <button
             type="button"
               className={clsx(
-                "lg:hidden p-2 rounded-lg transition-colors relative z-50",
+                "lg:hidden p-2 rounded-lg transition-colors",
                 isScrolled
                   ? "text-slate-700 hover:bg-slate-100"
                   : "text-white hover:bg-white/20",
