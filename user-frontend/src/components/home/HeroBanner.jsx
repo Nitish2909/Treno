@@ -4,6 +4,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination, EffectFade } from "swiper/modules";
 import { MapPin, Users, Star, ChevronDown } from "lucide-react";
 import SearchBar from "./SearchBar.jsx";
+import Goa from "../../assets/Goa.png"
+import Kerala from "../../assets/Kerala.png"
+import JK from "../../assets/J&K.png"
+import Uttarakhand from "../../assets/Uttarakhand.png"
+import Himalayas from "../../assets/Himalayas.png"
+import Rajasthan from "../../assets/Rajasthan.png"
 
 import "swiper/css";
 import "swiper/css/autoplay";
@@ -13,21 +19,21 @@ import "swiper/css/effect-fade";
 
 const slides = [
   {
-    image: "https://images.pexels.com/photos/1483053/pexels-photo-1483053.jpeg",
+    image: Himalayas,
     tag: "Himalayas",
     title: "Discover the Himalayas",
     subtitle:
       "Stand atop the roof of the world and feel the mountain breeze carry your worries away.",
   },
   {
-    image: "https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg",
+    image: Goa,
     tag: "Goa",
     title: "Escape to Paradise",
     subtitle:
       "Golden sands, azure waters, and vibrant sunsets — your perfect coastal retreat awaits.",
   },
   {
-    image: "https://images.pexels.com/photos/3278215/pexels-photo-3278215.jpeg",
+    image: Kerala,
     tag: "Kerala",
     title: "Serenity in God's Own Country",
     subtitle:
@@ -35,15 +41,14 @@ const slides = [
   },
   {
     // image: 'https://images.pexels.com/photos/2409953/pexels-photo-2409953.jpeg',
-    image: "https://images.pexels.com/photos/176880/pexels-photo-176880.jpeg",
+    image: Rajasthan ,
     tag: "Rajasthan",
     title: "Royal Rajasthan Awaits",
     subtitle:
       "Majestic forts, desert dunes, and royal hospitality — live like royalty in the desert kingdom.",
   },
   {
-    image:
-      "https://images.pexels.com/photos/27496413/pexels-photo-27496413.jpeg",
+    image:JK,
     tag: "Jammu & Kashmir",
     title: "Gulmarg: The Meadow of Flowers",
     subtitle:
@@ -58,9 +63,9 @@ const slides = [
       "Sip world-famous tea and watch the sunrise over the majestic Kanchenjunga range.",
   },
   {
-    image: "https://images.pexels.com/photos/2070307/pexels-photo-2070307.jpeg",
+    image: Uttarakhand,
     tag: "Uttarakhand",
-    title: "Mussoorie: Charm of the Doon Valley",
+    title: "Rishikesh is a city in India’s northern state of Uttarakhand",
     subtitle:
       "Stroll down the iconic Mall Road and enjoy panoramic views of the spectacular Garhwal Himalayan range.",
   },

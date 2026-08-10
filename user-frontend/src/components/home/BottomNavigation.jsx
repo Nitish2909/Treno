@@ -8,7 +8,7 @@ const BottomNavigation = () => {
     { path: '/packages', label: 'Package', icon: Package },
     { path: '/destinations', label: 'Destination', icon: MapPin },
     { path: '/contact', label: 'Contact', icon: MessageCircle },
-    { path: '/login', label: 'Login', icon: LogIn },
+    { path: '/auth/login', label: 'Login', icon: LogIn },
   ];
 
   return (

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import DatePicker from "react-datepicker";
+import DatePickerLib from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import PassengerForm from "./PassengerForm.jsx";
 import PriceSummary from "./PriceSummary.jsx";
+
+// Handle different versions of react-datepicker
+const DatePicker = DatePickerLib?.default || DatePickerLib;
 
 //  helpers
 
@@ -186,7 +189,7 @@ export default function BookingForm({ trip, onComplete }) {
   const [paying, setPaying] = useState(false);
 
   // Step 1
-  const [startDate, setstartDate] = useState("");
+  const [startDate, setStartDate] = useState("");
   const [travelers, setTravelers] = useState(1);
 
   // Step 2
@@ -317,7 +320,7 @@ export default function BookingForm({ trip, onComplete }) {
                   value={isCustomDateSelected ? "custom" : startDate}
                   onChange={(e) => {
                     e.preventDefault();
-                    setstartDate(e.target.value);
+                    setStartDate(e.target.value);
                   }}
                   className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition focus:ring-2 focus:ring-amber-400 bg-white mb-3 ${
                     step1Errors.startDate
@@ -338,14 +341,14 @@ export default function BookingForm({ trip, onComplete }) {
               {(!hasDates || isCustomDateSelected || startDate === "custom") && (
                 <div>
                   <DatePicker
-                    selected={parseValidDate(startDate)}
+                    selected={parseValidDate(startDate)}      
                     onChange={(date) => {
-                      setstartDate(date ? date.toISOString() : "");
+                      setStartDate(date ? date.toISOString() : "");
                     }}
                     minDate={new Date()}
                     dateFormat="dd MMM yyyy"
                     placeholderText="Select your departure date"
-                    className={`w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:ring-2 focus:ring-amber-400 ${
+                    className={`w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:ring-2 focus:ring-amber-400  ${
                       step1Errors.startDate
                         ? "border-red-400"
                         : "border-slate-300"
@@ -396,7 +399,6 @@ export default function BookingForm({ trip, onComplete }) {
                 </p>
               )}
             </div>
-
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center justify-between">
               <div className="text-sm text-slate-600">
                 {fmt(pricePerPerson)} × {travelers} traveler

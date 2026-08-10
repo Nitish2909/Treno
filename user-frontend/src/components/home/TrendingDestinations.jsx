@@ -168,6 +168,7 @@ function DestinationCard({ dest }) {
 
         {/* Bottom info elevated on 3D Z-axis */}
         <div
+        onClick={()=>{window.scrollTo(0,0)}}
           className="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-300 group-hover:translate-y-[-4px]"
           style={{ transform: 'translateZ(40px)' }}
         >

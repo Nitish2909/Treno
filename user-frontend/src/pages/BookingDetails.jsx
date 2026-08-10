@@ -64,6 +64,7 @@ export default function BookingDetails() {
 
   // Fallback for nested API response structures (e.g., data.data or data directly)
   const booking = data?.data || data?.booking || data;
+  console.log(booking)
 
   if (isLoading) {
     return (

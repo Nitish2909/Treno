@@ -638,7 +638,7 @@ export default function TripCard({
               <div className="flex items-center gap-1.5 text-slate-500 text-xs font-medium">
                 <Users className="w-3.5 h-3.5 text-teal-500 shrink-0" />
                 <span>
-                  {minGroupSize || 1}–{maxGroupSize} Guests
+                  {minGroupSize || 1}–{maxGroupSize} People
                 </span>
               </div>
             )}

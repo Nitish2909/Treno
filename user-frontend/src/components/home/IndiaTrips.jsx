@@ -387,6 +387,7 @@ import {
   toggleWishlist,
   selectIsInWishlist,
 } from "../../store/slices/wishlistSlice.js";
+import India from "../../assets/India.png"
 
 // Helper sub-component for wishlist state on individual trip items
 function WishlistButton({ trip }) {
@@ -469,8 +470,7 @@ export default function IndiaTrips() {
       <div className="relative w-full h-[380px] md:h-[440px] rounded-3xl overflow-hidden shadow-2xl mb-12">
         {/* Background Image */}
         <img
-          src="https://images.pexels.com/photos/38068047/pexels-photo-38068047.jpeg"
-          alt="India Trip"
+          src={India}
           className="w-full h-full object-cover object-center scale-105 transition-transform duration-1000 hover:scale-100"
         />
 

@@ -1,7 +1,12 @@
-
-import React, { useRef } from 'react';
-import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef } from "react";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   Mountain,
   Waves,
@@ -13,88 +18,88 @@ import {
   Clock,
   ArrowUpRight,
   Sparkles,
-} from 'lucide-react';
+} from "lucide-react";
 
 const CATEGORIES = [
   {
-    name: 'Trekking',
-    slug: 'trekking',
+    name: "Trekking",
+    slug: "trekking",
     icon: Mountain,
     tripCount: 148,
-    gradient: 'from-indigo-500 to-indigo-700',
-    glowColor: 'hover:shadow-indigo-500/25',
-    accentBg: 'bg-indigo-500/10',
-    textColor: 'text-indigo-600',
+    gradient: "from-indigo-500 to-indigo-700",
+    glowColor: "hover:shadow-indigo-500/25",
+    accentBg: "bg-indigo-500/10",
+    textColor: "text-indigo-600",
   },
   {
-    name: 'Beach',
-    slug: 'beach',
+    name: "Beach",
+    slug: "beach",
     icon: Waves,
     tripCount: 96,
-    gradient: 'from-blue-400 to-blue-600',
-    glowColor: 'hover:shadow-blue-500/25',
-    accentBg: 'bg-blue-500/10',
-    textColor: 'text-blue-600',
+    gradient: "from-blue-400 to-blue-600",
+    glowColor: "hover:shadow-blue-500/25",
+    accentBg: "bg-blue-500/10",
+    textColor: "text-blue-600",
   },
   {
-    name: 'Adventure',
-    slug: 'adventure',
+    name: "Adventure",
+    slug: "adventure",
     icon: Zap,
     tripCount: 112,
-    gradient: 'from-amber-400 to-orange-600',
-    glowColor: 'hover:shadow-orange-500/25',
-    accentBg: 'bg-orange-500/10',
-    textColor: 'text-orange-600',
+    gradient: "from-amber-400 to-orange-600",
+    glowColor: "hover:shadow-orange-500/25",
+    accentBg: "bg-orange-500/10",
+    textColor: "text-orange-600",
   },
   {
-    name: 'Cultural',
-    slug: 'cultural',
+    name: "Cultural",
+    slug: "cultural",
     icon: Landmark,
     tripCount: 74,
-    gradient: 'from-amber-500 to-amber-700',
-    glowColor: 'hover:shadow-amber-500/25',
-    accentBg: 'bg-amber-500/10',
-    textColor: 'text-amber-600',
+    gradient: "from-amber-500 to-amber-700",
+    glowColor: "hover:shadow-amber-500/25",
+    accentBg: "bg-amber-500/10",
+    textColor: "text-amber-600",
   },
   {
-    name: 'Honeymoon',
-    slug: 'honeymoon',
+    name: "Honeymoon",
+    slug: "honeymoon",
     icon: Heart,
     tripCount: 58,
-    gradient: 'from-rose-400 to-pink-600',
-    glowColor: 'hover:shadow-pink-500/25',
-    accentBg: 'bg-pink-500/10',
-    textColor: 'text-pink-600',
+    gradient: "from-rose-400 to-pink-600",
+    glowColor: "hover:shadow-pink-500/25",
+    accentBg: "bg-pink-500/10",
+    textColor: "text-pink-600",
   },
   {
-    name: 'Backpacking',
-    slug: 'backpacking',
+    name: "Backpacking",
+    slug: "backpacking",
     icon: Compass,
     tripCount: 83,
-    gradient: 'from-teal-400 to-teal-600',
-    glowColor: 'hover:shadow-teal-500/25',
-    accentBg: 'bg-teal-500/10',
-    textColor: 'text-teal-600',
+    gradient: "from-teal-400 to-teal-600",
+    glowColor: "hover:shadow-teal-500/25",
+    accentBg: "bg-teal-500/10",
+    textColor: "text-teal-600",
   },
   {
-    name: 'Wildlife',
-    slug: 'wildlife',
+    name: "Wildlife",
+    slug: "wildlife",
     icon: Leaf,
     tripCount: 47,
-    gradient: 'from-emerald-500 to-green-700',
-    glowColor: 'hover:shadow-green-500/25',
-    accentBg: 'bg-green-500/10',
-    textColor: 'text-green-600',
+    gradient: "from-emerald-500 to-green-700",
+    glowColor: "hover:shadow-green-500/25",
+    accentBg: "bg-green-500/10",
+    textColor: "text-green-600",
   },
   {
-    name: 'Weekend Getaways',
-    slug: 'weekend-getaways',
+    name: "Weekend Getaways",
+    slug: "weekend-getaways",
     icon: Clock,
     tripCount: 130,
-    gradient: 'from-purple-500 to-indigo-600',
-    glowColor: 'hover:shadow-purple-500/25',
-    accentBg: 'bg-purple-500/10',
-    textColor: 'text-purple-600',
+    gradient: "from-purple-500 to-indigo-600",
+    glowColor: "hover:shadow-purple-500/25",
+    accentBg: "bg-purple-500/10",
+    textColor: "text-purple-600",
   },
 ];
 
@@ -153,18 +158,20 @@ function Card3D({ cat, navigate }) {
         style={{
           rotateX,
           rotateY,
-          transformStyle: 'preserve-3d',
+          transformStyle: "preserve-3d",
         }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         whileTap={{ scale: 0.96 }}
-        onClick={() => navigate(`/trips/category/${cat.slug}`)}
-        onClick={()=>{window.scrollTo(0,0)}}
+        onClick={() => {
+          navigate(`/trips/category/${cat.slug}`);
+          window.scrollTo(0, 0);
+        }}
         className={`group relative flex h-full cursor-pointer flex-col justify-between rounded-3xl border border-slate-200/80 bg-slate-50/50 p-5 shadow-lg transition-shadow duration-300 hover:border-slate-300 hover:bg-white hover:shadow-2xl ${cat.glowColor}`}
       >
         {/* Subtle top indicator arrow */}
-        <div 
-          style={{ transform: 'translateZ(20px)' }}
+        <div
+          style={{ transform: "translateZ(20px)" }}
           className="absolute right-4 top-4 text-slate-400 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-slate-800"
         >
           <ArrowUpRight className="h-5 w-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -172,11 +179,13 @@ function Card3D({ cat, navigate }) {
 
         <div>
           {/* Icon with Ambient Glow and 3D Pop */}
-          <div 
-            style={{ transform: 'translateZ(40px)' }} 
+          <div
+            style={{ transform: "translateZ(40px)" }}
             className="relative mb-5 inline-block"
           >
-            <div className={`absolute inset-0 rounded-2xl ${cat.accentBg} blur-lg transition-all duration-300 group-hover:scale-125`} />
+            <div
+              className={`absolute inset-0 rounded-2xl ${cat.accentBg} blur-lg transition-all duration-300 group-hover:scale-125`}
+            />
             <div
               className={`relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${cat.gradient} text-white shadow-xl transition-transform duration-300 group-hover:rotate-3`}
             >
@@ -185,8 +194,8 @@ function Card3D({ cat, navigate }) {
           </div>
 
           {/* Category Title with 3D Depth */}
-          <h3 
-            style={{ transform: 'translateZ(25px)' }}
+          <h3
+            style={{ transform: "translateZ(25px)" }}
             className="text-base font-bold text-slate-900 sm:text-lg"
           >
             {cat.name}
@@ -194,14 +203,16 @@ function Card3D({ cat, navigate }) {
         </div>
 
         {/* Footer info with Subtle Z offset */}
-        <div 
-          style={{ transform: 'translateZ(15px)' }}
+        <div
+          style={{ transform: "translateZ(15px)" }}
           className="mt-4 flex items-center justify-between border-t border-slate-200/80 pt-3"
         >
           <span className="text-xs font-medium text-slate-500 group-hover:text-slate-800">
             {cat.tripCount} destinations
           </span>
-          <span className={`text-xs font-semibold ${cat.textColor} opacity-0 transition-opacity duration-300 group-hover:opacity-100`}>
+          <span
+            className={`text-xs font-semibold ${cat.textColor} opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
+          >
             Browse &rarr;
           </span>
         </div>
@@ -213,7 +224,7 @@ function Card3D({ cat, navigate }) {
 export default function Categories() {
   const navigate = useNavigate();
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <section className="relative overflow-hidden bg-white py-20 sm:py-28">
@@ -247,7 +258,7 @@ export default function Categories() {
           ref={ref}
           variants={containerVariants}
           initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          animate={inView ? "visible" : "hidden"}
           className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-4 lg:gap-6"
           onClick={()=>{window.scrollTo(0,0)}}
         >

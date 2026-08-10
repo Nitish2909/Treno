@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useGetFeaturedTripsQuery } from '../../store/api/tripApi';
+import international from "../../assets/international.png"
 
 export default function InternationalTrips() {
   const scrollContainerRef = useRef(null);
@@ -32,12 +33,12 @@ export default function InternationalTrips() {
         {/* Background Image & Overlays */}
         <div className="absolute inset-0 z-0 ">
           <img
-            src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=2000"
+            src={international}
             alt="Hero Background"
             className="w-full h-full object-cover object-center opacity-40 scale-105 transition-transform duration-1000 ease-out hover:scale-100"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"  />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 "  />
+          <div className="absolute inset-0 " />
         </div>
 
         {/* Hero Section Content */}
@@ -73,7 +74,7 @@ export default function InternationalTrips() {
           <div className="flex items-center justify-end gap-2 mb-4 px-2">
             <button
               onClick={() => scroll('left')}
-              className="p-3 rounded-full bg-slate-900/80 hover:bg-slate-800 text-white border border-slate-700/80 shadow-md backdrop-blur-md transition-all active:scale-95 hover:border-amber-400/50"
+              className="p-3 rounded-full  hover:bg-slate-800 text-white border border-slate-700/80 shadow-md backdrop-blur-md transition-all active:scale-95 hover:border-amber-400/50"
               aria-label="Previous Slide"
             >
               <ArrowLeft className="w-5 h-5" />
