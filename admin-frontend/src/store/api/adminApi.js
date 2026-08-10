@@ -35,7 +35,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     // Call /auth/refresh ensuring credentials are systematically included
     const refreshResult = await baseQuery({ 
-      url: '/auth/refresh', 
+      url: '/admin/refresh-token', 
       method: 'POST',
       credentials: 'include' // Explicitly forced for cookie sharing
     }, api, extraOptions);
@@ -48,7 +48,8 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       // Update local storage with the new token
       if (refreshResult.data.data?.accessToken) {
         console.log(refreshResult.data.data.accessToken)
-        localStorage.setItem(TOKEN_KEY, refreshResult.data.data.accessToken);
+        api.dispatch(setCredentials(refreshResult?.data?.data))
+        // localStorage.setItem(TOKEN_KEY, refreshResult.data.data.accessToken);
       }
 
       // Force credentials: 'include' on the retried request

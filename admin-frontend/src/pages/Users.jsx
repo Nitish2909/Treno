@@ -22,7 +22,9 @@ export default function Users() {
   const [deactivateUser,{ isLoading: deacting  }] = useDeactivateUserMutation()
 
   const users = data?.data?.users || []
+  console.log(users)
   const total = data?.data?.total || 0
+  console.log(total)
 
   async function handleToggleRole(user) {
     const newRole = user.role === 'admin' ? 'user' : 'admin'

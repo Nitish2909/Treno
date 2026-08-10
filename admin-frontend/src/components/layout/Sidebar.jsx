@@ -49,6 +49,12 @@ const navGroups = [
       { to: '/admin/messages', icon: MessageSquare, label: 'Messages' },
     ],
   },
+   {
+    label: 'Message',
+    items: [
+      { to: '/admin/messages', icon: MessageSquare, label: 'Messages' },
+    ],
+  },
 ]
 
 function NavItem({ to, icon: Icon, label }) {
