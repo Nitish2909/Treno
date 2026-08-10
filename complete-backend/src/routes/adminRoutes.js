@@ -12,6 +12,7 @@ import {
   getRevenueStats,
   getBookingAnalytics,
   adminLogout,
+  refreshAdminAccessToken,
 } from "../controllers/adminController.js";
 
 import {
@@ -67,6 +68,7 @@ const router = express.Router();
 
 router.post('/auth/login',authLimiter,adminLogin)
 router.post('/auth/logout',verifyToken,adminLogout)
+router.post("/refresh-token", refreshAdminAccessToken);
 
 // All admin routes require authentication + admin role
 router.use(verifyToken, isAdmin);

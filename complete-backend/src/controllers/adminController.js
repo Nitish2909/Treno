@@ -8,6 +8,7 @@ import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { cookieOptions, generateTokens } from "./authController.js";
+import jwt from 'jsonwebtoken'
 
 
 export const adminLogin = asyncHandler(async (req, res) => {
@@ -64,6 +65,36 @@ export const adminLogout = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, null, "Logged out successfully."));
 });
 
+
+export const refreshAdminAccessToken = asyncHandler(async (req, res) => {
+  const incomingToken =
+    req.cookies?.refreshToken || req.body?.refreshToken;
+
+    console.log(incomingToken)
+  if (!incomingToken) {
+    throw ApiError.unauthorized("Refresh token is missing.");
+  }
+
+  let decoded;
+  try {
+    decoded = jwt.verify(incomingToken, process.env.REFRESH_TOKEN_SECRET);
+  } catch {
+    throw ApiError.unauthorized("Invalid or expired refresh token. Please log in again.");
+  }
+
+  const user = await User.findById(decoded._id).select("+refreshToken");
+  if (!user || user.refreshToken !== incomingToken) {
+    throw ApiError.unauthorized("Refresh token is invalid or has been revoked.");
+  }
+
+  const { accessToken, refreshToken } = await generateTokens(user);
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, { ...cookieOptions })
+    .cookie("refreshToken", refreshToken, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1000 })
+    .json(new ApiResponse(200, { admin:user , token:accessToken, refreshToken}, "Access token refreshed."));
+});
 /**
  * GET /api/v1/admin/dashboard/stats
  */

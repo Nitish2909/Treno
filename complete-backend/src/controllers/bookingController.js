@@ -64,9 +64,9 @@ export const createBooking = asyncHandler(async (req, res) => {
       new Date(sd.date).toDateString() === requestedDate.toDateString()
   );
 
-  if (trip.startDates.length > 0 && !startDateEntry) {
-    throw ApiError.badRequest("Selected start date is not available for this trip.");
-  }
+  // if (trip.startDates.length > 0 && !startDateEntry) {
+  //   throw ApiError.badRequest("Selected start date is not available for this trip.");
+  // }
 
   // Check slot availability
   if (startDateEntry && startDateEntry.slots < passengers.length) {
