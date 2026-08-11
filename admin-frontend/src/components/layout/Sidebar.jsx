@@ -3,7 +3,8 @@ import {
   LayoutDashboard, Map, Compass, BookOpen, Calendar,
   Users, Star, Settings, LogOut, Mountain, ChevronRight,
   Tag, FileText,MessageSquare,
-  Plane
+  Plane,
+  User
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useAdminAuth } from '../../hooks/useAdminAuth'
@@ -44,9 +45,9 @@ const navGroups = [
     ],
   },
   {
-    label: 'Message',
+    label: 'Add Employee',
     items: [
-      { to: '/admin/messages', icon: MessageSquare, label: 'Messages' },
+      { to: '/admin/employee', icon: User, label: 'Employee' },
     ],
   },
    {

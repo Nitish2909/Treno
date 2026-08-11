@@ -1,31 +1,31 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import AdminLayout from './components/layout/AdminLayout'
-import AdminLogin from './pages/AdminLogin'
-import Dashboard from './pages/Dashboard'
-import Trips from './pages/Trips'
-import TripCreate from './pages/TripCreate'
-import TripEdit from './pages/TripEdit'
-import Bookings from './pages/Bookings'
-import BookingDetail from './pages/BookingDetail'
-import Users from './pages/Users'
-import UserDetail from './pages/UserDetail'
-import Reviews from './pages/Reviews'
-import Blogs from './pages/Blogs'
-import BlogCreate from './pages/BlogCreate'
-import BlogEdit from './pages/BlogEdit'
-import Categories from './pages/Categories'
-import Settings from './pages/Settings'
-import NotFound from './pages/NotFound'
-import Messages from './pages/Messages'
-
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import AdminLayout from "./components/layout/AdminLayout";
+import AdminLogin from "./pages/AdminLogin";
+import Dashboard from "./pages/Dashboard";
+import Trips from "./pages/Trips";
+import TripCreate from "./pages/TripCreate";
+import TripEdit from "./pages/TripEdit";
+import Bookings from "./pages/Bookings";
+import BookingDetail from "./pages/BookingDetail";
+import Users from "./pages/Users";
+import UserDetail from "./pages/UserDetail";
+import Reviews from "./pages/Reviews";
+import Blogs from "./pages/Blogs";
+import BlogCreate from "./pages/BlogCreate";
+import BlogEdit from "./pages/BlogEdit";
+import Categories from "./pages/Categories";
+import Settings from "./pages/Settings";
+import NotFound from "./pages/NotFound";
+import Messages from "./pages/Messages";
+import Employee from "./pages/Employee";
 
 function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useSelector((state) => state.adminAuth)
+  const { isAuthenticated } = useSelector((state) => state.adminAuth);
   if (!isAuthenticated) {
-    return <Navigate to="/admin/login" replace />
+    return <Navigate to="/admin/login" replace />;
   }
-  return children
+  return children;
 }
 
 export default function App() {
@@ -76,7 +76,10 @@ export default function App() {
         {/* Settings */}
         <Route path="settings" element={<Settings />} />
 
-          {/* Messages */}
+        {/* Add Employee */}
+        <Route path="employee" element={<Employee />} />
+
+        {/* Messages */}
         <Route path="messages" element={<Messages />} />
 
         {/* 404 fallback inside admin */}
@@ -86,5 +89,5 @@ export default function App() {
       {/* Global 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>
-  )
+  );
 }
