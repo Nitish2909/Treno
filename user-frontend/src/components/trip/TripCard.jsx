@@ -672,6 +672,7 @@ export default function TripCard({
           {/* View Details Link */}
           <Link
             to={`/trips/${dynamicTargetUri}`}
+            onClick={()=>{window.scrollTo(0,0)}}
             className={`group/btn shrink-0 inline-flex items-center gap-1.5 font-bold rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-amber-500/20 active:scale-95 ${
               compact
                 ? "px-3.5 py-1.5 text-xs bg-slate-900 text-white hover:bg-amber-500 hover:text-slate-950"

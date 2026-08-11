@@ -288,6 +288,8 @@ export default function TripDetail() {
   const savings = (originalPrice - displayPrice) * travelers;
 
   const handleBookNow = () => {
+
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // 'smooth' or 'auto'
     if (!selectedDate) {
       alert("Please select a travel date.");
       return;
@@ -794,7 +796,7 @@ export default function TripDetail() {
                   {/* Book Now */}
                   <button
                     onClick={handleBookNow}
-                    // onClick={()=>{window.scrollTo(0,0)}}
+                  
                     className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 rounded-xl transition text-base shadow-md shadow-amber-200"
                   >
                     Book Now
