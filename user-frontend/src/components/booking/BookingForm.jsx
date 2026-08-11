@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DatePickerLib from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import PassengerForm from "./PassengerForm.jsx";
 import PriceSummary from "./PriceSummary.jsx";
+import { useLocation, useParams } from "react-router-dom";
 
 // Handle different versions of react-datepicker
 const DatePicker = DatePickerLib?.default || DatePickerLib;
@@ -180,8 +181,10 @@ const variants = {
 // ------------------
 
 export default function BookingForm({ trip, onComplete }) {
+  const {state} = useLocation()
+  console.log(state)
   const maxGroup = trip?.groupSize?.max || 20;
-  const pricePerPerson = trip?.price?.original || 0;
+  const pricePerPerson = trip?.price?.discounted || 0;
 
   // State
   const [step, setStep] = useState(0);
@@ -190,7 +193,7 @@ export default function BookingForm({ trip, onComplete }) {
 
   // Step 1
   const [startDate, setStartDate] = useState("");
-  const [travelers, setTravelers] = useState(1);
+  const [travelers, setTravelers] = useState(state?.travelers || 1);
 
   // Step 2
   const [passengers, setPassengers] = useState([emptyPassenger()]);
@@ -240,6 +243,10 @@ export default function BookingForm({ trip, onComplete }) {
       return prev.slice(0, clamped);
     });
   };
+
+  useEffect(()=>{
+    adjustTravelers(travelers)
+  },[travelers])
 
   const goTo = (next) => {
     setDirection(next > step ? 1 : -1);
@@ -370,25 +377,25 @@ export default function BookingForm({ trip, onComplete }) {
                 Number of Travelers
               </label>
               <div className="flex items-center gap-4">
-                <button
+                {/* <button
                   type="button"
                   onClick={() => adjustTravelers(travelers - 1)}
                   disabled={travelers <= 1}
                   className="w-10 h-10 rounded-full border-2 border-slate-300 flex items-center justify-center text-slate-600 hover:border-amber-400 hover:text-amber-600 disabled:opacity-40 disabled:cursor-not-allowed transition font-bold text-lg"
                 >
                   −
-                </button>
+                </button> */}
                 <span className="text-2xl font-bold text-slate-800 w-8 text-center">
                   {travelers}
                 </span>
-                <button
+                {/* <button
                   type="button"
                   onClick={() => adjustTravelers(travelers + 1)}
                   disabled={travelers >= maxGroup}
                   className="w-10 h-10 rounded-full border-2 border-slate-300 flex items-center justify-center text-slate-600 hover:border-amber-400 hover:text-amber-600 disabled:opacity-40 disabled:cursor-not-allowed transition font-bold text-lg"
                 >
                   +
-                </button>
+                </button> */}
                 <span className="text-xs text-slate-400 ml-1">
                   Max {maxGroup} travelers
                 </span>

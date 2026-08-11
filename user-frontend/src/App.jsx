@@ -23,7 +23,7 @@ import DestinationDetails from "./pages/DestinationDetails.jsx";
 import CustomCursor from "./components/common/CustomCursor.jsx";
 import BookingDetails from "./pages/BookingDetails.jsx";
 import BottomNavigation from "./components/home/BottomNavigation.jsx";
-
+import EmployeeLogin from "./pages/EmployeeLogin.jsx";
 
 // Pages - lazy loaded
 const Trips = lazy(() => import("./pages/Trips.jsx"));
@@ -64,7 +64,7 @@ function AppContent() {
       {!isAuthPage && !isNoNavPage && <Navbar />}
       <main className="flex-1">
         <Suspense fallback={<Loader variant="fullpage" />}>
-        {/* <CustomCursor/> */}
+          {/* <CustomCursor/> */}
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
               {/* Public Routes */}
@@ -74,7 +74,7 @@ function AppContent() {
               <Route path="/trips/category/:categorySlug" element={<Trips />} />
               <Route path="/destination/:state" element={<Trips />} />
               <Route path="/packages" element={<Packages />} />
-               <Route
+              <Route
                 path="/event-and-festivels"
                 element={<EventAndFestivals />}
               />
@@ -84,15 +84,14 @@ function AppContent() {
                 path="/destinations/:city"
                 element={
                   // <ProtectedRoute>
-                    <DestinationDetails  />
+                  <DestinationDetails />
                   // </ProtectedRoute>
                 }
               />
               {/* WeekendGateways*/}
               <Route path="/weekend-gateways" element={<WeekendGateways />} />
 
-              <Route path="/packages" element={<Packages/>} />
-
+              <Route path="/packages" element={<Packages />} />
 
               {/* Auth Routes */}
               <Route path="/auth/login" element={<Login />} />
@@ -106,12 +105,14 @@ function AppContent() {
                 element={<ResetPassword />}
               />
 
+              <Route path="/auth/employee-login" element={<EmployeeLogin />} />
+
               {/* Protected Routes */}
               <Route
                 path="/booking/:tripId"
                 element={
                   // <ProtectedRoute>
-                    <Booking />
+                  <Booking />
                   // </ProtectedRoute>
                 }
               />
@@ -174,14 +175,10 @@ function AppContent() {
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/sitemap" element={<Sitemap />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
-               <Route path="/careers" element={<Careers />} />
-             
-
+              <Route path="/careers" element={<Careers />} />
 
               {/* 404 */}
               <Route path="*" element={<NotFound />} />
-
-
             </Routes>
           </AnimatePresence>
         </Suspense>
@@ -198,8 +195,3 @@ function AppContent() {
 export default function App() {
   return <AppContent />;
 }
-
-
-
-
-

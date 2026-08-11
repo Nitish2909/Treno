@@ -117,7 +117,7 @@ function TripSummaryCard({ trip, startDate, travelers }) {
             </span>
             <span>₹{subtotal?.toLocaleString("en-IN")}</span>
           </div>
-          {trip.originalPrice && trip.originalPrice > trip.price && (
+          {trip.price.original && trip.price.original > trip.price.discounted && (
             <div className="flex justify-between text-green-600 text-xs">
               <span>Savings</span>
               <span>
@@ -131,7 +131,7 @@ function TripSummaryCard({ trip, startDate, travelers }) {
           )}
           <div className="flex justify-between font-bold text-gray-900 text-base pt-1.5 border-t border-gray-100">
             <span>Total</span>
-            <span>₹{subtotal?.toLocaleString("en-IN")}</span>
+            <span>₹{(subtotal-(trip.price.original - trip.price.discounted)*travelers)?.toLocaleString("en-IN")}</span>
           </div>
         </div>
       </div>
@@ -143,7 +143,7 @@ function TripSummaryCard({ trip, startDate, travelers }) {
 export default function Booking() {
   const { tripId } = useParams();
   const navigate = useNavigate();
-  // const {state} = useLocation()
+  const {state:{travelers}} = useLocation()
   const { user } = useSelector((state) => state.auth);
   // const [trip,setTrip] = useState("")
   // console.log(user)
@@ -428,7 +428,7 @@ export default function Booking() {
                 <TripSummaryCard
                   trip={trip}
                   startDate={bookingFormData?.startDate}
-                  travelers={bookingFormData?.travelers || 1}
+                  travelers={travelers || 1}
                 />
 
                 {/* Security badge */}

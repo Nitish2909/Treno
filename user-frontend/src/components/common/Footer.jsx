@@ -38,7 +38,6 @@ const POPULAR_DESTINATIONS = [
   { label: "Kerala", href: "/destinations/kerala" },
   { label: "Ladakh", href: "/destinations/ladakh" },
   { label: "Rajasthan", href: "/destinations/rajasthan" },
-  { label: "Spiti Valley", href: "/destinations/spiti" },
   { label: "Andaman", href: "/destinations/andaman" },
   { label: "Meghalaya", href: "/destinations/meghalaya" },
   { label: "Shimla", href: "/destinations/shimla" },
@@ -166,6 +165,7 @@ export default function Footer() {
                 <Link
                   key={label}
                   to={href}
+                  onClick={()=>{window.scrollTo(0,0)}}
                   className="group flex items-center gap-1.5 text-sm text-slate-400 hover:text-teal-300 transition-colors duration-200"
                 >
                   <MapPin

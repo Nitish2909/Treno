@@ -29,6 +29,7 @@ import {
   Calendar,
   MapPin,
   Globe,
+  Phone
 } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useScrollPosition } from "../../hooks/useScrollAnimation.js";
@@ -410,6 +411,37 @@ export default function Navbar() {
           </h1>
         </marquee>
       </div> */}
+
+       {/* Top bar */}
+      {/* <div className="bg-[#134e1e] text-white text-sm hidden md:block  backdrop-blur-sm bg-opacity-95 ">
+        <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
+          <p className="text-brand-100 font-medium tracking-wide animate-pulse"></p>
+          <div className="flex items-center gap-5">
+            <Link
+              to="/auth/employee-login"
+              className="hover:text-brand-200 transition-colors duration-300 relative group py-0.5"
+            >
+              Employee Login
+              
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-200 transition-all duration-300 group-hover:w-full" />
+            </Link>
+            <Link 
+              to="/partner" 
+              className="hover:text-brand-200 transition-colors duration-300 relative group py-0.5"
+            >
+               Partner Login
+        
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-200 transition-all duration-300 group-hover:w-full" />
+            </Link>
+            <a
+              href="tel:918816942362"
+              className="flex items-center gap-1.5 bg-brand-700 hover:bg-brand-600 px-3 py-1 rounded-full transition-all duration-300 hover:scale-105 shadow-sm"
+            >
+              <Phone size={13} className="animate-bounce" /> +91 8816942362
+            </a>
+          </div>
+        </div>
+      </div> */}
       <header
         ref={navRef}
         className={clsx(
@@ -436,7 +468,7 @@ export default function Navbar() {
               <img
                 src={TrenoLogo}
                 alt="Treno Logo"
-                className="w-36 h-36 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg "
+                className="w-40 h-40 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg "
               />
             </Link>
 

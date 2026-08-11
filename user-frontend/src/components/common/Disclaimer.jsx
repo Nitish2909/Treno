@@ -2,8 +2,8 @@ import React from 'react';
 import { ShieldAlert, ExternalLink, ArrowLeft, Mail } from 'lucide-react';
 
 const Disclaimer = () => {
-  const companyName = "YourCompany";
-  const domain = "www.yourcompany.com";
+  const companyName = "Treno Travel";
+  const domain = "www.tripwithtreno.com";
 
   return (
     <div className="min-h-screen bg-slate-50/50 text-slate-800 py-12 px-4 sm:px-6 lg:px-8">

@@ -21,6 +21,7 @@ const BottomNavigation = () => {
             <NavLink
               key={item.path}
               to={item.path}
+              onClick={()=>{window.scrollTo(0,0)}}
               className={({ isActive }) =>
                 `flex flex-col items-center justify-center flex-1 h-full transition-colors duration-200 ${
                   isActive ? 'text-white' : 'text-gray-400 hover:text-gray-200'

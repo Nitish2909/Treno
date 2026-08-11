@@ -284,7 +284,7 @@ export default function TripDetail() {
     }
   }, [trip, selectedDate, availableDates]);
 
-  const totalPrice = displayPrice * travelers;
+  const totalPrice = originalPrice * travelers;
   const savings = (originalPrice - displayPrice) * travelers;
 
   const handleBookNow = () => {
@@ -775,7 +775,7 @@ export default function TripDetail() {
                   <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
                     <div className="flex justify-between text-gray-600">
                       <span>
-                        ₹{displayPrice?.toLocaleString("en-IN")} × {travelers}{" "}
+                        ₹{originalPrice?.toLocaleString("en-IN")} × {travelers}{" "}
                         traveler
                         {travelers > 1 ? "s" : ""}
                       </span>
@@ -789,7 +789,7 @@ export default function TripDetail() {
                     )}
                     <div className="border-t border-gray-200 pt-2 flex justify-between font-bold text-gray-900 text-base">
                       <span>Total</span>
-                      <span>₹{totalPrice?.toLocaleString("en-IN")}</span>
+                      <span>₹{(totalPrice-savings)?.toLocaleString("en-IN")}</span>
                     </div>
                   </div>
 
