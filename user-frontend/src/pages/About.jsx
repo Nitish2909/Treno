@@ -537,6 +537,7 @@ export default function About() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/trips"
+              onClick={()=>{window.scrollTo(0,0)}}
               className="inline-block bg-white text-amber-600 font-bold px-8 py-4 rounded-xl hover:bg-amber-50 transition-colors shadow-lg"
             >
               Explore Trips

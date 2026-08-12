@@ -133,7 +133,7 @@ export default function Home() {
           <PopularDestinations />
         </section>
 
-         <section className="overflow-hidden ">
+         <section className="overflow-hidden">
           < Chatbot/>
         </section>
 
