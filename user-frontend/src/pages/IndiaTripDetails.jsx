@@ -76,7 +76,7 @@ const IndiaTripDetails = () => {
         </div> */}
 
         {/* Carousel Navigation Arrows */}
-        <button className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition z-10">
+        {/* <button className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition z-10">
           <svg
             className="w-8 h-8"
             fill="none"
@@ -105,7 +105,7 @@ const IndiaTripDetails = () => {
               d="M9 5l7 7-7 7"
             />
           </svg>
-        </button>
+        </button> */}
 
         {/* Hero Content Overlay */}
         <div className="relative z-10 flex flex-col justify-end h-full p-6 md:p-12 pb-8 max-w-3xl text-white">
