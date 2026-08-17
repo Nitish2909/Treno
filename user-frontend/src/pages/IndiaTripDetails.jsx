@@ -65,7 +65,7 @@ const IndiaTripDetails = () => {
         />
 
         {/* Left Dark Gradient Overlay */}
-        {/* <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" /> */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
 
         {/* Carousel Dots Indicator */}
         {/* <div className="absolute top-6 left-6 md:left-12 flex items-center gap-2 z-10">
