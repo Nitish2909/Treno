@@ -92,7 +92,7 @@ const tripSchema = new mongoose.Schema(
     },
     location: {
       from: { type: String, trim: true },
-      destinations: [{ type: String, trim: true }],
+      destinations: [{ type: String, lowercase:true, trim: true }],
       state: { type: String, trim: true },
       country: { type: String, trim: true, default: "India" },
     },

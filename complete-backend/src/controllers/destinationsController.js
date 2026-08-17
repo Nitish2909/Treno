@@ -102,6 +102,7 @@ export const getTripByDestination = asyncHandler(async (req, res) => {
     // Clean up input string
     const normalizedId = id.trim();
 
+    console.log(normalizedId)
     // 1. Fetch Trips and Destination concurrently using Promise.all
     // 2. Use case-insensitive regex for destination lookup to handle capital/lowercase variations
     const [trips, destination] = await Promise.all([

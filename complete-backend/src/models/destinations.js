@@ -282,6 +282,11 @@ const seedDestinations = [
 
 
 
+
+
+
+
+
 // db.destinations.insertMany([
 //   {
 //     name: "Manali",
@@ -311,3 +316,198 @@ const seedDestinations = [
 //   }
 //   // Add remaining objects from the JSON array above
 // ]);
+
+
+
+// {
+//   name: 'bali',
+//   state: 'Bali',
+//   tagline: 'Island of the Gods',
+//   description: 'Indonesia’s tropical paradise famous for lush rice terraces, sacred temples, iconic surf spots, and vibrant culture.',
+//   image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4',
+//   knownFor: 'Temples, Surfing, Rice Terraces, Wellness & Yoga',
+//   bestTimeToVisit: 'April to October',
+//   urgencyText: 'Limited deals on villa stays!',
+//   rating: { score: 4.8, reviewsCount: 3400 },
+//   pricing: { discountedPrice: 18999, originalPrice: 26999 }
+// }
+
+// same schema generate for 
+// Iceland, sri-lanka, Georgia, bhutan,Kazakhstan,Mauritius, kenya,spain,egypt,switzerland,philipines
+
+
+
+
+
+
+
+[
+{
+name: 'thailand',
+state: 'Bangkok & Islands',
+tagline: 'Land of Smiles',
+description: 'A vibrant mix of ornate temples, bustling floating markets, world-famous street food, and pristine tropical beaches.',
+image: 'https://images.unsplash.com/photo-1506665531195-3566af2b4dfa',
+knownFor: 'Street Food, Beaches, Nightlife, Buddhist Temples',
+bestTimeToVisit: 'November to April',
+urgencyText: 'Popular island tours booking fast!',
+rating: { score: 4.7, reviewsCount: 4120 },
+pricing: { discountedPrice: 21999, originalPrice: 29999 }
+},
+{
+name: 'europe',
+state: 'Schengen Area',
+tagline: 'Continent of Dreams',
+description: 'Immerse yourself in historic landmarks, world-class art, fairytale castles, and diverse culinary capitals.',
+image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a',
+knownFor: 'Architecture, History, Fine Dining, Alpine Landscapes',
+bestTimeToVisit: 'May to September',
+urgencyText: 'Early bird summer packages on sale!',
+rating: { score: 4.9, reviewsCount: 5800 },
+pricing: { discountedPrice: 89999, originalPrice: 115000 }
+},
+{
+name: 'vietnam',
+state: 'Hanoi & Beyond',
+tagline: 'Timeless Charm',
+description: 'Discover dramatic emerald bays, historic French-colonial towns, rich heritage, and unbeatable local cuisine.',
+image: 'https://images.unsplash.com/photo-1528127269322-539801943592',
+knownFor: 'Ha Long Bay, Coffee Culture, Street Food, Rich History',
+bestTimeToVisit: 'December to April',
+urgencyText: 'Save big on Ha Long Bay cruises!',
+rating: { score: 4.7, reviewsCount: 2150 },
+pricing: { discountedPrice: 16999, originalPrice: 23999 }
+},
+{
+name: 'dubai',
+state: 'Dubai',
+tagline: 'City of Gold',
+description: 'A futuristic oasis known for ultra-modern architecture, luxury shopping, desert safaris, and high-octane nightlife.',
+image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c',
+knownFor: 'Burj Khalifa, Desert Safaris, Luxury Shopping, Theme Parks',
+bestTimeToVisit: 'November to March',
+urgencyText: 'Exclusive hotel upgrades available!',
+rating: { score: 4.8, reviewsCount: 4900 },
+pricing: { discountedPrice: 34999, originalPrice: 48999 }
+},
+{
+name: 'singapore',
+state: 'Singapore',
+tagline: 'The Garden City',
+description: 'A futuristic city-state blending lush green spaces, iconic skyline views, world-class shopping, and multicultural flavors.',
+image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd',
+knownFor: 'Gardens by the Bay, Marina Bay Sands, Street Food, Luxury Shopping',
+bestTimeToVisit: 'February to October',
+urgencyText: 'Family pass discounts ending soon!',
+rating: { score: 4.8, reviewsCount: 3800 },
+pricing: { discountedPrice: 29999, originalPrice: 39999 }
+},
+{
+name: 'maldives',
+state: 'Male Atoll',
+tagline: 'Sunny Side of Life',
+description: 'An idyllic tropical paradise featuring private overwater bungalows, crystal-clear turquoise lagoons, and vibrant coral reefs.',
+image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8',
+knownFor: 'Overwater Villas, Scuba Diving, Honeymoons, White Sand Beaches',
+bestTimeToVisit: 'November to April',
+urgencyText: 'Complimentary speedboat transfers included!',
+rating: { score: 4.9, reviewsCount: 2950 },
+pricing: { discountedPrice: 45999, originalPrice: 62999 }
+},
+{
+name: 'australia',
+state: 'New South Wales & Beyond',
+tagline: 'There is Nothing Like Australia',
+description: 'Experience dramatic outback landscapes, pristine ocean beaches, iconic coastal cities, and extraordinary wildlife.',
+image: 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be',
+knownFor: 'Great Barrier Reef, Sydney Opera House, Wildlife, Surf Beaches',
+bestTimeToVisit: 'September to November & March to May',
+urgencyText: 'Flight-inclusive package deals closing!',
+rating: { score: 4.8, reviewsCount: 3100 },
+pricing: { discountedPrice: 79999, originalPrice: 105000 }
+},
+{
+name: 'spain',
+state: 'Madrid & Catalonia',
+tagline: 'Passionate by Nature',
+description: 'Feel the energy of vibrant flamenco, breathtaking Gothic and Gaudi architecture, sun-drenched coasts, and legendary tapas.',
+image: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325',
+knownFor: 'Tapas, Sagrada Familia, Flamenco, Mediterranean Coast',
+bestTimeToVisit: 'April to June & September to October',
+urgencyText: 'High demand for Barcelona city breaks!',
+rating: { score: 4.7, reviewsCount: 2750 },
+pricing: { discountedPrice: 54999, originalPrice: 72999 }
+},
+{
+name: 'france',
+state: 'Île-de-France & Provence',
+tagline: 'Rendez-vous en France',
+description: 'Indulge in high fashion, iconic romance, world-famous wines, idyllic lavender fields, and unmatched culinary art.',
+image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34',
+knownFor: 'Eiffel Tower, Fine Wine, Art Museums, French Riviera',
+bestTimeToVisit: 'April to May & September to October',
+urgencyText: 'Paris romantic getaway deals selling out!',
+rating: { score: 4.8, reviewsCount: 4600 },
+pricing: { discountedPrice: 59999, originalPrice: 79999 }
+},
+{
+name: 'south africa',
+state: 'Western Cape & Gauteng',
+tagline: 'Inspiring New Ways',
+description: 'A country of dramatic contrasts featuring thrilling wildlife safaris, magnificent winelands, and stunning coastal cliffs.',
+image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5',
+knownFor: 'Big Five Safaris, Table Mountain, Wine Tasting, Coastal Drives',
+bestTimeToVisit: 'May to September (Safaris) & November to March (Cape Town)',
+urgencyText: 'Limited safari lodge slots left!',
+rating: { score: 4.8, reviewsCount: 1890 },
+pricing: { discountedPrice: 49999, originalPrice: 68999 }
+},
+{
+name: 'malaysia',
+state: 'Kuala Lumpur & Islands',
+tagline: 'Truly Asia',
+description: 'A dynamic fusion of modern skyscrapers, ancient rainforests, tropical islands, and rich multicultural traditions.',
+image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07',
+knownFor: 'Petronas Towers, Batu Caves, Rainforests, Langkawi Beaches',
+bestTimeToVisit: 'December to April',
+urgencyText: 'Special discounts on island resort stays!',
+rating: { score: 4.6, reviewsCount: 2400 },
+pricing: { discountedPrice: 19999, originalPrice: 27999 }
+},
+{
+name: 'turkey',
+state: 'Marmara & Cappadocia',
+tagline: 'Where East Meets West',
+description: 'Explore the historic crossroads of continents with ancient ruins, surreal fairy chimneys, bustling bazaars, and hot air balloons.',
+image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200',
+knownFor: 'Cappadocia Balloons, Grand Bazaar, Hagia Sophia, Turkish Baths',
+bestTimeToVisit: 'April to May & September to October',
+urgencyText: 'Cappadocia balloon slot offers active!',
+rating: { score: 4.8, reviewsCount: 3650 },
+pricing: { discountedPrice: 38999, originalPrice: 52999 }
+},
+{
+name: 'new zealand',
+state: 'North & South Islands',
+tagline: '100% Pure New Zealand',
+description: 'An adventurer’s dream filled with epic glaciers, geothermal wonderlands, majestic fjords, and scenic rolling hills.',
+image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800',
+knownFor: 'Fjords, Adventure Sports, Hobbiton, Glaciers & Lakes',
+bestTimeToVisit: 'December to March',
+urgencyText: 'Self-drive campervan slots filling up!',
+rating: { score: 4.9, reviewsCount: 2100 },
+pricing: { discountedPrice: 84999, originalPrice: 110000 }
+},
+{
+name: 'japan',
+state: 'Kanto & Kansai',
+tagline: 'Endless Discovery',
+description: 'A seamless blend of ultra-modern technology, timeless shinto shrines, serene cherry blossoms, and world-renowned gastronomy.',
+image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e',
+knownFor: 'Mount Fuji, Cherry Blossoms, Bullet Trains, Historic Temples',
+bestTimeToVisit: 'March to May & September to November',
+urgencyText: 'Cherry Blossom season deals open!',
+rating: { score: 4.9, reviewsCount: 5100 },
+pricing: { discountedPrice: 64999, originalPrice: 85999 }
+}
+]

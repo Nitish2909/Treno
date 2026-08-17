@@ -72,7 +72,10 @@ export const validateCreateTrip = [
 
   body("location.destinations")
     .optional()
-    .isArray({ min: 1 }).withMessage("At least one destination is required."),
+    .isArray({ min: 1 }).withMessage("At least one destination is required.")
+    .customSanitizer((destinations) => 
+    destinations.map((d) => (typeof d === 'string' ? d.trim().toLowerCase() : d))
+  ),
 
   body("location.state")
     .optional()
