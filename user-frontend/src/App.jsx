@@ -24,6 +24,13 @@ import CustomCursor from "./components/common/CustomCursor.jsx";
 import BookingDetails from "./pages/BookingDetails.jsx";
 import BottomNavigation from "./components/home/BottomNavigation.jsx";
 import EmployeeLogin from "./pages/EmployeeLogin.jsx";
+import InternationalTrips from "./components/home/InternationalTrips.jsx";
+import InternationalTripDetails from "./pages/InternationalTripDetails.jsx";
+import IndiaTrips from "./components/home/IndiaTrips.jsx";
+import IndiaTripDetails from "./pages/IndiaTripDetails.jsx";
+import CorporateTour from "./pages/CorporateTour.jsx";
+import UpcomingTrips from "./pages/UpcomingTrips.jsx";
+import GroupTourDetails from "./pages/GroupTourDetails.jsx";
 
 // Pages - lazy loaded
 const Trips = lazy(() => import("./pages/Trips.jsx"));
@@ -89,9 +96,21 @@ function AppContent() {
                 }
               />
               {/* WeekendGateways*/}
-              <Route path="/weekend-gateways" element={<WeekendGateways />} />
+              <Route path="/international-trip" element={<InternationalTrips />} />
+
+              <Route path="/international-trip/:name" element={<InternationalTripDetails />} />
+
+              <Route path="/india-trip" element={<IndiaTrips />} />
+
+              <Route path="/india-trip/:name" element={<IndiaTripDetails />} />
+
+              <Route path="/group-tour/:name" element={<GroupTourDetails />} />
 
               <Route path="/packages" element={<Packages />} />
+
+              <Route path="/corporate-tour" element={<CorporateTour />} />
+
+               <Route path="/upcoming-trip" element={<UpcomingTrips />} />
 
               {/* Auth Routes */}
               <Route path="/auth/login" element={<Login />} />

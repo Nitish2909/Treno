@@ -653,6 +653,7 @@ export default function TripCard({
                 Save {discountPct}%
               </span>
             )}
+          <span class="text-sm font-medium text-slate-500 tracking-wider">Starting From..</span>
             <div className="flex items-baseline gap-1.5">
               <span
                 className={`font-black text-slate-900 ${

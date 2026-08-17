@@ -40,8 +40,7 @@ export const tripApi = baseApi.injectEndpoints({
       providesTags: (result, error, slug) => [{ type: 'Trip', id: slug }],
     }),
 
-    
-
+   
     getFeaturedTrips: builder.query({
       query: (limit = 6) => `/trips/featured?limit=${limit}`,
       providesTags: [{ type: 'Trip', id: 'FEATURED' }],

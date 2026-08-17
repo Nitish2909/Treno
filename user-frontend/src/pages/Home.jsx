@@ -13,6 +13,7 @@ import IndiaTrips from "../components/home/IndiaTrips.jsx";
 import InternationalTrips from "../components/home/InternationalTrips.jsx";
 import RomanticEscapes from "../components/home/RomanticEscapes.jsx";
 import Chatbot from "../components/home/Chatbot.jsx";
+import WhatsApp from "../components/home/Whatsapp.jsx";
 // import WhatsApp from '../components/home/Whatsapp.jsx'
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -158,9 +159,9 @@ export default function Home() {
         </section>
 
         {/* Whatapp */}
-        {/* <section className="">
+        <section className="relative bottom-64">
           <WhatsApp/>
-        </section> */}
+        </section>
       </motion.div>
     </div>
   );

@@ -364,12 +364,12 @@ export default function Chatbot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="flex flex-col items-center justify-center w-20 h-20 bg-[#1e5629] rounded-full shadow-2xl overflow-hidden hover:scale-105 transition-transform duration-200 border-2 border-[#2d7d3d] focus:outline-none "
+          className="flex flex-col items-center justify-center w-16 h-16 bg-[#1e5629] rounded-full shadow-2xl overflow-hidden hover:scale-105 transition-transform duration-200 border-2 border-[#2d7d3d] focus:outline-none "
         >
           <img
             src={AVATAR_URL}
             alt="Ira"
-            className="w-16 h-14 rounded-full object-cover"
+            className="w-10 h-14 rounded-full object-cover"
           />
           <span className="text-[7px] font-bold text-white bg-black/40 px-2 py-0.5 rounded-full mt-0.5">
             Talk With Ira
@@ -385,7 +385,7 @@ export default function Chatbot() {
               <img
                 src={AVATAR_URL}
                 alt="Ira"
-                className="w-10 h-10 rounded-full object-cover border border-white/20"
+                className="w-14 h-10 rounded-full object-cover border border-white/20"
               />
               <div>
                 <h3 className="font-bold text-base leading-tight">Ira</h3>

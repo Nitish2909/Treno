@@ -29,11 +29,13 @@ import {
   Calendar,
   MapPin,
   Globe,
-  Phone
+  Phone,
+  CalendarDays
 } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useScrollPosition } from "../../hooks/useScrollAnimation.js";
 import TrenoLogo from "../../assets/TrenoLogo.webp";
+import TrenoLogoImg from "../../assets/Treno-Logo.png";
 
 // --------------------
 // Data
@@ -72,6 +74,84 @@ const DESTINATIONS = [
   { label: "Agra", href: "/destinations/agra" },
   { label: "Varanasi", href: "/destinations/varanasi" },
   { label: "Kashmir", href: "/destinations/kashmir" },
+];
+
+/** @type {{ label: string, href: string }[]} */
+const INTERNATIONALTRIP = [
+  { label: "Europe", href: "/international-trip/europe" },
+  { label: "Thailand", href: "/international-trip/thailand" },
+  { label: "Georgia", href: "/international-trip/georgia" },
+  { label: "Philippines", href: "/international-trip/philippines" },
+  { label: "Kazakhstan", href: "/international-trip/kazakhstan" },
+  { label: "Singapore", href: "/international-trip/singapore" },
+  { label: "Switzerland", href: "/international-trip/switzerland" },
+  { label: "Australia", href: "/international-trip/australia" },
+  { label: "Iceland", href: "/international-trip/iceland" },
+  { label: "Vietnam", href: "/international-trip/vietnam" },
+  { label: "Japan", href: "/international-trip/japan" },
+  { label: "Sri Lanka", href: "/international-trip/sri-lanka" },
+  { label: "Egypt", href: "/international-trip/egypt" },
+  { label: "Maldives", href: "/international-trip/maldives" },
+  { label: "New Zealand", href: "/international-trip/new-zealand" },
+  { label: "Spain", href: "/international-trip/spain" },
+  { label: "Malaysia", href: "/international-trip/malaysia" },
+  { label: "Bali", href: "/international-trip/bali" },
+  { label: "Kenya", href: "/international-trip/kenya" },
+  { label: "Bhutan", href: "/international-trip/bhutan" },
+  { label: "Turkey", href: "/international-trip/turkey" },
+  { label: "South Africa", href: "/international-trip/south-africa" },
+  { label: "France", href: "/international-trip/france" },
+  { label: "Dubai", href: "/international-trip/dubai" },
+  { label: "Mauritius", href: "/international-trip/mauritius" },
+];
+
+/** @type {{ label: string, href: string }[]} */
+const INDIATRIP = [
+  { label: "Manali", href: "/india-trip/manali" },
+  { label: "Goa", href: "/india-trip/goa" },
+  { label: "Kerala", href: "/india-trip/kerala" },
+  { label: "Ladakh", href: "/india-trip/ladakh" },
+  { label: "Rajasthan", href: "/india-trip/rajasthan" },
+  { label: "Andaman", href: "/india-trip/andaman" },
+  { label: "Meghalaya", href: "/india-trip/meghalaya" },
+  { label: "Shimla", href: "/india-trip/shimla" },
+  { label: "Jaipur", href: "/india-trip/jaipur" },
+  { label: "Sikkim", href: "/india-trip/sikkim" },
+  { label: "Uttarakhand", href: "/india-trip/uttarakhand" },
+  { label: "Nagaland", href: "/india-trip/nagaland" },
+  { label: "Agra", href: "/india-trip/agra" },
+  { label: "Varanasi", href: "/india-trip/varanasi" },
+  { label: "Kashmir", href: "/india-trip/kashmir" },
+];
+
+const GROUPTOURS = [
+  { label: "Europe", href: "/group-tour/europe" },
+  { label: "Bali", href: "/group-tour/bali" },
+  { label: "Bhutan", href: "/group-tour/bhutan" },
+  { label: "Himachal Pradesh", href: "/group-tour/himachal-pradesh" },
+  { label: "Japan", href: "/group-tour/japan" },
+  { label: "Kazakhstan", href: "/group-tour/kazakhstan" },
+  { label: "Georgia", href: "/group-tour/georgia" },
+  { label: "Meghalaya", href: "/group-tour/meghalaya" },
+  { label: "Ladakh", href: "/group-tour/ladakh" },
+  { label: "Rajasthan", href: "/group-tour/rajasthan" },
+  { label: "Uttarakhand", href: "/group-tour/uttarakhand" },
+  { label: "Singapore", href: "/group-tour/singapore" },
+  { label: "New Zealand", href: "/group-tour/new-zealand" },
+  { label: "Egypt", href: "/group-tour/egypt" },
+  { label: "Vietnam", href: "/group-tour/vietnam" },
+  { label: "Thailand", href: "/group-tour/thailand" },
+  { label: "Sri Lanka", href: "/group-tour/sri-lanka" },
+  { label: "Arunachal Pradesh", href: "/group-tour/arunachal-pradesh" },
+  { label: "Spain", href: "/group-tour/spain" },
+  { label: "Iceland", href: "/group-tour/iceland" },
+  { label: "Malaysia", href: "/group-tour/malaysia" },
+  { label: "Spiti", href: "/group-tour/spiti" },
+  { label: "Andaman", href: "/group-tour/andaman" },
+  { label: "Zanskar", href: "/group-tour/zanskar" },
+  { label: "Nagaland", href: "/group-tour/nagaland" },
+  { label: "Kenya", href: "/group-tour/kenya" },
+  { label: "Philippines", href: "/group-tour/philippines" },
 ];
 
 /** @type {{ label: string, href: string }[]} */
@@ -210,6 +290,132 @@ function DestinationsDropdown({ isOpen }) {
             >
               <Globe size={14} />
               All Destinations
+            </Link>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/**
+ * Desktop dropdown for the "International" nav item.
+ * @param {{ isOpen: boolean }} props
+ */
+function InternationalTripDropdown({ isOpen }) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          variants={dropdownVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[520px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-3 z-50 grid grid-cols-3 gap-1"
+        >
+          {INTERNATIONALTRIP.map(({ label, href }) => (
+            <Link
+              key={label}
+              to={href}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+            >
+              <MapPin size={14} className="text-amber-500 flex-shrink-0" />
+              {label}
+            </Link>
+          ))}
+
+          {/* Fixed: Added col-span-3 so it spans the entire width of the grid */}
+          <div className="col-span-3 mt-1 pt-2 border-t border-slate-100">
+            <Link
+              to="/international-trip"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-amber-600 hover:bg-amber-50 transition-colors"
+            >
+              <Globe size={14} />
+              International Trip
+            </Link>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/**
+ * Desktop dropdown for the "India" nav item.
+ * @param {{ isOpen: boolean }} props
+ */
+function IndiaTripDropdown({ isOpen }) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          variants={dropdownVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[520px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-3 z-50 grid grid-cols-3 gap-1"
+        >
+          {INDIATRIP.map(({ label, href }) => (
+            <Link
+              key={label}
+              to={href}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+            >
+              <MapPin size={14} className="text-amber-500 flex-shrink-0" />
+              {label}
+            </Link>
+          ))}
+
+          {/* Fixed: Added col-span-3 so it spans the entire width of the grid */}
+          <div className="col-span-3 mt-1 pt-2 border-t border-slate-100">
+            <Link
+              to="/india-trip"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-amber-600 hover:bg-amber-50 transition-colors"
+            >
+              <Globe size={14} />
+              India Trip
+            </Link>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/**
+ * Desktop dropdown for the "Group Tour" nav item.
+ * @param {{ isOpen: boolean }} props
+ */
+function GroupTourDropdown({ isOpen }) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          variants={dropdownVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[520px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-3 z-50 grid grid-cols-4 gap-1"
+        >
+          {GROUPTOURS.map(({ label, href }) => (
+            <Link
+              key={label}
+              to={href}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+            >
+              <MapPin size={14} className="text-amber-500 flex-shrink-0" />
+              {label}
+            </Link>
+          ))}
+
+          {/* Fixed: Added col-span-3 so it spans the entire width of the grid */}
+          <div className="col-span-3 mt-1 pt-2 border-t border-slate-100">
+            <Link
+              to="/"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-amber-600 hover:bg-amber-50 transition-colors"
+            >
+              <Globe size={14} />
+              Group Tour
             </Link>
           </div>
         </motion.div>
@@ -358,7 +564,7 @@ export default function Navbar() {
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
-    console.log(mobileOpen)
+    console.log(mobileOpen);
     document.body.style.overflow = mobileOpen ? "hidden !important" : "";
     return () => {
       document.body.style.overflow = "";
@@ -412,45 +618,124 @@ export default function Navbar() {
         </marquee>
       </div> */}
 
-       {/* Top bar */}
-      {/* <div className="bg-[#134e1e] text-white text-sm hidden md:block  backdrop-blur-sm bg-opacity-95 ">
+      {/* Top bar */}
+      <div className="sticky top-0 z-40">
+        <div className="text-sm hidden md:block bg-gray-900 backdrop-blur-sm bg-opacity-95 ">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
           <p className="text-brand-100 font-medium tracking-wide animate-pulse"></p>
           <div className="flex items-center gap-5">
-            <Link
-              to="/auth/employee-login"
-              className="hover:text-brand-200 transition-colors duration-300 relative group py-0.5"
+
+             {/* Logo  */}
+            {/* <Link
+              to="/"
+              className="flex items-center justify-center flex-shrink-0 group relative"
             >
-              Employee Login
               
+              <div
+                className={clsx(
+                  "absolute -inset-4 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-lg",
+                  isScrolled ? "bg-slate-900" : "bg-white",
+                )}
+              />
+
+              <img
+                src={TrenoLogoImg}
+                alt="Treno Logo"
+                className="w-16 h-16 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg  mr-112"
+              />
+            </Link> */}
+
+            {/* Expandable search */}
+            <form
+              onSubmit={handleSearchSubmit}
+              className="flex items-center gap-2"
+            >
+              <AnimatePresence>
+                {searchOpen && (
+                  <motion.input
+                    key="search-input"
+                    ref={searchInputRef}
+                    variants={searchVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    type="text"
+                    placeholder="Search trips…"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={(e) =>
+                      e.key === "Escape" && setSearchOpen(false)
+                    }
+                    className="h-9 px-3 rounded-full border border-slate-200 bg-white text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  />
+                )}
+              </AnimatePresence>
+              <button
+                type={searchOpen ? "submit" : "button"}
+                onClick={!searchOpen ? handleSearchOpen : undefined}
+                className={clsx(
+                  "w-9 h-9 rounded-full flex items-center justify-center transition-colors mr-4" ,
+                  isScrolled ? "text-slate-600 " : "text-white",
+                )}
+                aria-label="Search"
+              >
+                <Search size={18} />
+              </button>
+            </form>
+
+
+
+            {/* Upcoming Trip*/}
+            <Link
+              to="/upcoming-trip"
+              className="text-sm flex items-center font-medium text-white hover:text-brand-200 transition-colors duration-300 relative group py-0.5"
+            >
+                 <CalendarDays size={18}/>Upcoming Trips
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-200 transition-all duration-300 group-hover:w-full" />
             </Link>
-            <Link 
-              to="/partner" 
-              className="hover:text-brand-200 transition-colors duration-300 relative group py-0.5"
+             
+             {/* Corporate Tour*/}
+            <Link
+              to="/corporate-tour"
+              className="text-sm font-medium text-white hover:text-brand-200 transition-colors duration-300 relative group py-0.5"
             >
-               Partner Login
-        
+              Corporate Tour
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-200 transition-all duration-300 group-hover:w-full" />
+            </Link>
+
+            {/* Blog */}
+            <Link
+              to="/blog"
+              className="text-sm font-medium text-white hover:text-brand-200 transition-colors duration-300 relative group py-0.5"
+            >
+              Blog
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-200 transition-all duration-300 group-hover:w-full" />
+            </Link>
+            <Link
+              to="/contact"
+              className="text-sm font-medium text-white hover:text-brand-200 transition-colors duration-300 relative group py-0.5"
+            >
+              Contact Us
+              <span className="absolute bottom-0 left-0 w-0 h-0.5  bg-brand-200 transition-all duration-300 group-hover:w-full" />
             </Link>
             <a
               href="tel:918816942362"
-              className="flex items-center gap-1.5 bg-brand-700 hover:bg-brand-600 px-3 py-1 rounded-full transition-all duration-300 hover:scale-105 shadow-sm"
+              className=" flex items-center px-4 py-2 rounded-full text-sm font-medium transition-colors border transform-gpu perspective-1000 hover:-translate-y-1 hover:rotate-x-6 hover:shadow-2xl text-white"
             >
-              <Phone size={13} className="animate-bounce" /> +91 8816942362
+              <Phone size={15} className="animate-bounce" /> +91 8816942362
             </a>
           </div>
         </div>
-      </div> */}
+      </div>
       <header
         ref={navRef}
         className={clsx(
-          "sticky top-0 left-0 right-0 z-40 transition-all duration-300",
+          "relative left-0 right-0 transition-all duration-300",
           isScrolled ? "bg-white shadow-md" : "header-bg",
         )}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-18">
+          <div className="flex items-center justify-between h-16 lg:h-16">
             {/* Logo  */}
             <Link
               to="/"
@@ -464,7 +749,7 @@ export default function Navbar() {
                 )}
               />
 
-              {/* Significantly larger logo profile (w-24 h-24 / 96px) */}
+              {/* Significantly larger logo profile (w-40 h-40) */}
               <img
                 src={TrenoLogo}
                 alt="Treno Logo"
@@ -479,7 +764,7 @@ export default function Navbar() {
                 <Link
                   to="/"
                   className={clsx(
-                    "px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "px-3 py-2 rounded-lg text-base font-semibold transition-colors hover:bg-white/20 hover:text-sky-500",
                     isScrolled ? "text-slate-700" : "text-white",
                   )}
                 >
@@ -487,8 +772,98 @@ export default function Navbar() {
                 </Link>
               </li>
 
+              {/* International Trip */}
+              <li
+                className="relative"
+                onMouseEnter={() => toggleDropdown("international-trip")}
+                onMouseLeave={() => toggleDropdown(null)} // or setActiveDropdown(null)
+              >
+                <button
+                  aria-expanded={activeDropdown === "international-trip"}
+                  aria-haspopup="true"
+                  onClick={() => toggleDropdown("international-trip")}
+                  className={clsx(
+                    "flex items-center gap-1 px-3 py-2 rounded-lg text-base font-semibold transition-colors hover:bg-white/20 hover:text-sky-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
+                    isScrolled ? "text-slate-700" : "text-white",
+                    activeDropdown === "international-trip" && "text-amber-500",
+                  )}
+                >
+                  International Trip
+                  <ChevronDown
+                    size={14}
+                    className={clsx(
+                      "transition-transform duration-200",
+                      activeDropdown === "international-trip" && "rotate-180",
+                    )}
+                  />
+                </button>
+
+                <InternationalTripDropdown
+                  isOpen={activeDropdown === "international-trip"}
+                />
+              </li>
+
+              {/* India Trip */}
+              <li
+                className="relative"
+                onMouseEnter={() => toggleDropdown("india-trip")}
+                onMouseLeave={() => toggleDropdown(null)} // or setActiveDropdown(null)
+              >
+                <button
+                  aria-expanded={activeDropdown === "india-trip"}
+                  aria-haspopup="true"
+                  onClick={() => toggleDropdown("india-trip")}
+                  className={clsx(
+                    "flex items-center gap-1 px-3 py-2 rounded-lg text-base font-semibold  transition-colors hover:bg-white/20 hover:text-sky-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
+                    isScrolled ? "text-slate-700" : "text-white",
+                    activeDropdown === "india-trip" && "text-amber-500",
+                  )}
+                >
+                  India Trip
+                  <ChevronDown
+                    size={14}
+                    className={clsx(
+                      "transition-transform duration-200",
+                      activeDropdown === "india-trip" && "rotate-180",
+                    )}
+                  />
+                </button>
+
+                <IndiaTripDropdown isOpen={activeDropdown === "india-trip"} />
+              </li>
+
+              {/* Group Tour */}
+              <li
+                className="relative"
+                onMouseEnter={() => toggleDropdown("group-tour")}
+                onMouseLeave={() => toggleDropdown(null)} // or setActiveDropdown(null)
+              >
+                <button
+                  aria-expanded={activeDropdown === "group-tour"}
+                  aria-haspopup="true"
+                  onClick={() => toggleDropdown("group-tour")}
+                  className={clsx(
+                    "flex items-center gap-1 px-3 py-2 rounded-lg text-base font-semibold  transition-colors hover:bg-white/20 hover:text-sky-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
+                    isScrolled ? "text-slate-700" : "text-white",
+                    activeDropdown === "india-trip" && "text-amber-500",
+                  )}
+                >
+                  Group Tour
+                  <ChevronDown
+                    size={14}
+                    className={clsx(
+                      "transition-transform duration-200",
+                      activeDropdown === "group-tour" && "rotate-180",
+                    )}
+                  />
+                </button>
+
+                <GroupTourDropdown isOpen={activeDropdown === "group-tour"} />
+              </li>
+
+
               {/* Trips */}
-              <li className="relative">
+              {/* <li className="relative">
                 <button
                   onClick={() => toggleDropdown("trips")}
                   className={clsx(
@@ -507,14 +882,20 @@ export default function Navbar() {
                   />
                 </button>
                 <TripsDropdown isOpen={activeDropdown === "trips"} />
-              </li>
+              </li> */}
 
               {/* Destinations */}
-              <li className="relative">
+              <li
+                className="relative"
+                onMouseEnter={() => toggleDropdown("destinations")}
+                onMouseLeave={() => toggleDropdown(null)} // or setActiveDropdown(null)
+              >
                 <button
+                  aria-expanded={activeDropdown === "india-trip"}
+                  aria-haspopup="true"
                   onClick={() => toggleDropdown("destinations")}
                   className={clsx(
-                    "flex items-center gap-1 px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "flex items-center gap-1 px-3 py-2 rounded-lg text-base font-semibold  transition-colors hover:bg-white/20 hover:text-sky-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                     isScrolled ? "text-slate-700" : "text-white",
                     activeDropdown === "destinations" && "text-amber-500",
                   )}
@@ -528,6 +909,7 @@ export default function Navbar() {
                     )}
                   />
                 </button>
+
                 <DestinationsDropdown
                   isOpen={activeDropdown === "destinations"}
                 />
@@ -539,7 +921,7 @@ export default function Navbar() {
                   to="/packages"
                   onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
-                    "px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "px-3 py-2 rounded-lg text-base font-semibold  transition-colors hover:bg-white/20 hover:text-sky-500",
                     isScrolled ? "text-slate-700" : "text-white",
                   )}
                 >
@@ -547,22 +929,8 @@ export default function Navbar() {
                 </Link>
               </li>
 
-              {/* Event and Festivels */}
-              <li>
-                <Link
-                  to="/event-and-festivels"
-                  onClick={() => window.scrollTo(0, 0)}
-                  className={clsx(
-                    "px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
-                    isScrolled ? "text-slate-700" : "text-white",
-                  )}
-                >
-                  Event & Festivals
-                </Link>
-              </li>
-            
-          {/* Blog */}
-              <li>
+              {/* Blog */}
+              {/* <li>
                 <Link
                   to="/blog"
                   onClick={() => window.scrollTo(0, 0)}
@@ -573,7 +941,7 @@ export default function Navbar() {
                 >
                   Blog
                 </Link>
-              </li>
+              </li> */}
 
               {/* About */}
               <li>
@@ -581,7 +949,7 @@ export default function Navbar() {
                   to="/about"
                   onClick={() => window.scrollTo(0, 0)}
                   className={clsx(
-                    "px-3 py-2 rounded-lg text-base font-medium transition-colors hover:bg-white/20 hover:text-amber-500",
+                    "px-3 py-2 rounded-lg text-base font-semibold transition-colors hover:bg-white/20 hover:text-sky-500",
                     isScrolled ? "text-slate-700" : "text-white",
                   )}
                 >
@@ -590,7 +958,7 @@ export default function Navbar() {
               </li>
 
               {/* CONTACT */}
-              <li>
+              {/* <li>
                 <Link
                   to="/contact"
                   onClick={() => window.scrollTo(0, 0)}
@@ -601,13 +969,13 @@ export default function Navbar() {
                 >
                   Contact
                 </Link>
-              </li>
+              </li> */}
             </ul>
 
             {/*  Right Controls  */}
             <div className="hidden lg:flex items-center gap-3">
               {/* Expandable search */}
-              <form
+              {/* <form
                 onSubmit={handleSearchSubmit}
                 className="flex items-center gap-2"
               >
@@ -644,7 +1012,7 @@ export default function Navbar() {
                 >
                   <Search size={18} />
                 </button>
-              </form>
+              </form> */}
 
               {/* Auth */}
               {isAuthenticated ? (
@@ -664,7 +1032,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     to="/auth/register"
-                    className="px-4 py-2 rounded-full text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white transition-colors shadow-sm shadow-amber-200
+                    className=" ml-2 px-4 py-2 rounded-full text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white transition-colors shadow-sm shadow-amber-200
                     transform-gpu perspective-1000 hover:-translate-y-1 hover:rotate-x-6 hover:shadow-2xl
                     "
                   >
@@ -676,7 +1044,7 @@ export default function Navbar() {
 
             {/*  Mobile hamburger  */}
             <button
-            type="button"
+              type="button"
               className={clsx(
                 "lg:hidden p-2 rounded-lg transition-colors",
                 isScrolled
@@ -691,6 +1059,7 @@ export default function Navbar() {
           </div>
         </nav>
       </header>
+      </div>
 
       {/*  Mobile overlay  */}
       <AnimatePresence>
@@ -779,6 +1148,132 @@ export default function Navbar() {
                 >
                   Home
                 </Link>
+                
+
+                {/* International Trips accordion */}
+                <div>
+                  <button
+                    onClick={() => setMobileDestOpen((v) => !v)}
+                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                  >
+                    International Trips
+                    <ChevronDown
+                      size={14}
+                      className={clsx(
+                        "transition-transform",
+                        mobileDestOpen && "rotate-180",
+                      )}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {mobileDestOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden pl-3 mt-1 space-y-1"
+                      >
+                        {INTERNATIONALTRIP.map(({ label, href }) => (
+                          <Link
+                            key={label}
+                            to={href}
+                            onClick={() => setMobileOpen(false)
+
+                            }
+                            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                          >
+                            <MapPin size={13} className="text-amber-500" />
+                            {label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                 {/* India Trips accordion */}
+                <div>
+                  <button
+                  type="button"
+                    onClick={() => setMobileDestOpen((v) => !v)}
+                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                  >
+                    India Trips
+                    <ChevronDown
+                      size={14}
+                      className={clsx(
+                        "transition-transform",
+                        mobileDestOpen && "rotate-180",
+                      )}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {mobileDestOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden pl-3 mt-1 space-y-1"
+                      >
+                        {INDIATRIP.map(({ label, href }) => (
+                          <Link
+                            key={label}
+                            to={href}
+                            onClick={() => setMobileOpen(false)}
+                            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                          >
+                            <MapPin size={13} className="text-amber-500" />
+                            {label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              
+
+               {/* Group Tour accordion */}
+                <div>
+                  <button
+                  type="button"
+                    onClick={() => setMobileDestOpen((v) => !v)}
+                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                  >
+                    Group Tours
+                    <ChevronDown
+                      size={14}
+                      className={clsx(
+                        "transition-transform",
+                        mobileDestOpen && "rotate-180",
+                      )}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {mobileDestOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden pl-3 mt-1 space-y-1"
+                      >
+                        {GROUPTOURS.map(({ label, href }) => (
+                          <Link
+                            key={label}
+                            to={href}
+                            onClick={() => setMobileOpen(false)}
+                            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                          >
+                            <MapPin size={13} className="text-amber-500" />
+                            {label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
                 {/* Trips accordion */}
                 <div>
@@ -868,13 +1363,13 @@ export default function Navbar() {
                   Packages
                 </Link>
 
-                <Link
+                {/* <Link
                   to="/event-and-festivels"
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
                 >
                   Events & Festivals
-                </Link>
+                </Link> */}
 
                 {/* <Link
                   to="/weekend-gateways"

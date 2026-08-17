@@ -48,6 +48,8 @@ const POPULAR_DESTINATIONS = [
   { label: "Nagaland", href: "/destinations/nagaland" },
 ];
 
+
+
 const SOCIAL_LINKS = [
   {
     label: "Instagram",
@@ -160,7 +162,7 @@ export default function Footer() {
               <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
               Top Destinations
             </h4>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+            <div className="grid grid-cols-1 gap-x-1 gap-y-2.5">
               {POPULAR_DESTINATIONS.map(({ label, href }) => (
                 <Link
                   key={label}
@@ -177,6 +179,8 @@ export default function Footer() {
               ))}
             </div>
           </div>
+
+          
 
           {/* Column 4 — Contact Info */}
           <div className="lg:col-span-3">
