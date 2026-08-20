@@ -75,14 +75,7 @@ export const validateChangePassword = [
       return true;
     }),
 
-  body("confirmPassword")
-    .notEmpty().withMessage("Please confirm your new password.")
-    .custom((value, { req }) => {
-      if (value !== req.body.newPassword) {
-        throw new Error("Passwords do not match.");
-      }
-      return true;
-    }),
+  
 ];
 
 // ── Forgot Password ───────────────────────────────────────────────────────────
@@ -101,13 +94,4 @@ export const validateResetPassword = [
     .isLength({ min: 8 }).withMessage("Password must be at least 8 characters.")
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)
     .withMessage("Password must contain at least one uppercase letter, one lowercase letter, and one number."),
-
-  body("confirmPassword")
-    .notEmpty().withMessage("Please confirm your password.")
-    .custom((value, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error("Passwords do not match.");
-      }
-      return true;
-    }),
 ];

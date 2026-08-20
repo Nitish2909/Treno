@@ -13,6 +13,7 @@ import {
   changePassword,
   getWishlist,
   toggleWishlist,
+  validateResetToken,
 } from "../controllers/authController.js";
 import { verifyToken } from "../middleware/auth.js";
 import {
@@ -48,6 +49,7 @@ router.post("/refresh-token", refreshAccessToken);
 router.get("/verify-email/:token", verifyEmail);
 router.post("/forgot-password", authLimiter, validateForgotPassword, forgotPassword);
 router.post("/reset-password/:token", authLimiter, validateResetPassword, resetPassword);
+router.post("/reset-password/validate/:token",validateResetToken)
 
 // ── Protected routes 
 router.use(verifyToken);

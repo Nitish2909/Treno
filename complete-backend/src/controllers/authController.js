@@ -193,6 +193,39 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { accessToken, refreshToken,user }, "Access token refreshed."));
 });
 
+export const validateResetToken = asyncHandler(async (req, res) => {
+  const { token } = req.params;
+
+  if (!token) {
+    throw new ApiError(400, "Reset token is required.");
+  }
+
+  // Hash the incoming unhashed token from URL to match the DB version
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+
+  // Find user with matching token and an expiry date in the future
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpiry: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return new ApiResponse(
+      200,
+      { valid: false },
+      "Invalid or expired password reset token."
+    ).send(res);
+  }
+
+  return new ApiResponse(
+    200,
+    { valid: true },
+    "Password reset token is valid."
+  ).send(res);
+});
 /**
  * POST /api/v1/auth/forgot-password
  */
@@ -219,7 +252,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   user.passwordResetExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
   await user.save({ validateBeforeSave: false });
 
-  const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+  const resetUrl = `${process.env.FRONTEND_URL}/auth/reset-password/${resetToken}`;
   await sendEmail(email, "forgotPassword", { name: user.name, resetUrl });
 
   return new ApiResponse(
