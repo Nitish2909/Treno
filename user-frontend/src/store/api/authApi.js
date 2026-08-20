@@ -39,6 +39,10 @@ export const authApi = baseApi.injectEndpoints({
         }
       },
     }),
+    verifyResetToken: builder.query({
+      query: (token) => `/auth/reset-password/validate/${token}`,
+    }),
+    
 
     logoutUser: builder.mutation({
       query: () => ({
@@ -144,6 +148,7 @@ export const authApi = baseApi.injectEndpoints({
 export const {
   useLoginMutation,
   useRegisterMutation,
+  useVerifyResetTokenQuery,
   useLogoutUserMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, Eye, EyeOff, Loader2, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Lock, Eye, EyeOff, Loader2, CheckCircle, ArrowLeft, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useResetPasswordMutation } from '../store/api/authApi.js';
+import { useResetPasswordMutation, useVerifyResetTokenQuery } from '../store/api/authApi.js';
 
 function getPasswordStrength(password) {
   if (!password) return { label: '', color: '', width: '0%', level: 0 };
@@ -22,7 +22,16 @@ const COUNTDOWN_SECONDS = 3;
 export default function ResetPassword() {
   const { token } = useParams();
   const navigate = useNavigate();
-  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+
+  // 1. Verify token on initial load
+  const { 
+    data: verifyData, 
+    isLoading: isVerifying, 
+    isError: isVerifyError 
+  } = useVerifyResetTokenQuery(token || '', { skip: !token });
+
+  // 2. Password Reset Mutation
+  const [resetPassword, { isLoading: isResetting }] = useResetPasswordMutation();
 
   const [form, setForm] = useState({ password: '', confirmPassword: '' });
   const [showPassword, setShowPassword] = useState(false);
@@ -94,170 +103,196 @@ export default function ResetPassword() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-          <AnimatePresence mode="wait">
-            {!success ? (
-              <motion.div
-                key="form"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.3 }}
+          {/* ── State 1: Loading/Verification ── */}
+          {isVerifying ? (
+            <div className="text-center py-8">
+              <Loader2 className="w-10 h-10 text-amber-500 animate-spin mx-auto mb-4" />
+              <p className="text-gray-600 text-sm font-medium">Validating security token...</p>
+            </div>
+          ) : isVerifyError || !verifyData?.data?.valid ? (
+            /* ── State 2: Invalid or Expired Token ── */
+            <div className="text-center py-4">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <AlertCircle className="w-8 h-8 text-red-500" />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">Invalid or Expired Link</h2>
+              <p className="text-gray-500 text-sm mb-6">
+                This password reset link is invalid or has expired. Please request a new link to reset your password.
+              </p>
+              <Link
+                to="/auth/forgot-password"
+                className="inline-flex items-center justify-center w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm shadow-sm"
               >
-                <div className="text-center mb-6">
-                  <div className="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Lock className="w-7 h-7 text-amber-600" />
+                Request New Link
+              </Link>
+            </div>
+          ) : (
+            /* ── State 3: Valid Token (Form or Success) ── */
+            <AnimatePresence mode="wait">
+              {!success ? (
+                <motion.div
+                  key="form"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="text-center mb-6">
+                    <div className="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Lock className="w-7 h-7 text-amber-600" />
+                    </div>
+                    <h1
+                      className="text-2xl font-bold text-gray-900 mb-2"
+                      style={{ fontFamily: 'Playfair Display, serif' }}
+                    >
+                      Set New Password
+                    </h1>
+                    <p className="text-gray-500 text-sm">
+                      Choose a strong password to secure your account.
+                    </p>
                   </div>
-                  <h1
-                    className="text-2xl font-bold text-gray-900 mb-2"
+
+                  <form onSubmit={handleSubmit} noValidate className="space-y-5">
+                    {/* New Password */}
+                    <div>
+                      <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                        New Password
+                      </label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                          id="password" name="password"
+                          type={showPassword ? 'text' : 'password'}
+                          autoComplete="new-password"
+                          value={form.password} onChange={handleChange}
+                          placeholder="Min 6 characters"
+                          className={`w-full pl-10 pr-10 py-2.5 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition ${errors.password ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+                        />
+                        <button
+                          type="button" onClick={() => setShowPassword((v) => !v)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                          aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+
+                      {/* Strength meter */}
+                      {form.password && (
+                        <div className="mt-2">
+                          <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full rounded-full transition-all duration-300 ${strength.color}`}
+                              style={{ width: strength.width }}
+                            />
+                          </div>
+                          <div className="flex justify-between items-center mt-1">
+                            <p className={`text-xs font-medium ${strength.level === 1 ? 'text-red-500' : strength.level === 2 ? 'text-yellow-600' : 'text-green-600'}`}>
+                              {strength.label}
+                            </p>
+                            <p className="text-xs text-gray-400">
+                              {strength.level < 3 ? 'Use uppercase, numbers & symbols for stronger password' : 'Great password!'}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      {errors.password && <p className="text-xs text-red-500 mt-1">{errors.password}</p>}
+                    </div>
+
+                    {/* Confirm Password */}
+                    <div>
+                      <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                        Confirm New Password
+                      </label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                          id="confirmPassword" name="confirmPassword"
+                          type={showConfirm ? 'text' : 'password'}
+                          autoComplete="new-password"
+                          value={form.confirmPassword} onChange={handleChange}
+                          placeholder="Repeat new password"
+                          className={`w-full pl-10 pr-10 py-2.5 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition ${errors.confirmPassword ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+                        />
+                        <button
+                          type="button" onClick={() => setShowConfirm((v) => !v)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                          aria-label={showConfirm ? 'Hide password' : 'Show password'}
+                        >
+                          {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                      {errors.confirmPassword && <p className="text-xs text-red-500 mt-1">{errors.confirmPassword}</p>}
+                    </div>
+
+                    <button
+                      type="submit" disabled={isResetting}
+                      className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 disabled:bg-amber-300 text-white font-semibold py-3 rounded-lg transition-colors text-sm shadow-sm"
+                    >
+                      {isResetting ? (
+                        <><Loader2 className="w-4 h-4 animate-spin" />Resetting…</>
+                      ) : (
+                        'Reset Password'
+                      )}
+                    </button>
+                  </form>
+
+                  <div className="mt-6 text-center">
+                    <Link
+                      to="/auth/login"
+                      className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-amber-600 transition-colors"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                      Back to Login
+                    </Link>
+                  </div>
+                </motion.div>
+              ) : (
+                /* ── State 4: Reset Success ── */
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, type: 'spring', stiffness: 200, damping: 18 }}
+                  className="text-center py-4"
+                >
+                  <motion.div
+                    className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.1, type: 'spring', stiffness: 200, damping: 15 }}
+                  >
+                    <CheckCircle className="w-10 h-10 text-green-500" />
+                  </motion.div>
+
+                  <h2
+                    className="text-2xl font-bold text-gray-900 mb-3"
                     style={{ fontFamily: 'Playfair Display, serif' }}
                   >
-                    Set New Password
-                  </h1>
-                  <p className="text-gray-500 text-sm">
-                    Choose a strong password to secure your account.
+                    Password Reset!
+                  </h2>
+                  <p className="text-gray-500 text-sm mb-6">
+                    Your password has been successfully updated. You can now log in with your new password.
                   </p>
-                </div>
 
-                <form onSubmit={handleSubmit} noValidate className="space-y-5">
-                  {/* New Password */}
-                  <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                      New Password
-                    </label>
-                    <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <input
-                        id="password" name="password"
-                        type={showPassword ? 'text' : 'password'}
-                        autoComplete="new-password"
-                        value={form.password} onChange={handleChange}
-                        placeholder="Min 6 characters"
-                        className={`w-full pl-10 pr-10 py-2.5 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition ${errors.password ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
-                      />
-                      <button
-                        type="button" onClick={() => setShowPassword((v) => !v)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                        aria-label={showPassword ? 'Hide password' : 'Show password'}
-                      >
-                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                      </button>
-                    </div>
-
-                    {/* Strength meter */}
-                    {form.password && (
-                      <div className="mt-2">
-                        <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full rounded-full transition-all duration-300 ${strength.color}`}
-                            style={{ width: strength.width }}
-                          />
-                        </div>
-                        <div className="flex justify-between items-center mt-1">
-                          <p className={`text-xs font-medium ${strength.level === 1 ? 'text-red-500' : strength.level === 2 ? 'text-yellow-600' : 'text-green-600'}`}>
-                            {strength.label}
-                          </p>
-                          <p className="text-xs text-gray-400">
-                            {strength.level < 3 ? 'Use uppercase, numbers & symbols for stronger password' : 'Great password!'}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                    {errors.password && <p className="text-xs text-red-500 mt-1">{errors.password}</p>}
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl py-3 px-4 mb-6">
+                    <p className="text-sm text-amber-700">
+                      Redirecting to login in{' '}
+                      <span className="font-bold text-amber-600">{countdown}</span>{' '}
+                      second{countdown !== 1 ? 's' : ''}…
+                    </p>
                   </div>
 
-                  {/* Confirm Password */}
-                  <div>
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                      Confirm New Password
-                    </label>
-                    <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <input
-                        id="confirmPassword" name="confirmPassword"
-                        type={showConfirm ? 'text' : 'password'}
-                        autoComplete="new-password"
-                        value={form.confirmPassword} onChange={handleChange}
-                        placeholder="Repeat new password"
-                        className={`w-full pl-10 pr-10 py-2.5 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition ${errors.confirmPassword ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
-                      />
-                      <button
-                        type="button" onClick={() => setShowConfirm((v) => !v)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                        aria-label={showConfirm ? 'Hide password' : 'Show password'}
-                      >
-                        {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                      </button>
-                    </div>
-                    {errors.confirmPassword && <p className="text-xs text-red-500 mt-1">{errors.confirmPassword}</p>}
-                  </div>
-
-                  <button
-                    type="submit" disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 disabled:bg-amber-300 text-white font-semibold py-3 rounded-lg transition-colors text-sm shadow-sm"
-                  >
-                    {isLoading ? (
-                      <><Loader2 className="w-4 h-4 animate-spin" />Resetting…</>
-                    ) : (
-                      'Reset Password'
-                    )}
-                  </button>
-                </form>
-
-                <div className="mt-6 text-center">
                   <Link
                     to="/auth/login"
-                    className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-amber-600 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 hover:text-amber-700 transition-colors"
                   >
-                    <ArrowLeft className="w-4 h-4" />
-                    Back to Login
+                    Go to Login now
                   </Link>
-                </div>
-              </motion.div>
-            ) : (
-              /* ── Success state ── */
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, type: 'spring', stiffness: 200, damping: 18 }}
-                className="text-center py-4"
-              >
-                <motion.div
-                  className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.1, type: 'spring', stiffness: 200, damping: 15 }}
-                >
-                  <CheckCircle className="w-10 h-10 text-green-500" />
                 </motion.div>
-
-                <h2
-                  className="text-2xl font-bold text-gray-900 mb-3"
-                  style={{ fontFamily: 'Playfair Display, serif' }}
-                >
-                  Password Reset!
-                </h2>
-                <p className="text-gray-500 text-sm mb-6">
-                  Your password has been successfully updated. You can now log in with your new password.
-                </p>
-
-                <div className="bg-amber-50 border border-amber-200 rounded-xl py-3 px-4 mb-6">
-                  <p className="text-sm text-amber-700">
-                    Redirecting to login in{' '}
-                    <span className="font-bold text-amber-600">{countdown}</span>{' '}
-                    second{countdown !== 1 ? 's' : ''}…
-                  </p>
-                </div>
-
-                <Link
-                  to="/auth/login"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 hover:text-amber-700 transition-colors"
-                >
-                  Go to Login now
-                </Link>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              )}
+            </AnimatePresence>
+          )}
         </div>
       </div>
     </motion.div>
