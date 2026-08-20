@@ -544,6 +544,10 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileTripsOpen, setMobileTripsOpen] = useState(false);
+    const [mobileIndiaTripOpen, setMobileIndiaTripOpen] = useState(false);
+  const [mobileInternationalTripOpen, setMobileInternationalTripOpen] = useState(false);
+  const [mobileGroupTourOpen, setMobileGroupTourOpen] = useState(false);
+
   const [mobileDestOpen, setMobileDestOpen] = useState(false);
 
   const searchInputRef = useRef(null);
@@ -1149,7 +1153,7 @@ export default function Navbar() {
                 {/* International Trips accordion */}
                 <div>
                   <button
-                    onClick={() => setMobileDestOpen((v) => !v)}
+                    onClick={() => setMobileInternationalTripOpen((v) => !v)}
                     className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
                   >
                     International Trips
@@ -1162,7 +1166,7 @@ export default function Navbar() {
                     />
                   </button>
                   <AnimatePresence>
-                    {mobileDestOpen && (
+                    {mobileInternationalTripOpen && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
@@ -1190,7 +1194,7 @@ export default function Navbar() {
                 <div>
                   <button
                     type="button"
-                    onClick={() => setMobileDestOpen((v) => !v)}
+                    onClick={() => setMobileIndiaTripOpen((v) => !v)}
                     className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
                   >
                     India Trips
@@ -1203,7 +1207,7 @@ export default function Navbar() {
                     />
                   </button>
                   <AnimatePresence>
-                    {mobileDestOpen && (
+                    {mobileIndiaTripOpen && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
@@ -1231,7 +1235,7 @@ export default function Navbar() {
                 <div>
                   <button
                     type="button"
-                    onClick={() => setMobileDestOpen((v) => !v)}
+                    onClick={() => setMobileGroupTourOpen((v) => !v)}
                     className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
                   >
                     Group Tours
@@ -1244,7 +1248,7 @@ export default function Navbar() {
                     />
                   </button>
                   <AnimatePresence>
-                    {mobileDestOpen && (
+                    {mobileGroupTourOpen && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
