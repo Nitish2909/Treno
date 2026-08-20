@@ -34,8 +34,8 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useScrollPosition } from "../../hooks/useScrollAnimation.js";
-import TrenoLogo from "../../assets/TrenoLogo.webp";
-import TrenoLogoImg from "../../assets/Treno-Logo.png";
+import TrenoLogo from "../../assets/TrenoLogo1.png";
+
 
 // --------------------
 // Data
@@ -738,24 +738,24 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 lg:h-16">
             {/* Logo  */}
             <Link
-              to="/"
-              className="flex items-center justify-center flex-shrink-0 group relative"
-            >
-              {/* Soft background glow adjusted for the larger logo profile */}
-              <div
-                className={clsx(
-                  "absolute -inset-4 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-lg",
-                  isScrolled ? "bg-slate-900" : "bg-white",
-                )}
-              />
+  to="/"
+  className="flex items-center justify-center flex-shrink-0 group relative"
+>
+  {/* Soft background glow */}
+  <div
+    className={clsx(
+      "absolute -inset-4 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-lg",
+      isScrolled ? "bg-slate-900" : "bg-white"
+    )}
+  />
 
-              {/* Significantly larger logo profile (w-40 h-40) */}
-              <img
-                src={TrenoLogo}
-                alt="Treno Logo"
-                className="w-40 h-40 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg "
-              />
-            </Link>
+  {/* Corrected aspect ratio with object-contain and height constraint */}
+  <img
+    src={TrenoLogo}
+    alt="Treno Logo"
+    className="h-10 w-auto object-contain transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg"
+  />
+</Link>
 
             {/*  Desktop Links */}
             <ul className="hidden lg:flex items-center gap-1">
