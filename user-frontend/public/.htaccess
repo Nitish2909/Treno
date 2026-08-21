@@ -4,7 +4,7 @@
 
   # 1. Force Redirect www to non-www (Must be at the top)
   RewriteCond %{HTTP_HOST} ^www\.tripwithtreno\.com$ [NC]
-  RewriteRule ^(.*)$ https://cavner.co.in/$1 [R=301,L]
+  RewriteRule ^(.*)$ https://tripwithtreno.com/$1 [R=301,L]
 
   # 2. Allow direct access to index.html
   RewriteRule ^index\.html$ - [L]
