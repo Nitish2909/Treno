@@ -16,7 +16,7 @@ import {
   Clock,
   ChevronRight,
 } from "lucide-react";
-import TrenoLogo from "../../assets/Treno-Logo.png";
+import TrenoLogo from "../../assets/TrenoLogo1.png";
 
 // ---------------------------------------------------------------------------
 // Data Constants
@@ -47,8 +47,6 @@ const POPULAR_DESTINATIONS = [
   { label: "Varanasi", href: "/destinations/varanasi" },
   { label: "Nagaland", href: "/destinations/nagaland" },
 ];
-
-
 
 const SOCIAL_LINKS = [
   {
@@ -95,25 +93,26 @@ export default function Footer() {
           <div className="lg:col-span-4 space-y-5">
             <Link to="/" className="inline-block group">
               {/* White badge wrapper to ensure dark logo elements pop clearly */}
-              <div className="inline-flex items-center px-4 py-2.5 rounded-2xl  backdrop-blur-md  shadow-lg group-hover:bg-white/15 transition-all duration-300">
-                <img
-                  src={TrenoLogo}
-                  alt="Treno Logo"
-                  className="h-40 w-40 object-contain filter brightness-125 contrast-125"
-                />
-              </div>
+
+              <img
+                src={TrenoLogo}
+                alt="Treno Logo"
+                className="h-32 w-32 object-contain filter brightness-125 contrast-125"
+              />
             </Link>
 
             <p className="text-amber-400 text-xs font-semibold tracking-wider uppercase">
               Treno - Your Trusted Travel Partner
-              <br/>
-              <span className="text-white">(A Unit of Cavner Wealth & FinTech Services Pvt Ltd.)</span>
+              <br />
             </p>
+            <span className="text-white">
+              (A Unit of Cavner Wealth & FinTech Services Pvt Ltd.)
+            </span>
 
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
-              Treno- Your Trusted Travel Partner is your trusted travel companion for curated group trips,
-              adventure getaways, and transformative journeys across India and
-              beyond.
+              Treno- Your Trusted Travel Partner is your trusted travel
+              companion for curated group trips, adventure getaways, and
+              transformative journeys across India and beyond.
             </p>
 
             {/* Social Links */}
@@ -169,7 +168,9 @@ export default function Footer() {
                 <Link
                   key={label}
                   to={href}
-                  onClick={()=>{window.scrollTo(0,0)}}
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
                   className="group flex items-center gap-1.5 text-sm text-slate-400 hover:text-teal-300 transition-colors duration-200"
                 >
                   <MapPin
@@ -181,8 +182,6 @@ export default function Footer() {
               ))}
             </div>
           </div>
-
-          
 
           {/* Column 4 — Contact Info */}
           <div className="lg:col-span-3">
