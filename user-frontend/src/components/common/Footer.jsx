@@ -106,6 +106,8 @@ export default function Footer() {
 
             <p className="text-amber-400 text-xs font-semibold tracking-wider uppercase">
               Treno - Your Trusted Travel Partner
+              <br/>
+              <span className="text-white">(A Unit of Cavner Wealth & FinTech Services Pvt Ltd.)</span>
             </p>
 
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
