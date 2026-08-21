@@ -544,8 +544,9 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileTripsOpen, setMobileTripsOpen] = useState(false);
-    const [mobileIndiaTripOpen, setMobileIndiaTripOpen] = useState(false);
-  const [mobileInternationalTripOpen, setMobileInternationalTripOpen] = useState(false);
+  const [mobileIndiaTripOpen, setMobileIndiaTripOpen] = useState(false);
+  const [mobileInternationalTripOpen, setMobileInternationalTripOpen] =
+    useState(false);
   const [mobileGroupTourOpen, setMobileGroupTourOpen] = useState(false);
 
   const [mobileDestOpen, setMobileDestOpen] = useState(false);
@@ -628,24 +629,11 @@ export default function Navbar() {
             <p className="text-brand-100 font-medium tracking-wide animate-pulse"></p>
             <div className="flex items-center gap-5">
               {/* Logo  */}
-              {/* <Link
-              to="/"
-              className="flex items-center justify-center flex-shrink-0 group relative"
-            >
-              
-              <div
-                className={clsx(
-                  "absolute -inset-4 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-lg",
-                  isScrolled ? "bg-slate-900" : "bg-white",
-                )}
-              />
 
-              <img
-                src={TrenoLogoImg}
-                alt="Treno Logo"
-                className="w-16 h-16 transform group-hover:scale-105 transition-all duration-300 ease-out relative z-10 drop-shadow-md group-hover:drop-shadow-lg  mr-112"
-              />
-            </Link> */}
+              {/* <h2 class="text-sm md:text-sm font-extrabold tracking-wide inline-flex items-center  text-white">
+                Treno Travel (A Unit of Cavner Wealth & FinTech Services Pvt
+                Ltd.)
+              </h2> */}
 
               {/* Expandable search */}
               <form
@@ -676,7 +664,7 @@ export default function Navbar() {
                   type={searchOpen ? "submit" : "button"}
                   onClick={!searchOpen ? handleSearchOpen : undefined}
                   className={clsx(
-                    "w-9 h-9 rounded-full flex items-center justify-center transition-colors mr-4",
+                    "w-9 h-9 rounded-full flex items-center justify-center transition-colors",
                     isScrolled ? "text-slate-600 " : "text-white",
                   )}
                   aria-label="Search"
