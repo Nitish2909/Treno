@@ -3,6 +3,9 @@ User-agent: *
 # Allow all public pages
 Allow: /
 
+User-agent: Googlebot-Favicon
+Allow: /
+
 # Block private pages
 Disallow: /admin/
 Disallow: /dashboard/
