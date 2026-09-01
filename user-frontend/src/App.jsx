@@ -203,10 +203,10 @@ function AppContent() {
         </Suspense>
       </main>
       {!isAuthPage && !isNoNavPage && <Footer />}
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
 
       {/* bottom navigation  */}
-      <BottomNavigation />
+      {/* <BottomNavigation /> */}
     </div>
   );
 }

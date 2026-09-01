@@ -18,13 +18,13 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
 const slides = [
-  {
-    image: Himalayas,
-    tag: "Himalayas",
-    title: "Discover the Himalayas",
-    subtitle:
-      "Stand atop the roof of the world and feel the mountain breeze carry your worries away.",
-  },
+  // {
+  //   image: Himalayas,
+  //   tag: "Himalayas",
+  //   title: "Discover the Himalayas",
+  //   subtitle:
+  //     "Stand atop the roof of the world and feel the mountain breeze carry your worries away.",
+  // },
   {
     image: Goa,
     tag: "Goa",
