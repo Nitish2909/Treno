@@ -94,7 +94,7 @@ export default function SEOHead({
         name="robots"
         content={noIndex ? 'noindex, nofollow' : 'index, follow'}
       />
-    <link rel="icon" href="/fevicon.png" sizes="48x48" type="image/png"></link>
+    <link rel="icon" href="/fevicon.png" sizes="48x48" type="image/png"/>
       {/* ── Canonical  */}
       <link rel="canonical" href={canonicalUrl} />
 
