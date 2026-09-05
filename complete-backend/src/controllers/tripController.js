@@ -393,6 +393,7 @@ export const updateTrip = asyncHandler(async (req, res) => {
     return new ApiResponse(200, trip, "Trip updated successfully.").send(res);
   } catch (error) {
     deleteTempFiles(tempFilePaths);
+    console.log(error)
     throw error;
   }
 });
