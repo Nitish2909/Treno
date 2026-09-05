@@ -387,8 +387,9 @@ export const updateTrip = asyncHandler(async (req, res) => {
     Object.assign(trip, body);
     await trip.save();
 
-    deleteTempFiles(tempFilePaths);
-
+    if(req.files?.images){
+        deleteTempFiles(tempFilePaths);
+    }
     return new ApiResponse(200, trip, "Trip updated successfully.").send(res);
   } catch (error) {
     deleteTempFiles(tempFilePaths);
