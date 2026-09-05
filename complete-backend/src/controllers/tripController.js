@@ -364,7 +364,7 @@ export const updateTrip = asyncHandler(async (req, res) => {
       body.thumbnail = { url: result.secure_url, public_id: result.public_id };
     }
 
-    console.log(req.files.images)
+    
     // Append new gallery images
     if (req.files?.images) {
       // const uploadPromises = Array.from(req.files.images).map((file) =>
