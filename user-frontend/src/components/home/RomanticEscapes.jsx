@@ -372,7 +372,7 @@ export default function RomanticEscapes() {
             ref={scrollContainerRef}
             className="flex gap-5 overflow-x-auto pb-6 pt-2 scrollbar-none scroll-smooth"
           >
-            {trips.filter(trip=>trip.category?.name =="romantic").map((item, index) => {
+            {trips.filter(trip=>trip.category?.name =="Romantic").map((item, index) => {
               const imageUrl =
                 item.images?.[0]?.url ||
                 item.image ||
