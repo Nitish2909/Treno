@@ -199,14 +199,22 @@ const EMPTY_FORM = {
 
 export default function TripForm({ initialValues, onSubmit, loading = false }) {
   const [section, setSection] = useState('basic')
-  const [form, setForm]       = useState({ ...EMPTY_FORM, ...initialValues })
+  const [form, setForm]       = useState({ ...EMPTY_FORM, ...initialValues, featured: initialValues?.featured ?? false,
+    popular: initialValues?.popular ?? false, })
   const [errors, setErrors]   = useState({})
   const { data: catData, isLoading }     = useGetCategoriesQuery({})
   
   const categories = catData?.data?.categories || []
 
   useEffect(() => {
-    if (initialValues) setForm({ ...EMPTY_FORM, ...initialValues })
+    if (initialValues && Object.keys(initialValues).length > 0) {
+      setForm({
+        ...EMPTY_FORM,
+        ...initialValues,
+        featured: Boolean(initialValues.featured),
+        popular: Boolean(initialValues.popular),
+      })
+    }
   }, [initialValues])
 
   function set(key, val) {
