@@ -379,11 +379,11 @@ export default function TripForm({ initialValues, onSubmit, loading = false }) {
           </div>
           <div className="flex gap-6">
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="rounded border-gray-300 text-primary-500" checked={!!form.featured} onChange={(e) => set('featured', e.target.checked)} />
+              <input type="checkbox" className="rounded border-gray-300 text-primary-500" checked={Boolean(form.featured)} onChange={(e) => set('featured', e.target.checked)} />
               <span className="text-sm font-medium text-gray-700">Featured Trip</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="rounded border-gray-300 text-primary-500" checked={!!form.popular} onChange={(e) => set('popular', e.target.checked)} />
+              <input type="checkbox" className="rounded border-gray-300 text-primary-500" checked={Boolean(form.popular)} onChange={(e) => set('popular', e.target.checked)} />
               <span className="text-sm font-medium text-gray-700">Popular Trip</span>
             </label>
           </div>
