@@ -154,9 +154,9 @@ export default function Home() {
         </section>
 
         {/* Newsletter */}
-        <section className="">
+        {/* <section className="">
           <NewsletterSection />
-        </section>
+        </section> */}
 
         {/* Whatapp */}
         <section className="relative bottom-64">

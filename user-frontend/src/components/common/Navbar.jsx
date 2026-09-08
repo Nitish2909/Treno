@@ -326,7 +326,7 @@ function InternationalTripDropdown({ isOpen }) {
           {/* Fixed: Added col-span-3 so it spans the entire width of the grid */}
           <div className="col-span-3 mt-1 pt-2 border-t border-slate-100">
             <Link
-              to="/international-trip"
+              to="/international-trips"
               className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-amber-600 hover:bg-amber-50 transition-colors"
             >
               <Globe size={14} />

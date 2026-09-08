@@ -181,8 +181,8 @@ const variants = {
 // ------------------
 
 export default function BookingForm({ trip, onComplete }) {
-  const {state} = useLocation()
-  console.log(state)
+  const { state } = useLocation();
+  console.log(state);
   const maxGroup = trip?.groupSize?.max || 20;
   const pricePerPerson = trip?.price?.discounted || 0;
 
@@ -244,9 +244,9 @@ export default function BookingForm({ trip, onComplete }) {
     });
   };
 
-  useEffect(()=>{
-    adjustTravelers(travelers)
-  },[travelers])
+  useEffect(() => {
+    adjustTravelers(travelers);
+  }, [travelers]);
 
   const goTo = (next) => {
     setDirection(next > step ? 1 : -1);
@@ -345,10 +345,12 @@ export default function BookingForm({ trip, onComplete }) {
                 </select>
               )}
 
-              {(!hasDates || isCustomDateSelected || startDate === "custom") && (
+              {(!hasDates ||
+                isCustomDateSelected ||
+                startDate === "custom") && (
                 <div>
                   <DatePicker
-                    selected={parseValidDate(startDate)}      
+                    selected={parseValidDate(startDate)}
                     onChange={(date) => {
                       setStartDate(date ? date.toISOString() : "");
                     }}
@@ -406,7 +408,7 @@ export default function BookingForm({ trip, onComplete }) {
                 </p>
               )}
             </div>
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center justify-between">
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center justify-between ">
               <div className="text-sm text-slate-600">
                 {fmt(pricePerPerson)} × {travelers} traveler
                 {travelers > 1 ? "s" : ""}
@@ -673,7 +675,9 @@ export default function BookingForm({ trip, onComplete }) {
                     Duration
                   </span>
                   <span className="text-slate-800">
-                    {trip?.duration ? `${trip.duration?.days} days` : "—"}
+                    {trip?.duration
+                      ? `${trip.duration.days} Days / ${trip.duration.nights || trip.duration.days - 1} Nights`
+                      : "—"}
                   </span>
                 </div>
                 <div className="flex gap-3">

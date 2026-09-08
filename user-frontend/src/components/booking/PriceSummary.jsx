@@ -82,10 +82,10 @@ export default function PriceSummary({ trip, travelers, selectedDate, promoCode,
         </div>
 
         {/* Convenience Fee */}
-        <div className="flex justify-between items-center text-sm py-1">
+        {/* <div className="flex justify-between items-center text-sm py-1">
           <span className="text-slate-500">Convenience fee</span>
           <span className="text-slate-700">{fmt(CONVENIENCE_FEE)}</span>
-        </div>
+        </div> */}
 
         {/* Divider */}
         <div className="border-t border-slate-200 my-3" />
@@ -114,13 +114,13 @@ export default function PriceSummary({ trip, travelers, selectedDate, promoCode,
             <svg className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span>Price is per person. Includes accommodation, transport and guided tours.</span>
+            {/* <span>Price is per person. Includes accommodation, transport and guided tours.</span> */}
           </div>
           <div className="flex items-start gap-2 text-xs text-slate-500">
             <svg className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span>Free cancellation up to 7 days before departure.</span>
+            {/* <span>Free cancellation up to 7 days before departure.</span> */}
           </div>
         </div>
       </div>

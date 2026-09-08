@@ -236,7 +236,7 @@ import {
   toggleWishlist,
   selectIsInWishlist,
 } from "../../store/slices/wishlistSlice.js";
-import India from "../../assets/India.png"
+import RomanticEscape from "../../assets/romantic-escapes.png"
 
 // Helper sub-component for wishlist state on individual trip items
 function WishlistButton({ trip }) {
@@ -319,7 +319,7 @@ export default function RomanticEscapes() {
       <div className="relative w-full h-[380px] md:h-[440px] rounded-3xl overflow-hidden shadow-2xl mb-12">
         {/* Background Image */}
         <img
-          src={India}
+          src={RomanticEscape}
           className="w-full h-full object-cover object-center scale-105 transition-transform duration-1000 hover:scale-100"
         />
 
@@ -329,7 +329,7 @@ export default function RomanticEscapes() {
             {/* Subtle Pill Tag */}
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-400/20 backdrop-blur-md border border-amber-300/30 rounded-full text-amber-300 text-xs font-semibold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" />
-              Incredible India
+             Handpicked Honeymoon Packages
             </div>
 
             {/* Title */}
@@ -372,7 +372,7 @@ export default function RomanticEscapes() {
             ref={scrollContainerRef}
             className="flex gap-5 overflow-x-auto pb-6 pt-2 scrollbar-none scroll-smooth"
           >
-            {trips.filter(trip=>trip.category?.slug =="romantic").map((item, index) => {
+            {trips.filter(trip=>trip.category?.name =="Romantic").map((item, index) => {
               const imageUrl =
                 item.images?.[0]?.url ||
                 item.image ||

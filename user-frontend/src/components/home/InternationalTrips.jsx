@@ -23,9 +23,10 @@ export default function InternationalTrips() {
       });
     }
   };
+  // relative w-full max-w-7xl mx-auto px-4 py-8 bg-slate-50 min-h-screen overflow-hidden
 
   return (
-    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-sans overflow-hidden">
+    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 font-sans overflow-hidden">
       
       {/* Hero Banner Container */}
       <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-800">
@@ -125,6 +126,7 @@ export default function InternationalTrips() {
                 <Link
                   key={trip._id}
                   to={`/trips/${trip.slug}`}
+                   onClick={() => window.scrollTo(0, 0)}
                   className="group relative min-w-[240px] sm:min-w-[260px] md:min-w-[270px] h-[380px] rounded-2xl overflow-hidden bg-slate-800 border border-white/10 shadow-xl snap-start cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/10 hover:border-amber-400/30 flex-shrink-0"
                 >
                   {/* Background Image */}

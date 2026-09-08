@@ -31,6 +31,7 @@ import IndiaTripDetails from "./pages/IndiaTripDetails.jsx";
 import CorporateTour from "./pages/CorporateTour.jsx";
 import UpcomingTrips from "./pages/UpcomingTrips.jsx";
 import GroupTourDetails from "./pages/GroupTourDetails.jsx";
+import InternationalPackages from "./components/home/InternationalPackages.jsx";
 
 // Pages - lazy loaded
 const Trips = lazy(() => import("./pages/Trips.jsx"));
@@ -95,10 +96,13 @@ function AppContent() {
                   // </ProtectedRoute>
                 }
               />
-              {/* WeekendGateways*/}
+              
               <Route path="/international-trip" element={<InternationalTrips />} />
 
+               <Route path="/international-trips" element={<InternationalPackages />} />
+
               <Route path="/international-trip/:name" element={<InternationalTripDetails />} />
+
 
               <Route path="/india-trip" element={<IndiaTrips />} />
 

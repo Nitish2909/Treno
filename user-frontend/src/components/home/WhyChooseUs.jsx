@@ -255,8 +255,8 @@ export default function WhyChooseUs() {
           transition={{ duration: 0.6 }}
           className="mb-12 text-center"
         >
-          <h2 className="relative mb-3 inline-block font-['Playfair_Display',serif] text-3xl font-bold text-gray-900 sm:text-4xl">
-            Why Choose Treno?
+          <h2 className="relative  inline-block font-['Playfair_Display',serif] text-3xl font-bold text-gray-900 sm:text-4xl">
+            Why Choose Treno Travel?
             <span className="absolute -bottom-2 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-amber-400 shadow-sm" />
           </h2>
           <p className="mt-6 text-base text-gray-500 sm:text-lg">
