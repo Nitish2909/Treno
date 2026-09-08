@@ -268,7 +268,7 @@ function WishlistButton({ trip }) {
 
 export default function RomanticEscapes() {
   const scrollContainerRef = useRef(null);
-  const { data, isLoading, isError } = useGetFeaturedTripsQuery(6);
+  const { data, isLoading, isError } = useGetFeaturedTripsQuery(20);
 
   // Only use data from the backend. Fallback to an empty array if there's an error or no data.
   const trips = !isError && data?.data ? data.data : [];

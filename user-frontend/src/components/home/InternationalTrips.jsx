@@ -6,7 +6,7 @@ import international from "../../assets/international.png"
 
 export default function InternationalTrips() {
   const scrollContainerRef = useRef(null);
-  const { data, isLoading, isError } = useGetFeaturedTripsQuery(6);
+  const { data, isLoading, isError } = useGetFeaturedTripsQuery(20);
 
   const trips = data?.data || [];
 
