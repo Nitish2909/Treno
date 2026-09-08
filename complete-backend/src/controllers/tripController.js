@@ -149,7 +149,7 @@ export const getFeaturedTrips = asyncHandler(async (_req, res) => {
     .populate("category", "name slug icon")
     .select("title slug thumbnail price duration type averageRating totalReviews images location isFeatured isPopular")
     .sort("-createdAt")
-    .limit(8)
+    .limit(30)
     .lean();
 
   return new ApiResponse(200, trips, "Featured trips fetched successfully.").send(res);
