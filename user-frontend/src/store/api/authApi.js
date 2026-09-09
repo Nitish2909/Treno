@@ -140,6 +140,14 @@ export const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
+     sendInquiry: builder.mutation({
+      query: (data) => ({
+        url: '/inquiries',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 
 
@@ -159,4 +167,5 @@ export const {
   useGetWishlistQuery,
   useSendMessageMutation,
   useToggleWishlistApiMutation,
+  useSendInquiryMutation,
 } = authApi

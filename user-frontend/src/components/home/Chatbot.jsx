@@ -361,6 +361,7 @@ export default function Chatbot() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 font-sans">
+      <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-65"/>
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}

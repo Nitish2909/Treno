@@ -34,7 +34,7 @@ export default function WhatsApp() {
         </a> */}
           
           {/* Facebook */}
-          <a
+          {/* <a
           href="https://facebook.com/treno.travels"
           target="_blank"
           rel="noopener noreferrer"
@@ -42,7 +42,7 @@ export default function WhatsApp() {
           aria-label="Visit our Facebook page"
         >
           <FaFacebookF size={28} />
-        </a>
+        </a> */}
 
         {/* Instagram */}
         <a
@@ -52,11 +52,12 @@ export default function WhatsApp() {
           className="w-14 h-14 bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 rounded-full shadow-2xl flex items-center justify-center text-white transition-all hover:-translate-y-0.5"
           aria-label="Visit our Instagram profile"
         >
+          
           <FaInstagram size={28} />
         </a>
 
         {/* WhatsApp */}
-        <a
+        {/* <a
           href="https://wa.me/918816942362"
           target="_blank"
           rel="noopener noreferrer"
@@ -64,7 +65,25 @@ export default function WhatsApp() {
           aria-label="Chat on WhatsApp"
         >
           <FaWhatsapp size={30} />
-        </a>
+        </a> */}
+
+
+         {/* WhatsApp Floating Button Container */}
+        <div className="relative w-14 h-14">
+          {/* The Wave / Pulse Effect */}
+          <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-65"></div>
+
+          {/* Actual WhatsApp Button */}
+          <a
+            href="https://wa.me/918816942362"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative w-14 h-14 bg-green-500 rounded-full shadow-2xl flex items-center justify-center text-white hover:bg-green-600 transition-all hover:-translate-y-0.5 z-10"
+            aria-label="Chat on WhatsApp"
+          >
+            <FaWhatsapp size={30} />
+          </a>
+        </div>
       </div>
     </div>
   );
