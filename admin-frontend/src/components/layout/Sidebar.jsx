@@ -44,18 +44,26 @@ const navGroups = [
       { to: '/admin/settings', icon: Settings, label: 'Settings' },
     ],
   },
+   {
+    label: 'Inquiry',
+    items: [
+      { to: '/admin/inquiries', icon: MessageSquare, label: 'Inquiry' },
+    ],
+  },
+
+    {
+    label: 'Message',
+    items: [
+      { to: '/admin/messages', icon: MessageSquare, label: 'Messages' },
+    ],
+  },
   {
     label: 'Add Employee',
     items: [
       { to: '/admin/employee', icon: User, label: 'Employee' },
     ],
   },
-   {
-    label: 'Message',
-    items: [
-      { to: '/admin/messages', icon: MessageSquare, label: 'Messages' },
-    ],
-  },
+ 
 ]
 
 function NavItem({ to, icon: Icon, label }) {

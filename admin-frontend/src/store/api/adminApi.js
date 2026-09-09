@@ -362,6 +362,12 @@ export const adminApi = createApi({
       query: () => '/messages',
       providesTags: ['Messages'],
     }),
+
+      /* get enquiry*/
+    getInquiry: builder.query({
+      query: () => '/inquiries',
+      providesTags: ['Inquiry'],
+    }),
   }),
 })
 
@@ -414,5 +420,6 @@ export const {
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
 
-  useGetMessagesQuery
+  useGetMessagesQuery,
+  useGetInquiryQuery
 } = adminApi

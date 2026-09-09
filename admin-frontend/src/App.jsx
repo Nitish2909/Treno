@@ -19,6 +19,7 @@ import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import Messages from "./pages/Messages";
 import Employee from "./pages/Employee";
+import Inquiry from "./pages/Inquiry";
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useSelector((state) => state.adminAuth);
@@ -81,6 +82,9 @@ export default function App() {
 
         {/* Messages */}
         <Route path="messages" element={<Messages />} />
+
+          {/* Inquiry*/}
+        <Route path="inquries" element={<Inquiry />} />
 
         {/* 404 fallback inside admin */}
         <Route path="*" element={<NotFound />} />
