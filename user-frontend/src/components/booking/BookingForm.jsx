@@ -4,7 +4,7 @@ import DatePickerLib from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import PassengerForm from "./PassengerForm.jsx";
 import PriceSummary from "./PriceSummary.jsx";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams,useHistory } from "react-router-dom";
 
 // Handle different versions of react-datepicker
 const DatePicker = DatePickerLib?.default || DatePickerLib;
@@ -244,9 +244,17 @@ export default function BookingForm({ trip, onComplete }) {
     });
   };
 
-  useEffect(() => {
-    adjustTravelers(travelers);
-  }, [travelers]);
+const history = useHistory();
+
+useEffect(() => {
+  if (!state) {
+    history.replace("/trips");
+    return;
+  }
+  adjustTravelers(travelers);
+}, [state, travelers, history]);
+
+
 
   const goTo = (next) => {
     setDirection(next > step ? 1 : -1);
