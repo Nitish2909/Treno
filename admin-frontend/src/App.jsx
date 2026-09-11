@@ -84,7 +84,7 @@ export default function App() {
         <Route path="messages" element={<Messages />} />
 
           {/* Inquiry*/}
-        <Route path="inquries" element={<Inquiry />} />
+        <Route path="inquiries" element={<Inquiry />} />
 
         {/* 404 fallback inside admin */}
         <Route path="*" element={<NotFound />} />
