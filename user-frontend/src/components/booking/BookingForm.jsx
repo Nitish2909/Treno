@@ -244,15 +244,10 @@ export default function BookingForm({ trip, onComplete }) {
     });
   };
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    if (!state) {
-      navigate("/trips", { replace: true });
-      return;
-    }
+    
     adjustTravelers(travelers);
-  }, [state, travelers, navigate]);
+  }, [travelers]);
 
   const goTo = (next) => {
     setDirection(next > step ? 1 : -1);
