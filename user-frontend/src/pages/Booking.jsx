@@ -143,8 +143,9 @@ function TripSummaryCard({ trip, startDate, travelers }) {
 export default function Booking() {
   const { tripId } = useParams();
   const navigate = useNavigate();
-  const {state:{travelers}} = useLocation()
+  const {state} = useLocation()
   const { user } = useSelector((state) => state.auth);
+  const travelers = state?.travelers || 1
   // const [trip,setTrip] = useState("")
   // console.log(user)
   console.log(tripId);
