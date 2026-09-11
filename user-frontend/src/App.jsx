@@ -134,9 +134,9 @@ function AppContent() {
               <Route
                 path="/booking/:tripId"
                 element={
-                  // <ProtectedRoute>
+                  <ProtectedRoute>
                   <Booking />
-                  // </ProtectedRoute>
+                   </ProtectedRoute>
                 }
               />
               <Route
