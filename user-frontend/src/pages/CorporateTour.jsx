@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Phone, X } from 'lucide-react'; 
 import corporateTourImg from "../assets/corporate-tour.png";
-import CustomCorporateTripForm from '../components/common/CustomCorporateTripForm';
 import CustomCorporatePop from '../components/common/CustomCorporatePop';
+import TripInquiry from '../components/home/TripInquiry';
 
 
 const CorporateTour = () => {
